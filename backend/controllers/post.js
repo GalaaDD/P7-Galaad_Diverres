@@ -1,16 +1,15 @@
 const Post = require("../models/post");
-const conn = require("../config/db");
+const db = require("../config/db");
 require('dotenv').config();
 const fs = require('fs'); // Avoir accès à des opérations liés aux systèmes de fichiers
 
 
-
-
-exports.createPost = (req, res, next) => {
-    let image = "";
+exports.CreatePost = (req, res, next) => {
+    console.log();
+    let attatchment = "";
 
     if (req.file) {
-        image = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
+        attatchment	= `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
     }
     const title = req.body.title;
     const content = req.body.content;
@@ -18,40 +17,40 @@ exports.createPost = (req, res, next) => {
         user_id: req.body.user_id,
         title: title,
         content: content,
-        image: image
+        attatchment	: attatchment,
+        author: this.author.lastname,
+
+
     });
-    if (!title && !content && !image) {
-        return res.status(400).json({ message: "Le titre ne peux pas être vide" });
+    if (!title && !content && !attatchment) {
+        return res.status(400).json({ message: "Veuillez renseigner le titre" });
     } else {
 
-        conn.query(`INSERT INTO post SET ?`, post, (error, result) => {
+        db.query(`INSERT INTO post SET ?`, post, (error, result) => {
 
             if (error) {
                 return res.status(400).json({ error: error });
             }
-            return res.status(201).json({ message: "Post crée!" });
+            return res.status(201).json({ message: "Le Post a bien été crée!" });
         });
     }
 };
 
-
-
-
 // Modifier un post
 exports.modifyPost = (req, res, next) => {
-    let image = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
+    let attatchment = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
 
     if (req.file) {
-        image = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
+        attatchment = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
     }
-    conn.query(`SELECT * FROM post WHERE id=?`, req.params.id, (error, rows, fields) => {
+    db.query(`SELECT * FROM post WHERE id=?`, req.params.id, (error, rows, fields) => {
         if (error) {
             return res.status(500).json({ error: "mysql" });
         } else {
-            if (rows[0].image) {
-                const filename = rows[0].image.split("/images/")[1];
+            if (rows[0].attatchment) {
+                const filename = rows[0].attatchment.split("/images/")[1];
                 fs.unlink(`images/${filename}`, () => {
-                    conn.query(`UPDATE post SET content = ?, title = ?, image= ?  WHERE id = ?`, [req.body.content, req.body.title, image, req.params.id], (error, result) => {
+                    db.query(`UPDATE post SET content = ?, title = ?, image= ?  WHERE id = ?`, [req.params.id,, req.body.title,  req.body.content, attatchment ], (error, result) => {
                         if (error) {
                             return res.status(400).json({ error: "Le post n'a pas pu être modifié" });
                         }
@@ -59,7 +58,7 @@ exports.modifyPost = (req, res, next) => {
                     });
                 });
             } else {
-                conn.query(`UPDATE post SET content = ?, title = ?, WHERE id = ?`, [req.body.content, req.body.title, image, req.params.id], (error, result) => {
+                db.query(`UPDATE post SET content = ?, title = ?, WHERE id = ?`, [req.params.id, req.body.title, req.body.content, attatchment ], (error, result) => {
                     if (error) {
                         return res.status(400).json({ error: "Le post n'a pas pu être modifié" });
                     }
@@ -75,19 +74,16 @@ exports.modifyPost = (req, res, next) => {
 };
 
 
-
-
-
 exports.deletePost = (req, res, next) => {
-    conn.query(`SELECT * FROM post WHERE id=?`, req.params.id, (error, rows, fields) => {
+    db.query(`SELECT * FROM post WHERE id=?`, req.params.id, (error, rows, fields) => {
         if (error) {
             return res.status(500).json({ error: "mysql" });
         } else {
-            if (rows[0].image) {
-                const filename = rows[0].image.split("/images/")[1];
+            if (rows[0].attatchment) {
+                const filename = rows[0].attatchment.split("/images/")[1];
                 fs.unlink(`images/${filename}`, () => {
 
-                    conn.query(`DELETE FROM post WHERE id=?`, req.params.id, (error, rows, fields) => {
+                    db.query(`DELETE FROM post WHERE id=?`, req.params.id, (error, rows, fields) => {
                         if (error) {
                             return res.status(500).json({ error: "impossible de supprimer" });
                         } else {
@@ -97,7 +93,7 @@ exports.deletePost = (req, res, next) => {
                     });
                 });
             } else {
-                conn.query(`DELETE FROM post WHERE id=?`, req.params.id, (error, rows, fields) => {
+                db.query(`DELETE FROM post WHERE id=?`, req.params.id, (error, rows, fields) => {
                     if (error) {
                         return res.status(500).json({ error: "impossible de supprimer" });
                     } else {
@@ -117,7 +113,7 @@ exports.deletePost = (req, res, next) => {
 //tout les posts
 exports.getAllPost = (req, res, next) => {
 
-    conn.query('SELECT post.id, content, image, title, user_id, dateCreate, isAdmin, username  FROM post INNER JOIN user ON user.id = post.user_id ORDER BY dateCreate DESC', (error, result) => {
+    db.query('SELECT post.id, title, content, attatchment, likes , user_id, lastname, isAdmin  FROM post INNER JOIN user ON user.id = post.user_id ORDER BY dateCreate DESC', (error, result) => {
         if (error) {
             return res.status(400).json({ error: "impossible d'afficher tous les post" });
         }
@@ -127,8 +123,7 @@ exports.getAllPost = (req, res, next) => {
 // un post
 exports.getOnePost = (req, res, next) => {
 
-
-    conn.query('SELECT post.id, content, image, title, user_id, dateCreate, isAdmin, username FROM post INNER JOIN user ON user.id = post.user_id WHERE post.id=? ', req.params.id, (error, result) => {
+    db.query('SELECT post.id, title, content, attatchment, likes , user_id, lastname, isAdmin FROM post INNER JOIN user ON user.id = post.user_id WHERE post.id=? ', req.params.id, (error, result) => {
         if (error) {
             return res.status(400).json({ error: "impossible d'afficher un  post" });
         }

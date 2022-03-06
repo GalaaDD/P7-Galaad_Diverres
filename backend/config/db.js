@@ -15,10 +15,11 @@ db.connect((err) => {
 
 let user = `create table if not exists user(
   id int primary key auto_increment,
-  email varchar(50) not null,
+  email varchar(50) not null unique,
   password VARCHAR(255) not null,
   lastname VARCHAR(45) not null, 
-  firstname VARCHAR(45) not null
+  firstname VARCHAR(45) not null,
+  isAdmin TINYINT(4) not null
 )`;
 
 db.execute(user, function(err, results, fields) {
@@ -32,6 +33,7 @@ let post = `create table if not exists post(
   title VARCHAR(50) not null,
   content TEXT not null,
   attatchment VARCHAR(120),
+  lastname VARCHAR(15) not null, 
   likes int
   )`;
 

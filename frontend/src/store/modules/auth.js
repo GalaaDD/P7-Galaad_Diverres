@@ -1,5 +1,5 @@
+//import * as types from '@/store/mutation-types';
 import axios from "axios";
-
 
 const state = {
   user: null,
@@ -8,60 +8,105 @@ const state = {
 
 const getters = {
   isAuthenticated: (state) => !!state.user,
-  StatePosts: (state) => state.posts,
-  StateUser: (state) => state.user,
+  statePosts: (state) => state.posts,
+  stateUser: (state) => state.user,
 };
 
 const actions = {
-  async signUp({dispatch}, form) {
-    await axios.post('/api/user/signup', form)
+  /*async signUp({dispatch}, form) {
+    await axios.post('/signup', form)
     let UserForm = new FormData()
     UserForm.append('email', form.email)
     UserForm.append('password', form.password)
     await dispatch('LogIn', UserForm)
-  },  
+  },*/
+  
+  /*signUp({ dispatch }, payload) {
+    return new Promise(( resolve, reject ) => {
+      dispatch(types.LOADING, true)
+      console.log(payload)
+      axios.post('/signup', payload)
+      .then((response) => {
+        console.log(response)
+        resolve()
+      })
+      .catch(err => reject(err))
+    });
+  },*/
 
-  async LogIn({commit}, user) {
-    await axios.post("/api/user/login", user);
-    await commit("setUser", user.get("email"));
+  signUp({ dispatch }, payload) {
+    return new Promise(( resolve, reject ) => {
+      axios.post('signup', payload)
+      .then(res => {
+        console.log(res.data);
+        resolve()
+       dispatch('LogIn', payload)
+      })
+      .catch(err => reject(err))
+    });
+  },
+  LogIn({ commit }, payload) {
+    return new Promise(( resolve, reject ) => {
+      axios.post('login', payload)
+      .then(res => {
+        console.log(res.data);
+        resolve()
+        commit("setUser", payload)
+      })
+      .catch(err => reject(err))
+    })
   },
 
-  async CreatePost({ dispatch }, post) {
-    await axios.post("/api/post/post", post);
-    return await dispatch("GetPosts");
+  CreatePost({ dispatch }, post) {
+    return new Promise(( resolve, reject ) => {
+      axios.post('post', post)
+      .then(res => {
+        console.log(res.data);
+        resolve()
+        return dispatch("GetPosts");
+      })
+      .catch(err => reject(err))
+    })
   },
 
-  async GetPosts({ commit }) {
-    let response = await axios.get("/api/post/posts");
-    commit("setPosts", response.data);
+  GetPosts({ commit }) {
+    return new Promise(( resolve, reject ) => {
+      let payload = axios.get("posts")
+      .then(res => {
+        console.log(res);
+        resolve()
+        commit("setPosts", payload);
+      })
+      .catch(err => reject(err))
+    })
   },
 
-  async LogOut({ commit }) {
+  LogOut({ commit }) {
     let user = null;
-    commit("/api/user/logout", user);
+    commit("logout", user);
   },
 
 };
 
 const mutations = {
-  setUser(state, email ) {
-    state.user = email;
+  setUser(state, user) {
+    state.user = user;
   },
 
   setPosts(state, posts) {
     state.posts = posts;
   },
-
+  
   logout(state, user) {
     state.user = user;
   },
 };
 
 export default {
-  namespaced: true,
+  
   state,
   getters,
   actions,
   mutations,
-
+  namespaced: true,
 };

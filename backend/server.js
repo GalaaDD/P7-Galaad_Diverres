@@ -20,6 +20,7 @@ const errorHandler = error => {
     throw error;
   }
   const address = server.address();
+
   const bind = typeof address === 'string' ? 'pipe ' + address : 'port: ' + port;
   switch (error.code) {
     case 'EACCES':
@@ -42,6 +43,12 @@ server.on('listening', () => {
   const address = server.address();
   const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
   console.log('Listening on ' + bind);
+});
+
+app.get('/api/', (req, res) => {
+  if (res) { res.send('Connection établie'); } else {
+      console.log("problème");
+  }
 });
 
 server.listen(port);

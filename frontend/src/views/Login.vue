@@ -4,11 +4,11 @@
       <form @submit.prevent="submit">
         <div class="input__container">
           <label for="email">email:</label>
-          <input type="text" name="email" v-model="form.email" />
+          <input type="text" name="email" v-model="email" />
         </div>
         <div>
           <label for="password">Mot de Passe:</label>
-          <input type="password" name="password" v-model="form.password" />
+          <input type="password" name="password" v-model="password" />
         </div>
         <button type="submit">Se Connecter</button>
       </form>
@@ -16,53 +16,41 @@
     </div>
   </div>
 </template>
+
 <script>
-import useVuelidate from '@vuelidate/core'
-import {  required, email } from '@vuelidate/validators'
-import { mapActions } from "vuex"; 
-  
+  import { mapActions } from "vuex"; 
+
   export default {
     name: "LogIn",
     components: {},
-    setup () {
-      return { v$: useVuelidate() }
-    },
     data() {
       return {
-        form: {
+        /*form: {
           email: "",
           password: "",
-        },
+        },*/
+        email: "",
+        password: "",
         showError: false
-      };
-      },
-      validations () {
-        return {
-          firstName: { required }, // Matches this.firstName
-          lastName: { required }, // Matches this.lastName
-          contact: {
-          email: { required, email }, // Matches this.contact.email
-          password: { required }
-        }
-
       }
     },
     methods: {
-      ...mapActions(["LogIn"]),
+      ...mapActions('auth', ['LogIn']),
       async submit() {
-        const User = new FormData();
-        User.append("email", this.form.email);
-        User.append("password", this.form.password);
+        const User = {
+          email: this.email, 
+          password: this.password,
+        }
         try {
             await this.LogIn(User);
-            this.$router.push("/posts");
+            this.$router.push('/posts');
             this.showError = false
-        } catch (error) {
+        }catch (error) {
           this.showError = true
         }
       },
-    },
-  };
+    }
+  }
 </script>
 
 <style>

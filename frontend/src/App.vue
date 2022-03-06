@@ -4,15 +4,30 @@
     <router-view/>
   </div>
 </template>
+
 <script>
-// @ is an alias to /src
-import NavBar from '@/components/NavBar.vue'
-export default {
-  components: {
-    NavBar
-  }
-}
+  import NavBar from '@/components/NavBar.vue'
+  import axios from 'axios'
+
+  export default {
+    components: {
+      NavBar
+    },
+    data() {
+        return {
+          db: "",
+        };
+    },
+    created() {
+      axios.get()
+      .then((response) => (this.db = response.data))
+      .catch((error) => {
+        console.log(error);
+      });
+    },
+  };
 </script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

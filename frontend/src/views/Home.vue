@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-  <p>Heyyyyyy welcome to our blog, check out our posts</p>
+   <img id ="nav__image" src="../assets/logo-banner-update-3.png"/>
+      <h1 id="nav__text">Avec Groupomania, partagez et restez en contact avec vos collaborateurs.</h1>
   </div>
 </template>
 <script>

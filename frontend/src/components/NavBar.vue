@@ -12,26 +12,20 @@
   </div>
 </template>
 <script>
-import VueJwtDecode from "vue-jwt-decode";
+
 
 export default {
-  name: "NavBar",
+ e: "NavBar",
   data() {
     return {
-      usersid: VueJwtDecode.decode(localStorage.getItem("token")).userId,
-    };
+      id:"",
+    }
   },
   computed: {
     isLoggedIn: function() {
       return this.$store.getters.isAuthenticated;
     },
-  },
-  methods: {
-    async logout() {
-      await this.$store.dispatch("LogOut");
-      this.$router.push("/login");
-    },
-  },
+  }
 };
 </script>
 
@@ -47,6 +41,6 @@ a:hover {
   cursor: pointer;
 }
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: #689ef6;
 }
 </style>

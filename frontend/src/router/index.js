@@ -27,7 +27,7 @@ const routes = [
     path: '/posts',
     name: 'PostS',
     component: Posts,
-    meta: { requiresAuth: true },
+    meta: { guest: true },
   },
 ];
 
