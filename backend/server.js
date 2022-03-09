@@ -45,10 +45,4 @@ server.on('listening', () => {
   console.log('Listening on ' + bind);
 });
 
-app.get('/api/', (req, res) => {
-  if (res) { res.send('Connection établie'); } else {
-      console.log("problème");
-  }
-});
-
 server.listen(port);

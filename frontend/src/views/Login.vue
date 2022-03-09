@@ -19,16 +19,11 @@
 
 <script>
   import { mapActions } from "vuex"; 
-
   export default {
     name: "LogIn",
     components: {},
     data() {
       return {
-        /*form: {
-          email: "",
-          password: "",
-        },*/
         email: "",
         password: "",
         showError: false
@@ -36,17 +31,18 @@
     },
     methods: {
       ...mapActions('auth', ['LogIn']),
-      async submit() {
-        const User = {
+      submit() {
+        const user = {
           email: this.email, 
           password: this.password,
         }
         try {
-            await this.LogIn(User);
-            this.$router.push('/posts');
+            this.LogIn(user);
+            this.$router.push({ name: "HomeView" });
             this.showError = false
         }catch (error) {
-          this.showError = true
+          this.showError = true;
+          this.error = error.response.data;
         }
       },
     }

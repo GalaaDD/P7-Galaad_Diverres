@@ -1,7 +1,7 @@
 const db = require("../config/db");
 const Comment = require("../models/comment");
 
-// Création d'un commentaire
+// function to create a comment
 exports.createComment = (req, res, next) => {
     const content = req.body.content;
     const comment = new Comment({
@@ -22,29 +22,31 @@ exports.createComment = (req, res, next) => {
     }
 };
 
-// Suppression d'un commentaire
-exports.deleteComment = (req, res, next) => {
-    let comment_id = req.params.id;
-    db.query(`DELETE FROM comment WHERE id = ?`, comment_id, (error, result) => {
-        if (error) return res.status(400).json({ error: "Le commentaire n'a pas pu être supprimé" });
-        return res.status(200).json(result);
-    });
-};
 
-exports.getAllComm = (req, res, next) => {
+//function to display all of the comments
+exports.getAllComments = (req, res, next) => {
     db.query(`SELECT comment.id, comment.content, comment.user_id, comment.post_id, user.firstname FROM comment INNER JOIN post ON post.id = comment.post_id left join user on user.id = comment.user_id WHERE post.id= ? ORDER BY dateCreate DESC`, req.params.id, (error, result) => {
         if (error) return res.status(400).json({ error: "Les commentaires n'ont pas pu être affiché" });
         return res.status(200).json(result);
     });
 };
 
-exports.getOneComm = (req, res, next) => {
 
-
+// function to display one of the comments
+exports.getOneComment = (req, res, next) => {
     db.query('SELECT comment.id, comment.content, user_id, isAdmin  FROM comment INNER JOIN user ON user.id = comment.user_id WHERE comment.id=? ', req.params.id, (error, result) => {
         if (error) {
             return res.status(400).json({ error: "impossible d'afficher ce commentaire" });
         }
+        return res.status(200).json(result);
+    });
+};
+
+// function to delete a comment
+exports.deleteComment = (req, res, next) => {
+    let comment_id = req.params.id;
+    db.query(`DELETE FROM comment WHERE id = ?`, comment_id, (error, result) => {
+        if (error) return res.status(400).json({ error: "Le commentaire n'a pas pu être supprimé" });
         return res.status(200).json(result);
     });
 };

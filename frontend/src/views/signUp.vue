@@ -33,12 +33,6 @@
     components: {},
     data() {
       return {
-         /* form: {
-            email: "",
-            password: "",
-            lastname: "",
-            firstname:"",
-         },*/
         email: "",
         password: "",
         lastname: "",
@@ -48,27 +42,19 @@
     },
     methods: {
       ...mapActions ('auth', ['signUp']),
-      async submit() {
+      submit() {
         try {
-          /*console.log({
-            firstName: this.firstName,
-            lastName: this.lastName,
-            email: this.email,
-            password: this.password
-          })*/
-          //await this.signUp(this.form);
-          await this.signUp({
+          this.signUp({
             firstname: this.firstname,
             lastname: this.lastname,
             email: this.email,
             password: this.password
           })
-          this.$router.push("/posts");
+          this.$router.push({ name: "LogIn" });
           this.showError = false
         } 
         catch (error) {
-          //console.log(error);
-          this.showError = true
+          this.showError = true;
         }
       }
     }

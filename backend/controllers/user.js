@@ -5,14 +5,12 @@ const bcrypt = require('bcrypt');
 require('dotenv').config();
 
 
-
-
-//fonction qui va crypté le mot de passe qui va le prendre et creer un nouveau user 
-//avec ce mot de passe et l'email et va l'enregistrer dans la base de donnée
+//function to crypt the password and send user's informations to groupomania's data base to save it
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
         .then((hash) => {
             const user = new User({
+                userId: req.param.id,
                 email: req.body.email,
                 password: hash,
                 lastname: req.body.lastname,
@@ -24,29 +22,26 @@ exports.signup = (req, res, next) => {
                     console.log(err);
                     return res.status(400).json("erreur");
                 }else{
-                    return res.status(201).json({ message: 'Le compte a bien été crée !' }, );
+                    return res.status(201).json({ message: 'Le compte utilisateur a bien été crée !' }, );
                 }
             });
         })
         .catch(error => res.status(500).json({ error }));
 };
 
-//fonction qui permet au utilisateur existant de se connecter
+//fonction that allow the user to connect to the session through the use of a comparaison of hashes and token.
 exports.login = async(req, res, next) => {
+    console.log(req.body.email);
     let status = '';
     if (req.body.email && req.body.password) {
         db.query('SELECT * FROM user WHERE email= ?', req.body.email, (error, results, fields) => {
             if (results.length > 0) {
-                //bcrypt va comparé le mot de passe que l'utilisateur va entrer avec ce qui est déja enregistrer avec compare
                 bcrypt.compare(req.body.password, results[0].password)
-                    .then((valid) => { //valid est un boolean qui est d'abord sur true 
-                        //si c'est false il y a error
+                    .then((valid) => {
                         if (!valid) {
                             res.status(401).json({ message: 'Le mot de passe est incorrect' });
                         } else {
-                            //confirmation User connecté
-                            console.log(req.body.email, "en ligne");
-                            //on décris le niveau d'acces du membre
+                            console.log(req.body.email, "connecté");
                             
                             if (results[0].isAdmin === 1) {
                                 status = 'administrateur';
@@ -59,12 +54,11 @@ exports.login = async(req, res, next) => {
                                 lastname: results[0].lastname,
                                 firstname: results[0].firstname,
                                 isAdmin: results[0].isAdmin,
-                                token: jwt.sign({ 
-                                    userId: results[0].id, 
-                                    lastname: results[0].lastname, 
-                                    firstname: results[0].firstname, 
-                                    isAdmin: results[0].isAdmin },
-                                    process.env.SECRET_TOKEN_KEY, { expiresIn: '24h' })
+                                token: jwt.sign(
+                                    { userId: results[0].id },
+                                    process.env.SECRET_TOKEN_KEY,
+                                    { expiresIn: "24h" }
+                                ),
                             });
 
                         }
@@ -74,23 +68,12 @@ exports.login = async(req, res, next) => {
             }
         });
     } else {
-        res.status(500).json({ message: "Un email et un mot de passe sont requis pour se connecter" });
+        res.status(500).json({ message: "Un email et un mot de passe sont necessaires pour se connecter" });
     }
 };
 
-
-
-exports.deleteUser = (req, res, next) => {
-    let user_id = req.params.id;
-    db.query(`DELETE FROM user WHERE id = ?`, user_id, (error, result) => {
-        if (error) return res.status(400).json({ error: "Le compte utilisateur n'a pas pu etre supprimé" });
-        return res.status(200).json(result);
-    });
-};
-
-
-//fonction qui permet d'afficher tous les utilisateurs
-exports.getAllUser = (req, res, next) => {
+//function to display all of the users
+exports.getAllUsers = (req, res, next) => {
     db.query('SELECT id, email, email FROM user ', (error, result) => {
         if (error) {
             return res
@@ -101,7 +84,7 @@ exports.getAllUser = (req, res, next) => {
     });
 };;
 
-// fonction qui permet d'afficher un utilisateur
+// function to display one of the users
 exports.getOneUser = (req, res, next) => {
     db.query('SELECT * FROM user WHERE id =?', req.params.id, (error, result) => {
         if (error) {
@@ -113,13 +96,13 @@ exports.getOneUser = (req, res, next) => {
     });
 };
 
-// fonction qui permet de modifier les informations de l'utilisateur
-exports.modifyUser = (req, res, next) => {
+// function to update users' informations
+exports.updateUser = (req, res, next) => {
     const email = req.body.email;
     const id = req.params.id;
     let password = req.body.password;
     if (!email || !password) {
-        return res.status(400).json({ message: "les champs des formulaires ne peuvent pas être vide" });
+        return res.status(400).json({ message: "Un email et un mot de passe sont necessaires" });
     } else {
         bcrypt.hash(password, 10)
             .then((hash) => {
@@ -130,7 +113,7 @@ exports.modifyUser = (req, res, next) => {
                         if (error) {
                             return res.status(400).json(error);
                         }
-                        return res.status(200).json({ message: 'Vos informations ont été modifié !' });
+                        return res.status(200).json({ message: 'Vos informations ont bien été mise à jour !' });
                     }
 
                 );
@@ -138,4 +121,13 @@ exports.modifyUser = (req, res, next) => {
             })
             .catch(error => res.status(500).json({ error }));
     }
+};
+
+// function to delete user account
+exports.deleteUser = (req, res, next) => {
+    let user_id = req.params.id;
+    db.query(`DELETE FROM user WHERE id = ?`, user_id, (error, result) => {
+        if (error) return res.status(400).json({ error: "Le compte utilisateur n'a pas pu etre supprimé" });
+        return res.status(200).json(result);
+    });
 };

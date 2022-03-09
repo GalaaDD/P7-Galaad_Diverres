@@ -1,6 +1,5 @@
 const mysql = require('mysql2');
 
-
 const User = function (user) {
     this.id = user.id;
     this.lastname = user.lastname;

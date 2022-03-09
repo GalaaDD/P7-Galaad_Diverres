@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import store from "../store";
+//import store from "../store";
 import Home from "../views/Home";
 import Signup from "../views/signUp";
 import Login from "../views/Login";
@@ -27,7 +27,7 @@ const routes = [
     path: '/posts',
     name: 'PostS',
     component: Posts,
-    meta: { guest: true },
+    meta: { requiresAuth: true }, //requiresAuth: true
   },
 ];
 
@@ -37,27 +37,33 @@ const router = createRouter({
   routes,
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (store.getters.isAuthenticated) {
-      next();
-      return;
-    }
-    next("/login");
-  } else {
+router.beforeResolve((to, from, next) => {
+  if (to.meta.guest) {
     next();
+  } else if (to.meta.requiresAuth) {
+    const getToken = localStorage.getItem("userToken");
+    if (!getToken) {
+      next({
+        path: "/login",
+      });
+    } else {
+      next();
+    }
   }
 });
 
-router.beforeEach((to, from, next) => {
-  if (to.matched.some((record) => record.meta.guest)) {
-    if (store.getters.isAuthenticated) {
-      next("/posts");
-      return;
+router.beforeResolve((to, from, next) => {
+  if (to.meta.requiresAuth) {
+    next();
+  } else if (to.meta.guest) {
+    const getToken = localStorage.getItem("userToken");
+    if (getToken) {
+      next({
+        path: "/",
+      });
+    } else {
+      next();
     }
-    next();
-  } else {
-    next();
   }
 });
 

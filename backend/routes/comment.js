@@ -9,7 +9,7 @@ const userCtrl = require('../controllers/comment');
 
 router.post('/create', auth, userCtrl.createComment);
 router.delete('/delete/:id', auth, userCtrl.deleteComment);
-router.get('/:id', auth, userCtrl.getAllComm);
-router.get('/onecom/:id', auth, userCtrl.getOneComm);
+router.get('/:id', auth, userCtrl.getAllComments);
+router.get('/onecom/:id', auth, userCtrl.getOneComment);
 
 module.exports = router;
