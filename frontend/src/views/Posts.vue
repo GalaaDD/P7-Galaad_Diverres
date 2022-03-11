@@ -10,6 +10,11 @@
           <input type="text" name="title" v-model="title" />
         </div>
         <div>
+          <label class="sr-only" for="image" title="image" role="button">image</label>
+           <input type="file" name="image" accept=".png, .jpg, .jpeg, .gif" v-on:change="onSelect" ref="file" aria-required="true" id="image" />
+        </div>
+        <div>
+          <label for="content">Texte</label>
           <textarea
             name="content"
             v-model="content"
@@ -25,7 +30,7 @@
           <div id="post-div">
             <p>{{ post.title }}</p>
             <p>{{ post.content }}</p>
-            <img id="attatchment"/>
+            <img id="image"/>
             <p>Written By: {{ post.author.lastname }}</p>
           </div>
         </li>
@@ -46,29 +51,34 @@
       return {
         title: "",
         content: "",
-        attatchment: "",
-        author: this.lastname
+        image: "",
+        userId:"",
       };
-    },
-    created: function () {
-      // a function to call getposts action
-      this.GetPosts();
     },
     computed: {
       ...mapState( 'auth', {Posts: "StatePosts", User: "StateUser"}),
     },
     methods: {
-    ...mapActions('auth', ["CreatePost", "GetPosts"]),
-    submit() {
-      try {
-        this.CreatePost({
-          title: this.title,
-          content: this.content,
-          attatchment: this.attatchment,
-        })
-      } catch (error) {
-        throw "Sorry you can't make a post now!"
-      }
+
+      ...mapActions('auth', ["createPost"]),
+
+      onSelect() {
+        this.file = this.$refs.file.files[0];
+        console.log(this.file);
+      },
+
+      submit() {
+        //let userId = localStorage.getItem("userId");
+        try {
+          const formData = new FormData();
+          formData.append("image", this.file);
+          formData.append("title", this.title);
+          formData.append("content", this.content);
+          //formData.append("userId", userId);
+          this.createPost(formData);
+        } catch (error) {
+          throw "Sorry you can't make a post now!"
+        }
     },
   },
 };

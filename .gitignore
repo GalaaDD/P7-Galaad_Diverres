@@ -41,5 +41,5 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
-images/*
+backend/images/*
 

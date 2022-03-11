@@ -10,6 +10,7 @@ const routes = [
     path: '/',
     name: 'HomeView',
     component: Home,
+    meta: { requiresAuth: true },
   },
   {
     path: '/signup',
@@ -27,6 +28,11 @@ const routes = [
     path: '/posts',
     name: 'PostS',
     component: Posts,
+    meta: { requiresAuth: true }, //requiresAuth: true
+  },
+  {
+    path: '/create',
+    name: 'create',
     meta: { requiresAuth: true }, //requiresAuth: true
   },
 ];
@@ -54,7 +60,7 @@ router.beforeResolve((to, from, next) => {
 
 router.beforeResolve((to, from, next) => {
   if (to.meta.requiresAuth) {
-    next();
+    next()
   } else if (to.meta.guest) {
     const getToken = localStorage.getItem("userToken");
     if (getToken) {
@@ -66,5 +72,7 @@ router.beforeResolve((to, from, next) => {
     }
   }
 });
+
+
 
 export default router;

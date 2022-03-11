@@ -6,8 +6,7 @@ const Post = function(post) {
     this.user_id = post.user_id;
     this.title = post.title;
     this.content = post.content;
-    this.attatchment = post.attatchment;
-    this.author = post.lastname
+    this.image = post.image;
 };
 
 module.exports = Post;
