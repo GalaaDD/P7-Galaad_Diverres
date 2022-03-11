@@ -43,5 +43,5 @@ pnpm-debug.log*
 
 backend/images/*
 
-.env
+backend/.env
 
