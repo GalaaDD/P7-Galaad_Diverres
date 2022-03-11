@@ -30,11 +30,11 @@ db.execute(user, function(err, results, fields) {
 
 let post = `create table if not exists post(
   id int primary key auto_increment not null,
+  user_id int not null,
   title VARCHAR(50) not null,
   content TEXT not null,
-  attatchment VARCHAR(120),
-  lastname VARCHAR(15) not null, 
-  likes int
+  image VARCHAR(120),
+  author VARCHAR(15) not null
   )`;
 
 db.execute( post, function(err, results, fields) {

@@ -50,7 +50,7 @@
             email: this.email,
             password: this.password
           })
-          this.$router.push({ name: "LogIn" });
+          this.$router.push({ name: "HomeView" });
           this.showError = false
         } 
         catch (error) {

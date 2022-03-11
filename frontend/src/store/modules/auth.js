@@ -10,7 +10,7 @@ const getters = {
   isAuthenticated: (state) => !!state.user,
   statePosts: (state) => state.posts,
   stateUser: (state) => state.user,
-  user: (state) => state.user,
+
 };
 
 const actions = {
@@ -54,7 +54,8 @@ const actions = {
         axios.defaults.headers.common["Authorization"] =
           "Bearer " + response.data.token;
 
-        commit("user", response.data.user);
+        commit("setUser", response.data.user);
+
         resolve(response);
       })
       .catch((error) => {
@@ -78,25 +79,70 @@ const actions = {
     })
   },*/
 
-  CreatePost({ dispatch }, post) {
-    axios.post("post", post);
-    dispatch("GetPosts");
+  createPost({ commit, dispatch }, post) {
+    console.log(post);
+    return new Promise((resolve, reject) => {
+      axios.post('create', post)
+      .then((response) => {
+        commit("setPosts", response.data);
+        console.log(response.data);
+        dispatch('GetPosts')
+        resolve(response);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+    });
   },
 
-  GetPosts({ commit }) {
-    let response = axios.get("posts");
+  /*createPostV2({ commit }, post) {
+    console.log(post);
+    return new Promise((resolve, reject) => {
+      axios.post('createPost', post)
+      .then((response) => {
+        console.log(response)
+        commit("post", post);
+        resolve(response);
+      })
+      .catch((error) => {
+        console.log(error);
+        reject(error);
+      });
+    });
+  },*/
+
+  /*createPostV1({ dispatch }, post) {
+    axios.post("post", post);
+    dispatch("GetPosts");
+  },*/
+
+  GetPosts({ commit, dispatch }) {
+    let response = axios.get('posts');
     commit("setPosts", response.data);
+    dispatch('postsDisplay');
+  },
+
+  postsDisplay(){
+    
+  },
+
+  GetOnePost({ commit }) {
+    let response = axios.get('post');
+    commit("setPosts", response.data);
+  },
+
+  LogOut({ commit }) {
+    let user = null;
+    commit("logout", user);
   },
   
 };
 
 const mutations = {
-  user(state, user) {
-    state.user = user;
-  },
 
-  setUser(state, email) {
-    state.user = email;
+
+  setUser(state, user) {
+    state.user = user;
   },
 
   setPosts(state, posts) {

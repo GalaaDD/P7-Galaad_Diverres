@@ -26,7 +26,7 @@ exports.createComment = (req, res, next) => {
 //function to display all of the comments
 exports.getAllComments = (req, res, next) => {
     db.query(`SELECT comment.id, comment.content, comment.user_id, comment.post_id, user.firstname FROM comment INNER JOIN post ON post.id = comment.post_id left join user on user.id = comment.user_id WHERE post.id= ? ORDER BY dateCreate DESC`, req.params.id, (error, result) => {
-        if (error) return res.status(400).json({ error: "Les commentaires n'ont pas pu être affiché" });
+        if (error) return res.status(400).json({ error: "Les commentaires n'ont pas pu être affichés" });
         return res.status(200).json(result);
     });
 };
