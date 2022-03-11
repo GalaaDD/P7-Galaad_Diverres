@@ -45,3 +45,5 @@ backend/images/*
 
 backend/.env
 
+.env
+
