@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div v-if="User">
-      <p>Hi {{ User }}</p>
+      <p>Bienvenue {{ User }} à la création et au partage de vos passions</p>
     </div>
     <div>
       <form @submit.prevent="submit">
@@ -24,25 +24,11 @@
         <button type="submit">Submit</button>
       </form>
     </div>
-    <div class="posts" v-if="Posts">
-      <ul>
-        <li v-for="post in Posts" :key="post.id">
-          <div id="post-div">
-            <p>{{ post.title }}</p>
-            <p>{{ post.content }}</p>
-            <img id="image"/>
-            <p>Written By: {{ post.author.lastname }}</p>
-          </div>
-        </li>
-      </ul>
-    </div>
-    <div v-else>Oh no!!! We have no posts</div>
   </div>
 </template>
 
-
 <script>
-  import { mapState, mapActions } from "vuex";
+  import { mapGetters, mapActions } from "vuex";
 
   export default {
     name: 'PostS',
@@ -51,12 +37,12 @@
       return {
         title: "",
         content: "",
-        image: "",
-        userId:"",
+        file: "",
+        user_id:"",
       };
     },
     computed: {
-      ...mapState( 'auth', {Posts: "StatePosts", User: "StateUser"}),
+       ...mapGetters('auth' , {Posts: 'StatePosts', User: 'StateUser'}),
     },
     methods: {
 
@@ -68,14 +54,14 @@
       },
 
       submit() {
-        //let userId = localStorage.getItem("userId");
         try {
           const formData = new FormData();
           formData.append("image", this.file);
           formData.append("title", this.title);
           formData.append("content", this.content);
-          //formData.append("userId", userId);
+          formData.append("userId", this.user_id);
           this.createPost(formData);
+          this.$router.push({ name: "postsDisplay" });
         } catch (error) {
           throw "Sorry you can't make a post now!"
         }

@@ -1,7 +1,8 @@
 <template>
   <div id="nav">
     <router-link to="/">Accueil</router-link> |
-    <router-link to="/posts">Publications</router-link> |
+    <router-link to="/postsDisplay">Publications</router-link> |
+    <router-link to="/posts">Créer une Publication</router-link> |
     <span v-if="isLoggedIn">
       <a @click="logout">Se déconnecter</a>
     </span>
@@ -18,8 +19,8 @@ import { mapActions } from "vuex";
 export default {
 name: 'NavBar',
   computed : {
-    isLoggedIn : function(){ return localStorage.getItem("userToken")!==null;}
-    },
+    isLoggedIn : function(){ return this.$store.getters.isAuthenticated;} //return localStorage.getItem("userToken")!==null;}
+  },
   methods: {
     ...mapActions ('auth', ['LogOut']),
     logout (){

@@ -4,6 +4,8 @@ import Home from "../views/Home";
 import Signup from "../views/signUp";
 import Login from "../views/Login";
 import Posts from "../views/Posts";
+import postsDisplay from "../views/postsDisplay";
+import postPage from "../views/postPage";
 
 const routes = [
   {
@@ -33,6 +35,18 @@ const routes = [
   {
     path: '/create',
     name: 'create',
+    meta: { requiresAuth: true }, //requiresAuth: true
+  },
+  {
+    path: '/postsdisplay',
+    name: 'postsDisplay',
+    component: postsDisplay,
+    meta: { requiresAuth: true }, //requiresAuth: true
+  },
+  {
+    path: '/postpage',
+    name: 'postPage',
+    component: postPage,
     meta: { requiresAuth: true }, //requiresAuth: true
   },
 ];

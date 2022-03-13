@@ -2,26 +2,25 @@
 import axios from 'axios';
 
 const state = {
-  user: null,
+  users: null,
   posts: null,
 };
 
 const getters = {
   isAuthenticated: (state) => !!state.user,
-  statePosts: (state) => state.posts,
-  stateUser: (state) => state.user,
-
+  StatePosts: (state) => state.posts,
+  StateUser: (state) => state.user
 };
 
 const actions = {
 
-  signUp({ dispatch, commit }, user) {
+  signUp({ dispatch }, user) {
     return new Promise(( resolve, reject ) => {
       axios.post('signup', user)
       .then(response => {
         console.log(response.data);
         console.log(user);
-        commit("user", response.data.user);
+    
         dispatch('LogIn', user);
         resolve()
       })
@@ -32,20 +31,6 @@ const actions = {
     });
   },
 
-
-  /*signUp({ dispatch }, payload) {
-    return new Promise(( resolve, reject ) => {
-      axios.post('signup', payload)
-      .then(res => {
-        console.log(res.data);
-        resolve()
-        dispatch('LogIn', payload)
-        
-      })
-      .catch(err => reject(err))
-    });
-  },*/
-
   LogIn({ commit }, user) {
     return new Promise((resolve, reject) => {
       axios.post('login', user)
@@ -54,7 +39,7 @@ const actions = {
         axios.defaults.headers.common["Authorization"] =
           "Bearer " + response.data.token;
 
-        commit("setUser", response.data.user);
+        commit("setUser", user.get(response.data.firstname));
 
         resolve(response);
       })
@@ -64,22 +49,8 @@ const actions = {
       });
     });
   },
-  
-  /*LogIn({ commit }, user) {
-    return new Promise(( resolve, reject ) => {
-      axios.post('login', user)
-      .then(res => {
-        console.log(res.data);
-        resolve()
-        let email = res.data.email;
-        console.log(email);
-        commit('setUser', email);
-      })
-      .catch(err => reject(err))
-    })
-  },*/
 
-  createPost({ commit, dispatch }, post) {
+  createPost({ commit, dispatch }, post ) {
     console.log(post);
     return new Promise((resolve, reject) => {
       axios.post('create', post)
@@ -87,7 +58,7 @@ const actions = {
         commit("setPosts", response.data);
         console.log(response.data);
         dispatch('GetPosts')
-        resolve(response);
+        resolve(response.data);
       })
       .catch((error) => {
         reject(error);
@@ -95,40 +66,33 @@ const actions = {
     });
   },
 
-  /*createPostV2({ commit }, post) {
-    console.log(post);
+  GetPosts({ commit }, posts) {
     return new Promise((resolve, reject) => {
-      axios.post('createPost', post)
+      axios.get('posts', posts)
       .then((response) => {
-        console.log(response)
-        commit("post", post);
-        resolve(response);
+        commit("setPosts", response.data);
+        console.log(response.data);
+        resolve();
       })
       .catch((error) => {
-        console.log(error);
         reject(error);
       });
     });
-  },*/
-
-  /*createPostV1({ dispatch }, post) {
-    axios.post("post", post);
-    dispatch("GetPosts");
-  },*/
-
-  GetPosts({ commit, dispatch }) {
-    let response = axios.get('posts');
-    commit("setPosts", response.data);
-    dispatch('postsDisplay');
   },
 
-  postsDisplay(){
-    
-  },
-
-  GetOnePost({ commit }) {
-    let response = axios.get('post');
-    commit("setPosts", response.data);
+  GetOnePost({ commit }, post_Id){
+    console.log(post_Id);
+    return new Promise((resolve, reject) => {
+      axios.get(`posts`, post_Id)
+      .then((response) => {
+        commit("setPosts", response.data);
+        console.log(response.data);
+        resolve();
+      })
+      .catch((error) => {
+        reject(error);
+      });
+    });
   },
 
   LogOut({ commit }) {
@@ -139,16 +103,13 @@ const actions = {
 };
 
 const mutations = {
-
-
-  setUser(state, user) {
-    state.user = user;
+  setUser(state, firstname) {
+    state.user = firstname;
   },
 
   setPosts(state, posts) {
     state.posts = posts;
   },
-  
   logout(state, user) {
     state.user = user;
   },
@@ -163,24 +124,3 @@ export default {
   mutations,
   namespaced: true,
 };
-
- /*async signUp({dispatch}, form) {
-    await axios.post('/signup', form)
-    let UserForm = new FormData()
-    UserForm.append('email', form.email)
-    UserForm.append('password', form.password)
-    await dispatch('LogIn', UserForm)
-  },*/
-  
-  /*signUp({ dispatch }, payload) {
-    return new Promise(( resolve, reject ) => {
-      dispatch(types.LOADING, true)
-      console.log(payload)
-      axios.post('/signup', payload)
-      .then((response) => {
-        console.log(response)
-        resolve()
-      })
-      .catch(err => reject(err))
-    });
-  },*/
