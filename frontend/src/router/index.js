@@ -3,9 +3,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from "../views/Home";
 import Signup from "../views/signUp";
 import Login from "../views/Login";
-import Posts from "../views/Posts";
+import Posts from "../views/createPost";
 import postsDisplay from "../views/postsDisplay";
 import postPage from "../views/postPage";
+import createComment from "../views/createComment";
+import CommentView from "../views/comment";
+
 
 const routes = [
   {
@@ -34,7 +37,7 @@ const routes = [
   },
   {
     path: '/create',
-    name: 'create',
+    name: 'createPost',
     meta: { requiresAuth: true }, //requiresAuth: true
   },
   {
@@ -44,9 +47,27 @@ const routes = [
     meta: { requiresAuth: true }, //requiresAuth: true
   },
   {
-    path: '/postpage',
+    path: '/post',
     name: 'postPage',
     component: postPage,
+    meta: { requiresAuth: true }, //requiresAuth: true
+  },
+  {
+    path: '/createcomment',
+    name: 'createComment',
+    component: createComment,
+    meta: { requiresAuth: true }, //requiresAuth: true
+  },
+  {
+    path: '/:id',
+    name: 'Comment',
+    component: createComment,
+    meta: { requiresAuth: true }, //requiresAuth: true
+  },
+  {
+    path: '/comments',
+    name: 'CommentsView',
+    component: CommentView,
     meta: { requiresAuth: true }, //requiresAuth: true
   },
 ];

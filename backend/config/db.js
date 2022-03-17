@@ -28,14 +28,14 @@ db.execute(user, function(err, results, fields) {
   }
 });
 
-let post = `create table if not exists post(
-  id int primary key auto_increment not null,
-  user_id int not null,
-  title VARCHAR(50) not null,
-  content TEXT not null,
-  image VARCHAR(120),
-  author VARCHAR(15) not null
-  )`;
+let post = 'create table if not exists post(\
+  id int primary key auto_increment not null,\
+  user_id int not null,\
+  title VARCHAR(50) not null,\
+  content TEXT not null,\
+  image VARCHAR(120),\
+  CONSTRAINT `user` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)\
+  )';
 
 db.execute( post, function(err, results, fields) {
   if (err) {
@@ -43,10 +43,14 @@ db.execute( post, function(err, results, fields) {
   }
 });
 
-let commentTable = `create table if not exists Comment(
-  id int primary key auto_increment not null,
-  content TEXT not null
-  )`;
+let commentTable = 'create table if not exists comment(\
+  id int primary key auto_increment not null,\
+  content TEXT not null,\
+  post_id int not null,\
+  user_id int not null,\
+  FOREIGN KEY (`user_id`) REFERENCES `user`(`id`),\
+  FOREIGN KEY (`post_id`) REFERENCES `post`(`id`)\
+  )';
 
 db.execute( commentTable, function(err, results, fields) {
   if (err) {

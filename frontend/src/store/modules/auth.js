@@ -2,13 +2,11 @@
 import axios from 'axios';
 
 const state = {
-  users: null,
-  posts: null,
+  user: null,
 };
 
 const getters = {
   isAuthenticated: (state) => !!state.user,
-  StatePosts: (state) => state.posts,
   StateUser: (state) => state.user
 };
 
@@ -39,7 +37,7 @@ const actions = {
         axios.defaults.headers.common["Authorization"] =
           "Bearer " + response.data.token;
 
-        commit("setUser", user.get(response.data.firstname));
+        commit("setUser", user.get(response.data.email));
 
         resolve(response);
       })
@@ -49,67 +47,59 @@ const actions = {
       });
     });
   },
-
-  createPost({ commit, dispatch }, post ) {
-    console.log(post);
-    return new Promise((resolve, reject) => {
-      axios.post('create', post)
-      .then((response) => {
-        commit("setPosts", response.data);
-        console.log(response.data);
-        dispatch('GetPosts')
-        resolve(response.data);
-      })
-      .catch((error) => {
-        reject(error);
-      });
-    });
-  },
-
-  GetPosts({ commit }, posts) {
-    return new Promise((resolve, reject) => {
-      axios.get('posts', posts)
-      .then((response) => {
-        commit("setPosts", response.data);
-        console.log(response.data);
-        resolve();
-      })
-      .catch((error) => {
-        reject(error);
-      });
-    });
-  },
-
-  GetOnePost({ commit }, post_Id){
-    console.log(post_Id);
-    return new Promise((resolve, reject) => {
-      axios.get(`posts`, post_Id)
-      .then((response) => {
-        commit("setPosts", response.data);
-        console.log(response.data);
-        resolve();
-      })
-      .catch((error) => {
-        reject(error);
-      });
-    });
-  },
-
+  
   LogOut({ commit }) {
     let user = null;
     commit("logout", user);
   },
+
+  deleteUser({ commit }){
+    return new Promise((resolve, reject) => {
+      axios.get(`/deletecomment/:id` )
+      .then((response) => {
+        commit("SetUser", response.data);
+        console.log(response.data);
+        resolve();
+      })
+      .catch((error) => {
+        reject(error);
+      });
+    });
+  },
+  updateUser({ commit }){
+    return new Promise((resolve, reject) => {
+      axios.get(`/updateuser/:id` )
+      .then((response) => {
+        commit("SetUser", response.data);
+        console.log(response.data);
+        resolve();
+      })
+      .catch((error) => {
+        reject(error);
+      });
+    });
+  },
+  getOneUser({ commit }){
+    return new Promise((resolve, reject) => {
+      axios.get(`/user/:id` )
+      .then((response) => {
+        commit("SetUser", response.data);
+        console.log(response.data);
+        resolve();
+      })
+      .catch((error) => {
+        reject(error);
+      });
+    });
+  }
   
 };
 
 const mutations = {
-  setUser(state, firstname) {
-    state.user = firstname;
+  setUser(state, email) {
+    state.user = email;
   },
 
-  setPosts(state, posts) {
-    state.posts = posts;
-  },
   logout(state, user) {
     state.user = user;
   },

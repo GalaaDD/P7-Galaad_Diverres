@@ -74,7 +74,7 @@ exports.login = async(req, res, next) => {
 
 //function to display all of the users
 exports.getAllUsers = (req, res, next) => {
-    db.query('SELECT id, email, email FROM user ', (error, result) => {
+    db.query('SELECT id, email, firstname FROM user ', (error, result) => {
         if (error) {
             return res
                 .status(400)

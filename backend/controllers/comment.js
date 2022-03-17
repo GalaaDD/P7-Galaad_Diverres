@@ -9,8 +9,9 @@ exports.createComment = (req, res, next) => {
         post_id: req.body.post_id,
         content: req.body.content,
     });
+    console.log(post_id);
     if (!content) {
-        return res.status(400).json({ message: "Le titre ne peux pas être vide" });
+        return res.status(400).json({ message: "Le commentaire ne peux pas être vide" });
     } else {
         db.query(`INSERT INTO comment SET ?`, comment, (error, result) => {
             if (error) {
@@ -23,9 +24,9 @@ exports.createComment = (req, res, next) => {
 };
 
 
-//function to display all of the comments
-exports.getAllComments = (req, res, next) => {
-    db.query(`SELECT comment.id, comment.content, comment.user_id, comment.post_id, user.firstname FROM comment INNER JOIN post ON post.id = comment.post_id left join user on user.id = comment.user_id WHERE post.id= ? ORDER BY dateCreate DESC`, req.params.id, (error, result) => {
+//function to display all of the comments / ORDER BY dateCreate DESC
+exports.getAllCommentsByPost = (req, res, next) => {
+    db.query(`SELECT comment.id, comment.content, comment.user_id, comment.post_id FROM comment INNER JOIN post ON post.id = comment.post_id left join user on user.id = comment.user_id WHERE post.id= ?`, req.params.id, (error, result) => {
         if (error) return res.status(400).json({ error: "Les commentaires n'ont pas pu être affichés" });
         return res.status(200).json(result);
     });

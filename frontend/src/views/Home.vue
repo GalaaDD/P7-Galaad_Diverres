@@ -17,7 +17,9 @@
     components: {
     },
     computed: {
-       ...mapGetters('auth' , {Posts: 'StatePosts', User: 'StateUser'}),
+      ...mapGetters('auth' , {User: 'StateUser'}),
+      ...mapGetters('post' , {Posts: 'StatePosts'}),
+      ...mapGetters('comm' , {Comms:'SetComments'}),
     },
   }
 </script>
