@@ -4,5 +4,5 @@ configuration of mysql data base (db.js)
 
 user.ctrl.js:
 
-POST user/subscribe - Body : { blablsl}
+POST user/subscribe - Body : { }
 --> pour enregistrer et logger mon user
