@@ -20,7 +20,6 @@
             v-model="content"
             placeholder="Description..."
           ></textarea>
-          <input type="hidden" name="postId" :id= post.id>
         </div>
         <button type="submit">Publier</button>
       </form>
@@ -30,18 +29,7 @@
 
 <script>
   import { mapGetters, mapActions } from "vuex";
-  import { computed, defineComponent, provide, reactive } from "vue";
-    export default defineComponent({
-    setup() {
-      
-      const state = reactive({
-        id: Number
-      });
-
-      provide('idPost', computed(() => state.id));
-
-      return { state };
-    },
+  export default {
 
     name: 'createPost',
     components: {},
@@ -55,13 +43,13 @@
       };
     },
     computed: {
-      ...mapGetters('auth' , {User: 'StateUser'}),
-      ...mapGetters('post' , {Posts: 'StatePosts'}),
-      ...mapGetters('comm' , {Comms: 'StateComments'}),
+      ...mapGetters( {User: 'StateUser'}),
+      ...mapGetters( {Posts: 'StatePosts'}),
+      ...mapGetters( {Comms: 'StateComments'}),
     },
     methods: {
 
-      ...mapActions('post', ["createPost"]),
+      ...mapActions( ["createPost"]),
       onSelect() {
         this.file = this.$refs.file.files[0];
         console.log(this.file);
@@ -84,7 +72,7 @@
         }
     },
   },
-});
+};
 </script>
 
 <style>

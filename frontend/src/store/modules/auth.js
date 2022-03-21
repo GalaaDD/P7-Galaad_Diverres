@@ -1,5 +1,4 @@
-//import * as types from '@/store/mutation-types';
-import axios from 'axios';
+/*import axios from 'axios';
 
 const state = {
   user: null,
@@ -33,7 +32,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios.post('login', user)
       .then((response) => {
-        localStorage.setItem("userToken", response.data.token);
+        localStorage.setItem("AccessToken", response.data.token);
         axios.defaults.headers.common["Authorization"] =
           "Bearer " + response.data.token;
 
@@ -113,4 +112,4 @@ export default {
   actions,
   mutations,
   namespaced: true,
-};
+};*/

@@ -1,4 +1,4 @@
-import axios from 'axios';
+/*import axios from 'axios';
 
 const state = {
   posts: null,
@@ -55,7 +55,7 @@ const actions = {
     });
   },*/
 
-  GetOnePost({ commit }, posts){
+  /*GetOnePost({ commit }, posts){
     console.log(posts);
     return new Promise((resolve, reject) => {
       axios.get(`post/:id` )
@@ -100,4 +100,4 @@ export default {
   actions,
   mutations,
   namespaced: true,
-};
+};*/

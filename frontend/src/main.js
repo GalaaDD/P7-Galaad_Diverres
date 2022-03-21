@@ -7,7 +7,7 @@ import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:3000/api/';
 axios.defaults.withCredentials = 'true';
 
-let token = localStorage.getItem("userToken");
+let token = localStorage.getItem("AccessToken");
 console.log(token);
 if (token) {
   axios.defaults.headers.common["Authorization"] = "Bearer " + token;
@@ -21,7 +21,7 @@ if (token) {
       const originalRequest = error.config;
       if (error.response.status === 401 && !originalRequest._retry) {
         console.log("error 401");
-        localStorage.clear("userToken");
+        localStorage.clear("AccessToken");
         store.dispatch('LogOut')
         return router.push('/login')
       } 

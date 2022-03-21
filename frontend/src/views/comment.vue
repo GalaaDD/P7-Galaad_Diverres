@@ -16,36 +16,25 @@
   //import axios from 'axios';
     export default {
       name: 'CommentView',
-      data() {
-        return {
-          posts:[],
-          comments: [],
-        }
-      },
-        created: function() {
-        this.GetComments();
+      props: ["comment"],
+      created: function() {
+      this.GetComments();
       },
       computed: {
-        ...mapGetters('auth' , {User: 'StateUser'}),
-        ...mapGetters('post' , {Posts: 'StatePosts'}),
-        ...mapGetters('comm' , {Comms: 'StateComms'}),
+        ...mapGetters( {User: 'StateUser'}),
+        ...mapGetters( {Posts: 'StatePosts'}),
+        ...mapGetters( {Comms: 'StateComms'}),
       },
-      methods: {
-        ...mapActions('comm', ["GetComments"]),
 
-        /*getOneComm() {
-          const idPost = this.$route.params.id;
-          axios
-            .get(this.$localhost + "comment/post/" + idPost, {
-              
-            })
-            .then((res) => {
-              this.arts = res.data;
-            })
-            .catch((error) => {
-              console.log( error);
-            }); 
-        },*/
+      methods: {
+        
+        ...mapActions( ["GetComments"]),
+        
+        deleteOneComment() {
+        const IdComment = this.comment.id;
+        console.log("IdPost");
+        this.$store.dispatch("deleteOnePost", { IdComment });
+        },
       }
   };
 

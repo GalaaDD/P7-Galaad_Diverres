@@ -6,19 +6,17 @@
         <li :postId= post.id v-for="post in Posts" :key="post.user_id" >
           <div id="post-div">
             <h2>{{ post.title }}</h2>
-
-            <a @click="postPage">
-              <img :src= "post.image" id="image"/>
-            </a>
+            <img :src= "post.image" id="image"/>
             <p>{{ post.content }}</p>
             <p>{{ post.firstname }}</p>
+            <button @click="deleteOnePost()">Supprimer la publication</button>
             <div class="comment__Container">
-            <CommentView :key="post.id"/>
+            <CommentView v-for="comment in post.comments" :key="comment.id"/>
             <router-view/>
           </div>
           </div>
           <div class="commentCreation__Container">
-            <createComment />
+            <createComment :postId="post.id" />
             <router-view/>
           </div>
         </li>
@@ -30,58 +28,38 @@
 
 <script>
   import { mapGetters, mapActions } from "vuex";
-  import { computed, defineComponent, provide, reactive } from "vue";
   import createPost  from '@/views/createPost.vue'
   import createComment from '@/views/createComment.vue'
   import CommentView   from '@/views/comment.vue'
+ 
   
-  export default defineComponent({
-    
-    setup() {
-      const state = reactive({
-        idPost:  2
-      });
-
-      provide('idPost', computed(() => state.idPost));
-
-      return { state };
-    },
+  export default {
+  
 
     name: 'postsDisplay',
+    props: ["post"],
     components: {
       createComment, CommentView, createPost, 
     },
 
-    data() {
-      return {
-        posts: [],
-        comms:[],
-      }
-    },
     created: function() {
       this.GetPosts();
     },
     computed: {
-      Posts() {
-        return this.$store.state.comm;
-      },
-      ...mapGetters('auth' , {User: 'StateUser'}),
-      ...mapGetters('post' , {Posts: 'StatePosts'}),
-      ...mapGetters('comm' , {Comms:'SetComments'}),
+      
+      ...mapGetters( {User: 'StateUser'}),
+      ...mapGetters( {Posts: 'StatePosts'}),
+      ...mapGetters( {Comms:'SetComments'}),
     },
     methods: {
-
-      ...mapActions('post', ["GetPosts"]),
-
-      
+     deleteUser() {
+      const idPost = this.postId;
+      this.$store.dispatch("deleteUser", { idPost });
     },
-      
-      postPage(){
-        
-        this.$router.push({ name: "postPage" });
-      }
+
+      ...mapActions( ["GetPosts"]),
     },
-  );
+  };
 </script>
 
 <style>

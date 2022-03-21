@@ -5,7 +5,6 @@ import Signup from "../views/signUp";
 import Login from "../views/Login";
 import Posts from "../views/createPost";
 import postsDisplay from "../views/postsDisplay";
-import postPage from "../views/postPage";
 import createComment from "../views/createComment";
 import CommentView from "../views/comment";
 
@@ -27,7 +26,7 @@ const routes = [
     path: '/login',
     name: 'LogIn',
     component: Login,
-    meta: { guest: true },
+    meta: { guest: true},
   },
   {
     path: '/posts',
@@ -47,25 +46,13 @@ const routes = [
     meta: { requiresAuth: true }, //requiresAuth: true
   },
   {
-    path: '/post',
-    name: 'postPage',
-    component: postPage,
-    meta: { requiresAuth: true }, //requiresAuth: true
-  },
-  {
-    path: '/createcomment',
+    path: '/comment',
     name: 'createComment',
     component: createComment,
     meta: { requiresAuth: true }, //requiresAuth: true
   },
   {
-    path: '/:id',
-    name: 'Comment',
-    component: createComment,
-    meta: { requiresAuth: true }, //requiresAuth: true
-  },
-  {
-    path: '/comments',
+    path: '/comment/post/:postId',
     name: 'CommentsView',
     component: CommentView,
     meta: { requiresAuth: true }, //requiresAuth: true
@@ -82,7 +69,7 @@ router.beforeResolve((to, from, next) => {
   if (to.meta.guest) {
     next();
   } else if (to.meta.requiresAuth) {
-    const getToken = localStorage.getItem("userToken");
+    const getToken = localStorage.getItem("AccessToken");
     if (!getToken) {
       next({
         path: "/login",
@@ -97,7 +84,7 @@ router.beforeResolve((to, from, next) => {
   if (to.meta.requiresAuth) {
     next()
   } else if (to.meta.guest) {
-    const getToken = localStorage.getItem("userToken");
+    const getToken = localStorage.getItem("AccessToken");
     if (getToken) {
       next({
         path: "/",

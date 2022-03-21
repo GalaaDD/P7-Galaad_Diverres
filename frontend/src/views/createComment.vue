@@ -3,79 +3,50 @@
     <p>Commenter la publication</p>
       <form @submit.prevent="submit">
         <div class="comment__container">
-          <label for="content">Création d'un commentaire</label>
+          <label for="comment">Création d'un commentaire</label>
           <textarea
-            name="content"
-            v-model="content"
+            name="comment"
+            v-model="comment"
             placeholder="commentaire..."
           ></textarea>
         </div>
-        <button type="submit">{{ idPost }}</button>
+        <button type="submit">Commenter</button>
       </form>
   </div>
 </template>
 
 <script>
   import { mapGetters, mapActions } from "vuex";
-  import { defineComponent, inject } from 'vue'
-import post from "../store/modules/post";
-  export default defineComponent ({
-    setup() {
-    const idPost = inject('idPost');
+  import VueJwtDecode from "vue-jwt-decode";
+  export default {
     
-    return {
-      idPost,
-    };
-  },
     name: 'createComment',
-
+    props: ["postId"],
     components: {},
     data() {
       return {
-        content: "",
-        comms:[],
-        userId:"",
-        postId:"",
+        comment: "",
+        usersId: VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId,
       };
     },
     computed: {
-      ...mapGetters('auth' , {User: 'StateUser'}),
-      ...mapGetters('post' , {Posts: 'StatePosts'}),
-      ...mapGetters('comm' , {Comms: 'StateComms'}),
+      ...mapGetters( {User: 'StateUser'}),
+      ...mapGetters( {Posts: 'StatePosts'}),
+      ...mapGetters( {Comms: 'StateComms'}),
     },
     methods: {
 
-      ...mapActions('comm', ["createComment"]),
+      ...mapActions(["createComment"]),
       
 
       submit() {
-        console.log('comm');
-        //const idPost = this.$route.params.id;
-
-        /*const formData = {
-          /*formData.append("content", this.content);
-          formData.append("userId",  this.user_id);
-          formData.append("postId", this.post_id);
-          console.log(this.postId);
-          this.createComment(formData);*/
-          //user_id: userId,
-          /*content: this.comment,
-          post_id: idPost,
-        }
-        try{
-          createComment(formData);
-          this.$router.push({ name: "commentView" });
-        }catch (error) {
-        throw "Sorry you can't make a post now!"
-        }*/
         
         try {
-          const formData = new FormData();
-          formData.append("content", this.content);
-          formData.append("userId", this.user_id);
-          formData.append("postId", post.id);
-          console.log(formData.data);
-          this.createComment(formData);
+          const content = this.comment;
+          const post_id = this.postId;
+          const user_id = VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId;
+          this.$store.dispatch("createComment", { content, post_id, user_id });
+          this.comment = "";
 
         } catch (error) {
           throw "Sorry you can't make a post now!"
@@ -83,8 +54,7 @@ import post from "../store/modules/post";
     },
 
     },
-  },
-);
+};
 </script>
 
 <style>

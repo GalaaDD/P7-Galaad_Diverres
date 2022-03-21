@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const auth = require('../middleware/auth');
-// Controle si l'email de l'utilisateur est déja enregistrer
+//check if email is already saved
 const userCtrl = require('../controllers/post');
 const multer = require('../middleware/multer-config');
 

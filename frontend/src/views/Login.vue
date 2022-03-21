@@ -30,7 +30,7 @@
       }
     },
     methods: {
-      ...mapActions('auth', ['LogIn']),
+      ...mapActions( ['LogIn']),
       submit() {
         const user = {
           email: this.email, 

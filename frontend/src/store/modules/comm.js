@@ -1,4 +1,4 @@
-import axios from 'axios';
+/*import axios from 'axios';
 //import { inject } from 'vue'
 
   
@@ -13,6 +13,8 @@ const getters = {
 const actions = {
 
   createComment({ commit, dispatch }, comm ) {
+    console.log(comm);
+    
     return new Promise((resolve, reject) => {
       axios.post('comment', comm)
       .then((response) => {
@@ -84,4 +86,4 @@ export default {
   actions,
   mutations,
   namespaced: true,
-};
+};*/

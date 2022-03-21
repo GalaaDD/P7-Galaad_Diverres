@@ -41,7 +41,7 @@
       };
     },
     methods: {
-      ...mapActions ('auth', ['signUp']),
+      ...mapActions ( ['signUp']),
       submit() {
         try {
           this.signUp({
@@ -50,6 +50,7 @@
             email: this.email,
             password: this.password
           })
+          window.location.reload();
           this.$router.push({ name: "HomeView" });
           this.showError = false
         } 
