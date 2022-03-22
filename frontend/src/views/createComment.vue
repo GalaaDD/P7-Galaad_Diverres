@@ -5,8 +5,8 @@
         <div class="comment__container">
           <label for="comment">Création d'un commentaire</label>
           <textarea
-            name="comment"
-            v-model="comment"
+            name="content"
+            v-model="content"
             placeholder="commentaire..."
           ></textarea>
         </div>
@@ -25,8 +25,8 @@
     components: {},
     data() {
       return {
-        comment: "",
-        usersId: VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId,
+        content: "",
+        userId: VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId,
       };
     },
     computed: {
@@ -42,11 +42,13 @@
       submit() {
         
         try {
-          const content = this.comment;
+          const content = this.content;
           const post_id = this.postId;
           const user_id = VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId;
-          this.$store.dispatch("createComment", { content, post_id, user_id });
-          this.comment = "";
+
+          this.createComment({ content, post_id, user_id });
+          this.content= "";
+          //this.$store.dispatch("createComment", { content, post_id, user_id });
 
         } catch (error) {
           throw "Sorry you can't make a post now!"

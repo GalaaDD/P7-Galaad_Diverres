@@ -1,10 +1,13 @@
 <template>
   <div id="nav">
     <router-link to="/">Accueil</router-link> |
-    <router-link to="/postsDisplay">Fil d'actualités</router-link> |
+    <router-link to="/post/display">Fil d'actualités</router-link> |
     <span v-if="isLoggedIn">
       <a @click="logout">Se déconnecter</a>
     </span>
+    <!--<span v-if="Admin">
+      <router-link to="/adminposts">Publications à modérer</router-link> |
+    </span>-->
     <span v-else>
       <router-link to="/signup">S'inscrire</router-link> |
       <router-link to="/login">Se Connecter</router-link>

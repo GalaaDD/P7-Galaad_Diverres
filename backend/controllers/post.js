@@ -20,6 +20,7 @@ exports.createPost = (req, res, next) => {
         title: title,
         content: content,
         image: image,
+        canBeDisplay: 0,
     });
     if (!title && !content && !image) {
         return res.status(400).json({ message: "Veuillez renseigner le titre" });
@@ -38,26 +39,11 @@ exports.createPost = (req, res, next) => {
 //function to update a post
 exports.updatePost = (req, res, next) => {
     let image = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
-
-    if (req.file) {
-        image = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
-    }
     db.query(`SELECT * FROM post WHERE id=?`, req.params.id, (error, rows, fields) => {
         if (error) {
             return res.status(500).json({ error: "mysql" });
-        } else {
-            if (rows[0].image) {
-                const filename = rows[0].image.split("/images/")[1];
-                fs.unlink(`images/${filename}`, () => {
-                    db.query(`UPDATE post SET content = ?, title = ?, image= ?  WHERE id = ?`, [req.params.id, req.body.title,  req.body.content, image ], (error, result) => {
-                        if (error) {
-                            return res.status(400).json({ error: "La publication n'a pas pu être mise à jour" });
-                        }
-                        return res.status(200).json(result);
-                    });
-                });
             } else {
-                db.query(`UPDATE post SET content = ?, title = ?, WHERE id = ?`, [req.params.id, req.body.title, req.body.content, image ], (error, result) => {
+                db.query(`UPDATE post SET content = ?, title = ? WHERE id = ?`, [req.params.id, req.body.title, req.body.content, image ], (error, result) => {
                     if (error) {
                         return res.status(400).json({ error: "La publication n'a pas pu être mise à jour" });
                     }
@@ -66,7 +52,7 @@ exports.updatePost = (req, res, next) => {
 
             }
         }
-    });
+    );
 };
 
 //function to delete a post from groupomania data base
@@ -105,9 +91,19 @@ exports.deletePost = (req, res, next) => {
 };
 
 //function to get all of the posts from groupomania data base
-exports.getAllPosts = (req, res, next) => {
-    //const userId = req.params.id;ORDER BY dateCreate DESC
+exports.getAllPostsAdmin = (req, res, next) => {
 
+    //WHERE canBeDisplay = 1
+    db.query('SELECT post.id, user_id, title, content, image  FROM post WHERE canBeDisplay = 1 INNER JOIN user ON user.id = post.user_id ', (error, result) => {
+        if (error) {
+            return res.status(400).json({ error: "L'affichage de l'ensemble des publications semble etre indisponible pour le moment" });
+        }
+        return res.status(200).json(result);
+    });
+};
+exports.getAllPosts = (req, res, next) => {
+    
+    //WHERE canBeDisplay = 1
     db.query('SELECT post.id, user_id, title, content, image  FROM post INNER JOIN user ON user.id = post.user_id ', (error, result) => {
         if (error) {
             return res.status(400).json({ error: "L'affichage de l'ensemble des publications semble etre indisponible pour le moment" });

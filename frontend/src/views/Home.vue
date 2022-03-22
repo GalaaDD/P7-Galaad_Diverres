@@ -7,8 +7,8 @@
     </div>
   </div>
    <!--<div v-for="(user) in users" :key="user.id">-->
-     
-     <button @click="deleteUser()">Supprimer mon compte</button>
+    <button @click="deleteUser()">Supprimer mon compte</button>
+    <button @click="updateUser()">Modifier mon compte</button>
    <!--</div>-->
 </template>
 
@@ -25,7 +25,7 @@
       return {
         users: [],
         userId: "",
-        isAdmin: 0,
+        Admin: 0,
         email: "",
         password: "",
       };
@@ -39,14 +39,18 @@
     /*mounted() {
     this.getOneUser() {
     this.userId = VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId;
-    this.admin = VueJwtDecode.decode(localStorage.getItem("AccessToken")).isAdmin;
+    this.admin = VueJwtDecode.decode(localStorage.getItem("AccessToken")).Admin;
     },
   },*/
-  methods: {
-    deleteUser() {
-       const userId = VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId;
-          this.$store.dispatch("deleteUser", { userId });
+    methods: {
+      deleteUser() {
+        const userId = VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId;
+            this.$store.dispatch("deleteUser", { userId });
+      },
+      updateUser() {
+        const userId = VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId;
+          this.$store.dispatch("updateUser", { userId });
+      },
     },
-  },
   }
 </script>

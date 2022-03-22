@@ -6,7 +6,7 @@ const User = function (user) {
     this.firstname = user.firstname;
     this.email = user.email;
     this.password = user.password;
-    this.isAdmin = user.isAdmin;
+    this.Admin = user.Admin;
 };
 
 module.exports = User;

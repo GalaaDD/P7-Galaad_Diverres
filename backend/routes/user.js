@@ -13,8 +13,8 @@ router.post('/signup', passwordValidation, userCtrl.signup);
 router.post('/login', userCtrl.login);
 router.get('/getAllUsers', userCtrl.getAllUsers);
 router.get('/user/:id', userCtrl.getOneUser);
-router.post('/updateuser/:id', auth, userCtrl.updateUser);
-router.delete('/deleteuser/:id', auth, userCtrl.deleteUser);
+router.put('/update/:id', auth, userCtrl.updateUser);
+router.delete('/delete/:id', auth, userCtrl.deleteUser);
 
 
 module.exports = router;

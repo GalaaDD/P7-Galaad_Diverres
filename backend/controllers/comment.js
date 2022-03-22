@@ -8,19 +8,24 @@ exports.createComment = (req, res, next) => {
         post_id: req.body.post_id,
         content: req.body.content,
     });
-    console.log(req.body.userId);
-    if (!req.body.comment) {
+    console.log(req.body);
+    if (!req.body.content) {
         return res.status(400).json({ message: "Le commentaire ne peux pas être vide" });
     } else {
         db.query(`INSERT INTO comment SET ?`, comment, (error, result) => {
             if (error) {
                 res.status(400).json({ error: error });
             } else {
-                res.status(200).json({ result });
+                db.query(`SELECT * FROM comment ORDER BY id DESC LIMIT 1`, (error, result) => {
+                    if (error) res.status(400).json({ error: error });
+                    else res.status(200).json({ comment: result[0] });
+                    return res.status(201).json({ message: "Le Post a bien été crée!" });
+                });
             }
         });
     }
 };
+// recuperer data.comment pour sauvegarder
 
 
 //function to display all of the comments / ORDER BY dateCreate DESC

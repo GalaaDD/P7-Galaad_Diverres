@@ -1,7 +1,7 @@
 <template>
   <createPost />
   <router-view/>
-    <div class="posts" v-if="Posts">
+    <div class="posts" v-if="Posts"> <!--&& CanBeDisplay = 0-->
       <ul>
         <li :postId= post.id v-for="post in Posts" :key="post.user_id" >
           <div id="post-div">
@@ -10,6 +10,7 @@
             <p>{{ post.content }}</p>
             <p>{{ post.firstname }}</p>
             <button @click="deleteOnePost()">Supprimer la publication</button>
+            <button @click="updateUser()">Modifier mon compte</button>
             <div class="comment__Container">
             <CommentView v-for="comment in post.comments" :key="comment.id"/>
             <router-view/>
@@ -31,11 +32,9 @@
   import createPost  from '@/views/createPost.vue'
   import createComment from '@/views/createComment.vue'
   import CommentView   from '@/views/comment.vue'
- 
   
   export default {
   
-
     name: 'postsDisplay',
     props: ["post"],
     components: {
@@ -82,14 +81,16 @@
   }
 
 #post-div {
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 10%;
 }
 
 img {
-        border-radius: 15px ;
+  max-width: 70%;
+  border-radius: 15px ;
 }
 
 </style>

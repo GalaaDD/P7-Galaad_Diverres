@@ -11,10 +11,11 @@ export default createStore({
 
   state: {
      /***Auth-Part ***/
-    user: null,
+    user: [null],
     /***Content-Part ***/
     posts: null,
-    comms: null,
+
+    comments: null,
   },
 
   getters: {
@@ -24,7 +25,7 @@ export default createStore({
     
       /***Content-Part ***/
     StatePosts: (state) => state.posts,
-    StateComms: (state) => state.comms,
+    StateComments: (state) => state.comments,
   },
   actions: {
       /***Auth-Part ***/
@@ -44,7 +45,7 @@ export default createStore({
         });
       });
     },
-      
+  
     LogIn({ commit }, user) {
       return new Promise((resolve, reject) => {
         axios.post('login', user)
@@ -88,9 +89,9 @@ export default createStore({
         });
       });
     },*/
-    updateUser({ commit }){
+    updateUser({ commit }, userId){
       return new Promise((resolve, reject) => {
-        axios.get(`/updateuser/` )
+        axios.get(`/updateuser/${userId}` )
         .then((response) => {
           commit("SetUser", response.data.user);
           console.log(response.data);
@@ -101,9 +102,11 @@ export default createStore({
         });
       });
     },
-    getOneUser({ commit }){
+
+    getOneUser({ commit }, userId){
+      console.log(userId);
       return new Promise((resolve, reject) => {
-        axios.get(`/user/:id` )
+        axios.get(`/user/${userId}` )
         .then((response) => {
           commit("SetUser", response.data.user);
           console.log(response.data);
@@ -118,11 +121,11 @@ export default createStore({
     createPost({ commit, dispatch }, post ) {
       console.log(post);
       return new Promise((resolve, reject) => {
-        axios.post('create', post)
+        axios.post('post', post)
         .then((response) => {
           commit("setPosts", response.data);
           console.log(response.data);
-          dispatch('GetPosts', response.data)
+          dispatch('GetPosts', 'updatePost', response.data)
           resolve(response.data);
         })
         .catch((error) => {
@@ -130,10 +133,27 @@ export default createStore({
         });
       });
     },
-  
-    GetPosts({ commit }, posts) {
+
+    updatePost({ commit }, userId){
+      let formData = new FormData();
+      formData.append("userId", userId);
+      console.log(userId);
       return new Promise((resolve, reject) => {
-        axios.get('posts', posts)
+        axios.put(`/post/${userId}` )
+        .then((response) => {
+          commit("SetUser", response.data.user);
+          console.log(response.data);
+          resolve();
+        })
+        .catch((error) => {
+          reject(error);
+        });
+      });
+    },
+  
+    GetPosts({ commit }) {
+      return new Promise((resolve, reject) => {
+        axios.get('post/display')
         .then((response) => {
           commit("setPosts", response.data);
           //dispatch('createComment', response.data);
@@ -144,6 +164,7 @@ export default createStore({
         });
       });
     },
+    
     GetOnePost({ commit }, posts){
       console.log(posts);
       return new Promise((resolve, reject) => {
@@ -162,7 +183,7 @@ export default createStore({
     /*deleteOnePost({ commit }, post){
       console.log(post);
       return new Promise((resolve, reject) => {
-        axios.delete(`/deletepost/${post.IdPost}`)
+        axios.delete(`/post/${post.IdPost}`)
         .then((response) => {
           commit("SetPosts", response.data);
           console.log(response.data);
@@ -174,18 +195,14 @@ export default createStore({
       });
     },*/
     /***Content-comment-Part ***/
-    createComment({ commit, dispatch }, comment, postId ) {
-      console.log(postId);
-      let formData = new FormData();
-      formData.append("post_id", comment.post_id);
-      formData.append("user_id", comment.user_id);
-      formData.append("content", comment.content);
+    createComment({ commit }, payload) {
+      console.log(payload);
       return new Promise((resolve, reject) => {
-        axios.post('comment', formData)
+        axios.post('comment', payload)
         .then((response) => {
-          commit("setComms", response.data);
+          commit("setComments", response.data);
           console.log(response.data);
-          dispatch('GetComments', response.data)
+          //dispatch('GetComments', [response.data.comment])
           resolve(response.data);
         })
         .catch((error) => {
@@ -194,9 +211,10 @@ export default createStore({
       });
     },
   
-    GetComments({ commit }, comms) {
+    GetComments({ commit }, comment) {
+     
       return new Promise((resolve, reject) => {
-        axios.get('comment/post/:postId', comms)
+        axios.get(`comment/post/`, comment)
         .then((response) => {
           commit("setComms", response.data);
           resolve();
@@ -235,6 +253,9 @@ export default createStore({
     setPosts(state, posts) {
       state.posts = posts;
     },
+    /*setComments(state, comments) {
+      state.comments = comments;
+    },*/
   },
   //modules: { auth, post, comm },
   plugins: [ createPersistedState()],

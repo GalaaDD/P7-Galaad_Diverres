@@ -6,7 +6,6 @@ const userRoutes = require('./routes/user');
 const postRoutes = require('./routes/post');
 const commRoutes = require('./routes/comment');
 
-
 const path =  require("path");
 const helmet = require("helmet");
 

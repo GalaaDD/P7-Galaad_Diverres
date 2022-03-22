@@ -19,7 +19,7 @@ let user = `create table if not exists user(
   password VARCHAR(255) not null,
   lastname VARCHAR(45) not null, 
   firstname VARCHAR(45) not null,
-  isAdmin TINYINT(4) not null
+  Admin TINYINT(4) not null
 )`;
 
 db.execute(user, function(err, results, fields) {
@@ -34,6 +34,7 @@ let post = 'create table if not exists post(\
   title VARCHAR(50) not null,\
   content TEXT not null,\
   image VARCHAR(120),\
+  canBeDisplay TINYINT not null,\
   CONSTRAINT `user` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)\
   )';
 

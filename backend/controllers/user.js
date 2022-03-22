@@ -15,7 +15,7 @@ exports.signup = (req, res, next) => {
                 password: hash,
                 lastname: req.body.lastname,
                 firstname:req.body.firstname,
-                isAdmin: 0,
+                Admin: 0,
             });
             db.query('INSERT INTO user SET ?', user, (err, result, field) => {
                 if (err) {
@@ -43,7 +43,7 @@ exports.login = async(req, res, next) => {
                         } else {
                             console.log(req.body.email, "connecté");
                             
-                            if (results[0].isAdmin === 1) {
+                            if (results[0].Admin === 1) {
                                 status = 'administrateur';
                             } else {
                                 status = 'membre';
@@ -53,7 +53,7 @@ exports.login = async(req, res, next) => {
                                 email: results[0].email,
                                 lastname: results[0].lastname,
                                 firstname: results[0].firstname,
-                                isAdmin: results[0].isAdmin,
+                                Admin: results[0].Admin,
                                 token: jwt.sign(
                                     { userId: results[0].id },
                                     process.env.SECRET_TOKEN_KEY,
@@ -109,7 +109,7 @@ exports.updateUser = (req, res, next) => {
 
                 password = hash;
                 db.query(
-                    `UPDATE user SET email='${email}', password='${password}', isAdmin=${0}  WHERE id=?`, id, (error, results, fields) => {
+                    `UPDATE user SET email='${email}', password='${password}', Admin=${0}  WHERE id=?`, id, (error, results, fields) => {
                         if (error) {
                             return res.status(400).json(error);
                         }

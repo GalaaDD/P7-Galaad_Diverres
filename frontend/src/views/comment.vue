@@ -1,7 +1,7 @@
 <template>
-     <div class="comms" v-if="Comms">
+     <div class="comments" v-if="comments">
       <ul>
-        <li :id= post.id v-for="comm in Comms" :key="comm.id" class="comment">
+        <li :id= post.id v-for="comment in comments" :key="comment.id" class="comment">
           <div id="comment-div">
             <p>{{ comment.content }}</p>
           </div>
@@ -14,11 +14,13 @@
 <script>
   import { mapGetters, mapActions } from "vuex";
   //import axios from 'axios';
+
     export default {
       name: 'CommentView',
       props: ["comment"],
+
       created: function() {
-      this.GetComments();
+        this.GetComments();
       },
       computed: {
         ...mapGetters( {User: 'StateUser'}),

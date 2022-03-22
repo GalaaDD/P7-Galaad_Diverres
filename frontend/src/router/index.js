@@ -7,6 +7,7 @@ import Posts from "../views/createPost";
 import postsDisplay from "../views/postsDisplay";
 import createComment from "../views/createComment";
 import CommentView from "../views/comment";
+import adminPosts from "../views/adminPosts";
 
 
 const routes = [
@@ -35,14 +36,20 @@ const routes = [
     meta: { requiresAuth: true }, //requiresAuth: true
   },
   {
-    path: '/create',
+    path: '/post',
     name: 'createPost',
     meta: { requiresAuth: true }, //requiresAuth: true
   },
   {
-    path: '/postsdisplay',
+    path: '/post/display',
     name: 'postsDisplay',
     component: postsDisplay,
+    meta: { requiresAuth: true }, //requiresAuth: true
+  },
+  {
+    path: '/post/moderation',
+    name: 'adminPosts',
+    component: adminPosts,
     meta: { requiresAuth: true }, //requiresAuth: true
   },
   {
