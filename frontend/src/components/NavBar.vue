@@ -21,7 +21,7 @@ import { mapActions } from "vuex";
 export default {
 name: 'NavBar',
   computed : {
-  isLoggedIn : function(){  return localStorage.getItem("AccessToken")!==null;} //return this.$store.getters.isAuthenticated;}
+  isLoggedIn : function(){ return this.$store.getters.isAuthenticated;} // return  localStorage.getItem("AccessToken")!==null;}}
   },
   methods: {
     ...mapActions ('auth', ['LogOut']),

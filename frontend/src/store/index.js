@@ -11,11 +11,11 @@ export default createStore({
 
   state: {
      /***Auth-Part ***/
-    user: [null],
+    user: null,
     /***Content-Part ***/
     posts: null,
 
-    comments: null,
+    comments: [],
   },
 
   getters: {
@@ -36,7 +36,7 @@ export default createStore({
         .then(response => {
           console.log(response.data);
           console.log(user);
-          dispatch('LogIn', user);
+          dispatch('LogIn', response.data.user);
           resolve()
         })
         .catch((error) => {
@@ -54,7 +54,7 @@ export default createStore({
           axios.defaults.headers.common["Authorization"] =
             "Bearer " + response.data.token;
   
-          commit("setUser", user.get(response.data.user));
+          commit("setUser", user);
   
           resolve(response);
         })
@@ -195,15 +195,15 @@ export default createStore({
       });
     },*/
     /***Content-comment-Part ***/
-    createComment({ commit }, payload) {
+    createComment({ commit, dispatch }, payload) {
       console.log(payload);
       return new Promise((resolve, reject) => {
         axios.post('comment', payload)
         .then((response) => {
-          commit("setComments", response.data);
+          commit("setComments", payload);
           console.log(response.data);
-          //dispatch('GetComments', [response.data.comment])
-          resolve(response.data);
+          dispatch('GetComments', payload)
+          resolve();
         })
         .catch((error) => {
           reject(error);
@@ -212,9 +212,8 @@ export default createStore({
     },
   
     GetComments({ commit }, comment) {
-     
       return new Promise((resolve, reject) => {
-        axios.get(`comment/post/`, comment)
+        axios.get(`comment/post/${comment.post_id}`)
         .then((response) => {
           commit("setComms", response.data);
           resolve();
@@ -253,9 +252,9 @@ export default createStore({
     setPosts(state, posts) {
       state.posts = posts;
     },
-    /*setComments(state, comments) {
-      state.comments = comments;
-    },*/
+    setComments(state, comments) {
+      state.comments.push(comments);
+    },
   },
   //modules: { auth, post, comm },
   plugins: [ createPersistedState()],

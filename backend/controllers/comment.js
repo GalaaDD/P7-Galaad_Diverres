@@ -16,10 +16,10 @@ exports.createComment = (req, res, next) => {
             if (error) {
                 res.status(400).json({ error: error });
             } else {
+                
                 db.query(`SELECT * FROM comment ORDER BY id DESC LIMIT 1`, (error, result) => {
                     if (error) res.status(400).json({ error: error });
                     else res.status(200).json({ comment: result[0] });
-                    return res.status(201).json({ message: "Le Post a bien été crée!" });
                 });
             }
         });

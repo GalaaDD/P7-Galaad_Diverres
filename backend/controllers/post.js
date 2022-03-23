@@ -31,7 +31,7 @@ exports.createPost = (req, res, next) => {
             if (error) {
                 return res.status(400).json({ error: error });
             }
-            return res.status(201).json({ message: "Le Post a bien été crée!" });
+            return res.status(201).json({ message: "La publication a bien été crée!" });
         });
     }
 };

@@ -9,7 +9,8 @@
             <p>{{ post.content }}</p>
             <p>{{ post.firstname }}</p>
             <button @click="deleteOnePost()">Supprimer la publication</button>
-            <button @click="updateUser()">Modifier mon compte</button>
+            <button @click="updatePost()">Modifier la publication</button>
+            <!--<button type="submit" v-if="@click" canBeDisplay = 0>Approuver le post</button>-->
             <div class="comment__Container">
             <CommentView v-for="comment in post.comments" :key="comment.id"/>
             <router-view/>
@@ -22,12 +23,16 @@
         </li>
       </ul>
     </div>
-    <div v-else>Aucune publications de disponible</div>
+    <div v-else>Aucune publications à moderer</div>
 </template>
 </template>
 
 <script>
 export default {
+
+  canBeDisplay(){
+    
+  }
 
 }
 </script>

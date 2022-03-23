@@ -40,6 +40,7 @@
         file: "",
         user_id:"",
         id:"",
+        canBeDisplay: 0,
       };
     },
     computed: {

@@ -47,6 +47,7 @@
           const user_id = VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId;
 
           this.createComment({ content, post_id, user_id });
+          this.$router.push({ name: "postsDisplay" });
           this.content= "";
           //this.$store.dispatch("createComment", { content, post_id, user_id });
 
