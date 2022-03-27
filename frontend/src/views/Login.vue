@@ -64,8 +64,8 @@
     button {
     background-color: #4286f4;
     color: white;
-    padding: 0.8rem 0;
-    margin: 0.6rem 0;
+    padding: 14px 0;
+    margin: 10px 0;
     border: none;
     cursor: grab;
     width: 48%;
@@ -78,14 +78,14 @@
     opacity: 0.8;
     }
     .container {
-    padding: 1rem 0;
+    padding: 16px 0;
     text-align:left;
    
     }
     span.psw {
     float: right;
     padding-top: 0;
-    padding-right: 1rem;
+    padding-right: 15px;
     }
     textarea{
       border-radius: 0.8rem;
@@ -98,8 +98,6 @@
         display: block;
         float: none;
         }
-
-
     }
 </style>
 
