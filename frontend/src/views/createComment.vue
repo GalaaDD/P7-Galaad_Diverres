@@ -1,9 +1,8 @@
 <template>
-  <div >  <!--v-if="User"-->
-    <p>Commenter la publication</p>
+  <div v-if="User" id="createComment__container">  
       <form @submit.prevent="submit">
         <div class="comment__container">
-          <label for="comment">Création d'un commentaire</label>
+          <label for="comment">Commenter la publication</label>
           <textarea
             name="content"
             v-model="content"
@@ -24,7 +23,7 @@
     props: ["postId"],
     components: {},
     data() {
-      return {
+      return { 
         content: "",
         userId: VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId,
       };
@@ -32,7 +31,7 @@
     computed: {
       ...mapGetters( {User: 'StateUser'}),
       ...mapGetters( {Posts: 'StatePosts'}),
-      ...mapGetters( {Comms: 'StateComms'}),
+      ...mapGetters( {Comments: 'StateComments'}),
     },
     methods: {
 
@@ -44,12 +43,12 @@
         try {
           const content = this.content;
           const post_id = this.postId;
+          
           const user_id = VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId;
-
-          this.createComment({ content, post_id, user_id });
+          console.log( user_id );
+          this.createComment({ content, post_id, user_id});
           this.$router.push({ name: "postsDisplay" });
           this.content= "";
-          //this.$store.dispatch("createComment", { content, post_id, user_id });
 
         } catch (error) {
           throw "Sorry you can't make a post now!"

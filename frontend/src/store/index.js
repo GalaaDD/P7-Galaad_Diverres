@@ -1,8 +1,5 @@
 import { createStore } from "vuex";
 import createPersistedState from "vuex-persistedstate";
-//import auth from './modules/auth';
-//import post from './modules/post';
-//import comm from './modules/comm';
 import axios from 'axios';
 
 // Create store
@@ -11,7 +8,7 @@ export default createStore({
 
   state: {
      /***Auth-Part ***/
-    user: null,
+    user: [],
     /***Content-Part ***/
     posts: null,
 
@@ -30,13 +27,14 @@ export default createStore({
   actions: {
       /***Auth-Part ***/
 
-    signUp({ dispatch }, user) {
+    signUp({ commit, dispatch }, user) {
       return new Promise(( resolve, reject ) => {
         axios.post('signup', user)
         .then(response => {
           console.log(response.data);
           console.log(user);
-          dispatch('LogIn', response.data.user);
+          commit("setUser", response.data.firstname);
+          dispatch('LogIn', user);
           resolve()
         })
         .catch((error) => {
@@ -54,7 +52,7 @@ export default createStore({
           axios.defaults.headers.common["Authorization"] =
             "Bearer " + response.data.token;
   
-          commit("setUser", user);
+            commit("setUser", response.data);
   
           resolve(response);
         })
@@ -64,37 +62,20 @@ export default createStore({
         });
       });
     },
-    
     LogOut({ commit }) {
       let user = null;
       commit("logout", user);
     },
-  
-    /*deleteUser({ commit }, userId){
-      console.log(userId);
+    deleteUser({ commit }, user){
+      console.log(user);
+      let userId = user.userId;
       return new Promise((resolve, reject) => {
-        axios.delete(`/deleteuser/${userId}` )
+        axios.delete(`/delete/`+ userId )
         .then((response) => {
-          if (response) {
-            localStorage.clear();
-          }
-          this.$router.push("../Signup");
-          commit("LogOut", response.data);
-          
+          console.warn(response);
+          commit("logout", response.data);
           console.log(response.data);
-          resolve();
-        })
-        .catch((error) => {
-          reject(error);
-        });
-      });
-    },*/
-    updateUser({ commit }, userId){
-      return new Promise((resolve, reject) => {
-        axios.get(`/updateuser/${userId}` )
-        .then((response) => {
-          commit("SetUser", response.data.user);
-          console.log(response.data);
+          location.reload();
           resolve();
         })
         .catch((error) => {
@@ -102,17 +83,16 @@ export default createStore({
         });
       });
     },
-
-    getOneUser({ commit }, userId){
-      console.log(userId);
+    updateUser({ commit }, payload){
+      const userId = payload.userId;
       return new Promise((resolve, reject) => {
-        axios.get(`/user/${userId}` )
+        axios.patch(`/update/`+ userId, payload)
         .then((response) => {
-          commit("SetUser", response.data.user);
-          console.log(response.data);
-          resolve();
+          commit("logout", payload);
+          resolve(response);
         })
         .catch((error) => {
+          console.log(error);
           reject(error);
         });
       });
@@ -123,8 +103,8 @@ export default createStore({
       return new Promise((resolve, reject) => {
         axios.post('post', post)
         .then((response) => {
-          commit("setPosts", response.data);
-          console.log(response.data);
+          commit("setPosts", post);
+          console.log(response);
           dispatch('GetPosts', 'updatePost', response.data)
           resolve(response.data);
         })
@@ -134,12 +114,11 @@ export default createStore({
       });
     },
 
-    updatePost({ commit }, userId){
-      let formData = new FormData();
-      formData.append("userId", userId);
-      console.log(userId);
+    updatePost({ commit }, post ){
+      let postId = post;
+      console.log(post);
       return new Promise((resolve, reject) => {
-        axios.put(`/post/${userId}` )
+        axios.put(`/post/`+ postId )
         .then((response) => {
           commit("SetUser", response.data.user);
           console.log(response.data);
@@ -151,9 +130,25 @@ export default createStore({
       });
     },
   
-    GetPosts({ commit }) {
+    canBeDisplay( {commit}, payload ){
+      let postId = payload.post_id;
+      console.log(postId);
       return new Promise((resolve, reject) => {
-        axios.get('post/display')
+        axios.put(`/post/moderation/`)
+        .then((response) => {
+          console.log(response.data);
+          commit;
+          resolve();
+        })
+        .catch((error) => {
+          reject(error);
+        });
+      });
+    },
+
+    GetPostsAdmin({ commit }) {
+      return new Promise((resolve, reject) => {
+        axios.get('post/admin')
         .then((response) => {
           commit("setPosts", response.data);
           //dispatch('createComment', response.data);
@@ -164,14 +159,13 @@ export default createStore({
         });
       });
     },
-    
-    GetOnePost({ commit }, posts){
-      console.log(posts);
+
+    GetPosts({ commit, /*dispatch*/ }) {
       return new Promise((resolve, reject) => {
-        axios.get(`post/:id` )
+        axios.get('post/display')
         .then((response) => {
           commit("setPosts", response.data);
-          console.log(response.data);
+          //dispatch('deleteOnePost', response.data.id);
           resolve();
         })
         .catch((error) => {
@@ -180,20 +174,22 @@ export default createStore({
       });
     },
   
-    /*deleteOnePost({ commit }, post){
+    deleteOnePost({ commit }, post){
       console.log(post);
+      let postId = post;
       return new Promise((resolve, reject) => {
-        axios.delete(`/post/${post.IdPost}`)
+        axios.delete(`/post/`+ postId)
         .then((response) => {
-          commit("SetPosts", response.data);
+          commit;
           console.log(response.data);
+          location.reload();
           resolve();
         })
         .catch((error) => {
           reject(error);
         });
       });
-    },*/
+    },
     /***Content-comment-Part ***/
     createComment({ commit, dispatch }, payload) {
       console.log(payload);
@@ -212,10 +208,11 @@ export default createStore({
     },
   
     GetComments({ commit }, comment) {
+      let postId = comment.post_id;
       return new Promise((resolve, reject) => {
-        axios.get(`comment/post/${comment.post_id}`)
+        axios.get(`comment/post/`+ postId)
         .then((response) => {
-          commit("setComms", response.data);
+          commit("setComments", response);
           resolve();
         })
         .catch((error) => {
@@ -223,30 +220,24 @@ export default createStore({
         });
       });
     },
-  
-    /*deleteOneComment({ commit }, comment){
-      return new Promise((resolve, reject) => {
-        axios.delete(`/deletecomment/${comment.idComment}` )
-        .then((response) => {
-          commit("setComms", response.data);
-          console.log(response.data);
-          resolve();
-        })
-        .catch((error) => {
-          reject(error);
-        });
-      });
-    },*/
   
   },
   mutations: {
     /***Auth-Part ***/
-    setUser(state, user) {
-      state.user = user;
+    setUser(state, firstname) {
+      state.user = firstname;
+    },
+
+    reset(state) {
+      Object.keys(state).forEach(key => {
+        state[key] = null; // or = 
+      });
     },
   
     logout(state, user) {
       state.user = user;
+      localStorage.clear("AccessToken");
+      
     },
     /***Content-Part ***/
     setPosts(state, posts) {

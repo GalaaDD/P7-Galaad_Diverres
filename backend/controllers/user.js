@@ -32,7 +32,6 @@ exports.signup = (req, res, next) => {
 //fonction that allow the user to connect to the session through the use of a comparaison of hashes and token.
 exports.login = async(req, res, next) => {
     console.log(req.body.email);
-    let status = '';
     if (req.body.email && req.body.password) {
         db.query('SELECT * FROM user WHERE email= ?', req.body.email, (error, results, fields) => {
             if (results.length > 0) {
@@ -43,11 +42,6 @@ exports.login = async(req, res, next) => {
                         } else {
                             console.log(req.body.email, "connecté");
                             
-                            if (results[0].Admin === 1) {
-                                status = 'administrateur';
-                            } else {
-                                status = 'membre';
-                            }
                             res.status(200).json({
                                 userId: results[0].id,
                                 email: results[0].email,
@@ -72,35 +66,13 @@ exports.login = async(req, res, next) => {
     }
 };
 
-//function to display all of the users
-exports.getAllUsers = (req, res, next) => {
-    db.query('SELECT id, email, firstname FROM user ', (error, result) => {
-        if (error) {
-            return res
-                .status(400)
-                .json({ error: "Les utilisateurs ne peuvent pas etre affichés " });
-        }
-        return res.status(200).json(result);
-    });
-};;
-
-// function to display one of the users
-exports.getOneUser = (req, res, next) => {
-    db.query('SELECT * FROM user WHERE id =?', req.params.id, (error, result) => {
-        if (error) {
-            return res
-                .status(400)
-                .json({ error: "Utilisateur introuvable ou indisponible" });
-        }
-        return res.status(200).json(result);
-    });
-};
-
 // function to update users' informations
 exports.updateUser = (req, res, next) => {
     const email = req.body.email;
-    const id = req.params.id;
+    const userId = req.params.userId;
     let password = req.body.password;
+    console.log(req.body.email);
+    console.log(req.body.password);
     if (!email || !password) {
         return res.status(400).json({ message: "Un email et un mot de passe sont necessaires" });
     } else {
@@ -109,7 +81,7 @@ exports.updateUser = (req, res, next) => {
 
                 password = hash;
                 db.query(
-                    `UPDATE user SET email='${email}', password='${password}', Admin=${0}  WHERE id=?`, id, (error, results, fields) => {
+                    `UPDATE user SET email='${email}', password='${password}', Admin=${0}  WHERE id=?`, userId, (error, results, fields) => {
                         if (error) {
                             return res.status(400).json(error);
                         }
@@ -125,7 +97,8 @@ exports.updateUser = (req, res, next) => {
 
 // function to delete user account
 exports.deleteUser = (req, res, next) => {
-    let user_id = req.params.id;
+    let user_id = req.params.userId;
+    console.log(user_id);
     db.query(`DELETE FROM user WHERE id = ?`, user_id, (error, result) => {
         if (error) return res.status(400).json({ error: "Le compte utilisateur n'a pas pu etre supprimé" });
         return res.status(200).json(result);

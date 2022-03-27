@@ -8,6 +8,7 @@ exports.createPost = (req, res, next) => {
     const title = req.body.title;
     const content = req.body.content;
     const userId = req.userId;
+    
     console.log(userId);
     let image = "";
 
@@ -39,7 +40,7 @@ exports.createPost = (req, res, next) => {
 //function to update a post
 exports.updatePost = (req, res, next) => {
     let image = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
-    db.query(`SELECT * FROM post WHERE id=?`, req.params.id, (error, rows, fields) => {
+    db.query(`SELECT * FROM post WHERE id=?`, req.params.postId, (error, rows, fields) => {
         if (error) {
             return res.status(500).json({ error: "mysql" });
             } else {
@@ -57,66 +58,51 @@ exports.updatePost = (req, res, next) => {
 
 //function to delete a post from groupomania data base
 exports.deletePost = (req, res, next) => {
-    db.query(`SELECT * FROM post WHERE id=?`, req.params.id, (error, rows, fields) => {
+    db.query(`SELECT * FROM post WHERE id=?`, req.params.postId, (error, rows, fields) => {
         if (error) {
             return res.status(500).json({ error: "mysql" });
         } else {
-            if (rows[0].image) {
-                const filename = rows[0].image.split("/images/")[1];
-                fs.unlink(`images/${filename}`, () => {
+            db.query(`DELETE FROM post WHERE id=?`, req.params.postId, (error, rows, fields) => {
+                if (error) {
+                    return res.status(500).json({ error: "impossible de supprimer" });
+                } else {
 
-                    db.query(`DELETE FROM post WHERE id=?`, req.params.id, (error, rows, fields) => {
-                        if (error) {
-                            return res.status(500).json({ error: "impossible de supprimer" });
-                        } else {
-
-                            return res.status(200).json({ message: "Message supprimé !" });
-                        };
-                    });
-                });
-            } else {
-                db.query(`DELETE FROM post WHERE id=?`, req.params.id, (error, rows, fields) => {
-                    if (error) {
-                        return res.status(500).json({ error: "impossible de supprimer" });
-                    } else {
-
-                        return res.status(200).json({ message: "Message supprimé !" });
-                    };
-                });
-            }
-
+                    return res.status(200).json({ message: "Message supprimé !" });
+                };
+            });
         }
     });
-
 };
 
 //function to get all of the posts from groupomania data base
 exports.getAllPostsAdmin = (req, res, next) => {
-
-    //WHERE canBeDisplay = 1
-    db.query('SELECT post.id, user_id, title, content, image  FROM post WHERE canBeDisplay = 1 INNER JOIN user ON user.id = post.user_id ', (error, result) => {
+    //WHERE canBeDisplay = 0
+    db.query('SELECT post.id, user_id, title, content, image  FROM post  INNER JOIN user ON user.id = post.user_id WHERE canBeDisplay = 0', (error, result) => {
         if (error) {
             return res.status(400).json({ error: "L'affichage de l'ensemble des publications semble etre indisponible pour le moment" });
         }
         return res.status(200).json(result);
     });
 };
+
+
+
+exports.canBeDisplay = (req, res, next) => {
+    //WHERE canBeDisplay = 1
+    db.query(`UPDATE post SET canBeDisplay = 1`, (error, result) => {
+        if (error) {
+            return res.status(400).json({ error: "La publications semble etre indisponible pour le moment" });
+        }
+        return res.status(200).json(result);
+    });
+};
+
 exports.getAllPosts = (req, res, next) => {
     
     //WHERE canBeDisplay = 1
-    db.query('SELECT post.id, user_id, title, content, image  FROM post INNER JOIN user ON user.id = post.user_id ', (error, result) => {
+    db.query('SELECT post.id, user_id, title, content, image  FROM post INNER JOIN user ON user.id = post.user_id WHERE canBeDisplay = 1', (error, result) => {
         if (error) {
             return res.status(400).json({ error: "L'affichage de l'ensemble des publications semble etre indisponible pour le moment" });
-        }
-        return res.status(200).json(result);
-    });
-};
-//function to get one post from groupomania data base
-exports.getOnePost = (req, res, next) => {
-
-    db.query('SELECT post.id, user_id, title, content, image FROM post INNER JOIN user ON user.id = post.user_id WHERE post.id=? ', req.params.id, (error, result) => {
-        if (error) {
-            return res.status(400).json({ error: "L'affichage de l'une des publications semble etre indisponible pour le moment" });
         }
         return res.status(200).json(result);
     });

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div v-if="User">
-      <p>Bienvenue {{ User }} à la création et au partage de vos passions</p>
+      <p>Bienvenue {{ User.firstname }}, à la création et au partage de vos passions</p>
     </div>
     <div>
       <form @submit.prevent="submit">
@@ -46,7 +46,7 @@
     computed: {
       ...mapGetters( {User: 'StateUser'}),
       ...mapGetters( {Posts: 'StatePosts'}),
-      ...mapGetters( {Comms: 'StateComments'}),
+      ...mapGetters( {Comments: 'StateComments'}),
     },
     methods: {
 
@@ -70,7 +70,7 @@
 
           this.$router.push({ name: "postsDisplay" });
         } catch (error) {
-          throw "Sorry you can't make a post now!"
+          throw "Le service est temporairement indisponible"
         }
     },
   },

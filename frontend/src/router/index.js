@@ -8,32 +8,54 @@ import postsDisplay from "../views/postsDisplay";
 import createComment from "../views/createComment";
 import CommentView from "../views/comment";
 import adminPosts from "../views/adminPosts";
-
+import NotFound from "../views/NotFound.vue";
+import update from "../views/update.vue";
 
 const routes = [
   {
     path: '/',
     name: 'HomeView',
     component: Home,
-    meta: { requiresAuth: true },
+    meta: { 
+      requiresAuth: true,
+      title: 'Accueil'
+    },
   },
   {
     path: '/signup',
     name: 'SignUp',
     component: Signup,
-    meta: { guest: true },
+    meta: {
+      guest: true,
+      title: 'Inscription'
+    },
   },
   {
     path: '/login',
     name: 'LogIn',
     component: Login,
-    meta: { guest: true},
+    meta: { 
+      guest: true,
+      title: 'Connexion'
+    },
+  },
+  {
+    path: '/update/:userId',
+    name: 'updateUser',
+    meta: { requiresAuth: true},
+  },
+  {
+    path: '/delete/:userId',
+    name: 'deleteUser',
+    meta: { requiresAuth: true},
   },
   {
     path: '/posts',
     name: 'PostS',
     component: Posts,
-    meta: { requiresAuth: true }, //requiresAuth: true
+    meta: { 
+      requiresAuth: true,
+    }, //requiresAuth: true
   },
   {
     path: '/post',
@@ -44,12 +66,35 @@ const routes = [
     path: '/post/display',
     name: 'postsDisplay',
     component: postsDisplay,
+    meta: { 
+      requiresAuth: true,
+      title: 'Publications',
+    }, //requiresAuth: true
+  },
+  {
+    path: '/post/:id',
+    name: 'deletePost',
+    component: postsDisplay,
     meta: { requiresAuth: true }, //requiresAuth: true
   },
   {
-    path: '/post/moderation',
+    path: '/post/:id',
+    name: 'updatePost',
+    component: postsDisplay,
+    meta: { requiresAuth: true }, //requiresAuth: true
+  },
+  {
+    path: '/post/admin',
     name: 'adminPosts',
     component: adminPosts,
+    meta: {
+      requiresAuth: true,
+      title: 'Administrateur-Publications à modérer'
+    }, //requiresAuth: true
+  },
+  {
+    path: '/post/moderation/',
+    name: 'canBeDisplay',
     meta: { requiresAuth: true }, //requiresAuth: true
   },
   {
@@ -64,6 +109,24 @@ const routes = [
     component: CommentView,
     meta: { requiresAuth: true }, //requiresAuth: true
   },
+  {
+    name: 'Not Found',
+    path: '/:pathMatch(.*)',
+    component: NotFound,
+    meta: {
+      requiresAuth: true,
+      title: '404 Not Found'
+      }, //requiresAuth: true
+  },
+  {
+    name: 'update',
+    path: '/update',
+    component: update,
+    meta: {
+      requiresAuth: true,
+      title: 'Modifications'
+      }, //requiresAuth: true
+  },
 ];
 
 const router = createRouter({
@@ -71,6 +134,11 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 })
+
+router.afterEach((to, from) => {
+  console.log(from);
+  document.title = to.meta.title;
+});
 
 router.beforeResolve((to, from, next) => {
   if (to.meta.guest) {

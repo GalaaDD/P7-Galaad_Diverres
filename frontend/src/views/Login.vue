@@ -26,7 +26,7 @@
       return {
         email: "",
         password: "",
-        showError: false
+        showError: false,
       }
     },
     methods: {
@@ -58,26 +58,14 @@
     }
     form {
     border: 5px solid #f1f1f1;
-    }
-    input[type=text], input[type=password] {
-    width: 100%;
-    padding: 16px 8px;
-    margin: 16px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    }
-    .icon {
-    font-size: 110px;
-    display: flex;
-    justify-content: center;
-    color: #4286f4;
+    border-radius: 1rem ;
+    padding: 0.5rem;
     }
     button {
     background-color: #4286f4;
     color: white;
-    padding: 14px 0;
-    margin: 10px 0;
+    padding: 0.8rem 0;
+    margin: 0.6rem 0;
     border: none;
     cursor: grab;
     width: 48%;
@@ -90,13 +78,19 @@
     opacity: 0.8;
     }
     .container {
-    padding: 16px 0;
+    padding: 1rem 0;
     text-align:left;
+   
     }
     span.psw {
     float: right;
     padding-top: 0;
-    padding-right: 15px;
+    padding-right: 1rem;
+    }
+    textarea{
+      border-radius: 0.8rem;
+      border: solid grey 0.15rem;
+      margin: 1rem;
     }
     /* Change styles for span on extra small screens */
     @media screen and (max-width: 300px) {
@@ -104,6 +98,8 @@
         display: block;
         float: none;
         }
+
+
     }
 </style>
 

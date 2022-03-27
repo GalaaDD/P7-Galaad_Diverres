@@ -14,7 +14,7 @@ db.connect((err) => {
 });
 
 let user = `create table if not exists user(
-  userId int primary key auto_increment not null,
+  userId int primary key auto_increment,
   email varchar(50) not null unique,
   password VARCHAR(255) not null,
   lastname VARCHAR(45) not null, 
@@ -27,16 +27,18 @@ db.execute(user, function(err, results, fields) {
     console.log(err.message);
   }
 });
+//canBeDisplay TINYINT not null,\
+//ON DELETE CASCADE\
+//CONSTRAINT `user` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)\
 
-let post = 'create table if not exists post(\
-  id int primary key auto_increment not null,\
-  user_id int not null,\
-  title VARCHAR(50) not null,\
-  content TEXT not null,\
-  image VARCHAR(120),\
-  canBeDisplay TINYINT not null,\
-  CONSTRAINT `user` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)\
-  )';
+let post = `create table if not exists post(
+  id int primary key auto_increment not null,
+  user_id int not null,
+  title VARCHAR(50) not null,
+  content TEXT not null,
+  image VARCHAR(120),
+  canBeDisplay TINYINT not null
+)`;
 
 db.execute( post, function(err, results, fields) {
   if (err) {
@@ -44,14 +46,15 @@ db.execute( post, function(err, results, fields) {
   }
 });
 
-let commentTable = 'create table if not exists comment(\
-  id int primary key auto_increment not null,\
-  content TEXT not null,\
-  post_id int not null,\
-  user_id int not null,\
-  FOREIGN KEY (`user_id`) REFERENCES `user`(`id`),\
-  FOREIGN KEY (`post_id`) REFERENCES `post`(`id`)\
-  )';
+// FOREIGN KEY (`user_id`) REFERENCES `user`(`id`),\
+//FOREIGN KEY (`post_id`) REFERENCES `post`(`id`)\
+
+let commentTable = `create table if not exists comment(
+  id int primary key auto_increment not null,
+  content TEXT not null,
+  post_id int not null,
+  user_id int not null
+)`;
 
 db.execute( commentTable, function(err, results, fields) {
   if (err) {

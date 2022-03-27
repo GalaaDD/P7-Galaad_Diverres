@@ -26,13 +26,18 @@ exports.createComment = (req, res, next) => {
     }
 };
 // recuperer data.comment pour sauvegarder
-
+//db.query(`SELECT comment.id, comment.content, comment.post_id, comment.user_id,  FROM comment INNER JOIN post ON post.id = comment.post_id left join user on user.id = comment.user_id WHERE post.id= ?`, req.params.postId, (error, result) => {
 
 //function to display all of the comments / ORDER BY dateCreate DESC
 exports.getAllCommentsByPost = (req, res, next) => {
-    db.query(`SELECT comment.id, comment.content, comment.user_id, comment.post_id FROM comment INNER JOIN post ON post.id = comment.post_id left join user on user.id = comment.user_id WHERE post.id= ?`, req.params.id, (error, result) => {
+    console.log(req.params);
+    db.query(`SELECT comment.id, comment.content, comment.post_id, comment.user_id, user.firstname FROM comment INNER JOIN post ON post.id = comment.post_id left join user on user.id = comment.user_id WHERE post.id= ?`, req.params.postId, (error, result) => {
+        console.log(req.params.postId);
+        
         if (error) return res.status(400).json({ error: "Les commentaires n'ont pas pu être affichés" });
+        console.log(result);
         return res.status(200).json(result);
+        
     });
 };
 

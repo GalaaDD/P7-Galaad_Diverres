@@ -1,46 +1,70 @@
 <template>
   <createPost />
   <router-view/>
-    <div class="posts" v-if="Posts"> <!--&& CanBeDisplay = 0-->
+  <div v-if="User">
+    <div class="posts" v-if="Posts">
       <ul>
         <li :postId= post.id v-for="post in Posts" :key="post.user_id" >
           <div id="post-div">
             <h2>{{ post.title }}</h2>
             <img :src= "post.image" id="image"/>
             <p>{{ post.content }}</p>
-            <p>{{ post.firstname }}</p>
-            <button @click="deleteOnePost()">Supprimer la publication</button>
-            <button @click="updateUser()">Modifier mon compte</button>
+            <p>Publié par {{ User.firstname }} {{ User.lastname }} </p>
+            <div v-if ="userId == post.user_id">
+              <button @click="deleteOnePost(post.id)">Supprimer la publication</button>
+              <button @click="updatePost(post.id)">Modifier ma publication</button>
+              <!--sending post.id as a parameter to know which one has to be either delete or updated-->
+            </div>
             <div class="comment__Container">
-            <CommentView v-for="comment in post.comments" :key="comment.id"/>
-            <router-view/>
-          </div>
-          </div>
-          <div class="commentCreation__Container">
-            <createComment :postId="post.id" />
-            <router-view/>
+              <!--<CommentView v-for="comment in Comments" :key="comment.id"/>
+              <router-view/>-->
+              <div class="comments" v-if="Comments">
+                <ul>
+                  <li :id= post.id v-for="comment in Comments" :key="comment.id" class="comment">
+                    <div id="comment-div">
+                      <p>{{ User.firstname }} {{ User.lastname }}</p>
+                      <p>{{ comment.content }}</p>
+                      
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div v-else>Aucun commentaire sur cette publication</div>
+              <div class="commentCreation__Container">
+                <createComment :postId="post.id" />
+                <router-view/>
+              </div>
+            </div>
           </div>
         </li>
       </ul>
-      
     </div>
     <div v-else>Aucune publications de disponible</div>
+  </div>
 </template>
 
 <script>
   import { mapGetters, mapActions } from "vuex";
   import createPost  from '@/views/createPost.vue'
   import createComment from '@/views/createComment.vue'
-  import CommentView   from '@/views/comment.vue'
-  
+  //import CommentView   from '@/views/comment.vue'
+  import VueJwtDecode from "vue-jwt-decode";
+
   export default {
   
     name: 'postsDisplay',
     props: ["post"],
     components: {
-      createComment, CommentView, createPost, 
+      createComment, createPost, 
     },
-
+    
+    data() {
+      return {
+        content: "",
+        userId: VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId,
+        Admin: VueJwtDecode.decode(localStorage.getItem("AccessToken")).Admin,
+      };
+    },
     created: function() {
       this.GetPosts();
     },
@@ -48,15 +72,23 @@
       
       ...mapGetters( {User: 'StateUser'}),
       ...mapGetters( {Posts: 'StatePosts'}),
-      ...mapGetters( {Comms:'SetComments'}),
-    },
-    methods: {
-     deleteUser() {
-      const idPost = this.postId;
-      this.$store.dispatch("deleteUser", { idPost });
+      ...mapGetters( {Comments:'StateComments'}),
     },
 
-      ...mapActions( ["GetPosts"]),
+    methods: {
+
+    updatePost: function() {
+      let idPost = this.post.id;
+      this.$store.dispatch( "updatePost", { idPost });
+      this.$router.push({ name: "update" });
+    },
+
+    deleteOnePost: function () {
+      let idPost = this.post.id;
+      this.$store.dispatch("deleteOnePost", { idPost });
+    },
+
+      ...mapActions( ["GetPosts", "updatePost", "deleteOnePost"]),
     },
   };
 </script>
@@ -89,8 +121,8 @@
 }
 
 img {
-  max-width: 70%;
-  border-radius: 15px ;
+  max-width: 85%;
+  border-radius: 15px;
 }
 
 </style>
