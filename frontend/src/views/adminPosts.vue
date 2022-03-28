@@ -9,16 +9,14 @@
             
             <div class="comment__Container">
             <div class="comments" v-if="Comments">
-                <ul>
-                  <li :id= post.id v-for="comment in Comments" :key="comment.id" class="comment">
+                  <div :id= post.id v-for="comment in Comments" :key="comment.id" class="comment">
                     <div id="comment-div">
                       <p>{{ User.firstname }} {{ User.lastname }}</p>
                       <p>{{ comment.content }}</p>
                     </div>
+                  </div>
                   <button @click="deleteOnePost(post.postId)">Supprimer la publication</button>
                   <button @click="updatePostPage(post.postId)">Modifier la publication</button>
-                  </li>
-                </ul>
               </div>
               <div v-else>Aucun commentaire sur cette publication</div>
           </div>
@@ -66,3 +64,25 @@
     },
   };
 </script>
+
+<style>
+
+  .comments{
+    background-color: #fff;
+    border-radius: 1rem;
+  }
+
+  button{
+    width: 20%;
+    margin: 1rem;
+    padding: 0.3rem 0.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  @media screen and (max-width: 300px) {
+    .posts {
+      width: 90%;
+    }
+  }
+</style>

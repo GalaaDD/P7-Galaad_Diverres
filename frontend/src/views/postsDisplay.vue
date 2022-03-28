@@ -16,18 +16,13 @@
               <!--sending post.id as a parameter to know which one has to be either delete or updated-->
             </div>
             <div class="comment__Container">
-              <!--<CommentView v-for="comment in Comments" :key="comment.id"/>
-              <router-view/>-->
               <div class="comments" v-if="Comments">
-                <ul>
-                  <li :id= post.id v-for="comment in Comments" :key="comment.id" class="comment">
+                  <div :id= post.id v-for="comment in Comments" :key="comment.id" class="comment">
                     <div id="comment-div">
                       <p>{{ User.firstname }} {{ User.lastname }}</p>
                       <p>{{ comment.content }}</p>
-                      
                     </div>
-                  </li>
-                </ul>
+                  </div>
               </div>
               <div v-else>Aucun commentaire sur cette publication</div>
               <div class="commentCreation__Container">
@@ -112,17 +107,23 @@
     border-radius: 25px;
   }
 
-#post-div {
-  width: 80%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 10%;
-}
+  #post-div {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10%;
+  }
 
-img {
-  max-width: 85%;
-  border-radius: 15px;
-}
+  img {
+    max-width: 100%;
+    border-radius: 15px;
+  }
+
+  p, h2{
+    background-color: #fff;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+  }
 
 </style>
