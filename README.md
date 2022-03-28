@@ -26,6 +26,8 @@ Langages utilisés sur le Projet:
 
 • VueJs: vue 3 , vue-jwt-decode, vue-router, vuex, vuex-persistedstate
 
+• Packages de sécurités: helmet, ddos.
+
 
 Configuration du projet: 
 
