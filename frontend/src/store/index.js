@@ -137,6 +137,7 @@ export default createStore({
         axios.put(`/post/moderation/`)
         .then((response) => {
           console.log(response.data);
+          location.reload();
           commit;
           resolve();
         })
@@ -228,16 +229,18 @@ export default createStore({
       state.user = firstname;
     },
 
-    reset(state) {
+    /*reset(state) {
       Object.keys(state).forEach(key => {
         state[key] = null; // or = 
       });
-    },
-  
+    },*/
+    /*localStorage.clear("AccessToken");
+    localStorage.clear*/
+    
     logout(state, user) {
       state.user = user;
-      localStorage.clear("AccessToken");
-      
+      localStorage.removeItem("AccessToken");
+      localStorage.removeItem("vuex");
     },
     /***Content-Part ***/
     setPosts(state, posts) {

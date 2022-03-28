@@ -65,6 +65,7 @@
           formData.append("content", this.content);
           formData.append("user_id", this.user_id);
           formData.append("post_id", this.id);
+          formData.append("canBeDisplay", this.canBeDisplay);
           console.log(formData);
           this.createPost(formData);
 
@@ -72,7 +73,7 @@
         } catch (error) {
           throw "Le service est temporairement indisponible"
         }
-    },
+    },//localStorage.clear;
   },
 };
 </script>
