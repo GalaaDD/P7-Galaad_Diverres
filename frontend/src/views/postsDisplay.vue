@@ -12,7 +12,7 @@
             <p>Publié par {{ User.firstname }} {{ User.lastname }} </p>
             <div v-if ="userId == post.user_id">
               <button @click="deleteOnePost(post.id)">Supprimer la publication</button>
-              <button @click="updatePost(post.id)">Modifier ma publication</button>
+              <button @click="updatePost(post.id)">Modifier la publication</button>
               <!--sending post.id as a parameter to know which one has to be either delete or updated-->
             </div>
             <div class="comment__Container">
@@ -125,9 +125,9 @@
   p, h2{
     background-color: #fff;
     border-radius: 0.5rem;
-    padding: 0.5rem;
+    padding: 0.3rem;
     text-align: left;
-    width: 80%
+    width: 94.5%
   }
 
 </style>

@@ -51,41 +51,41 @@
 
 <style>
     body {
-    display: flex;
-    justify-content: center;
-    font-family: Roboto, Arial, sans-serif;
-    font-size: 15px;
+      display: flex;
+      justify-content: center;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 15px;
     }
     form {
-    border: 5px solid #f1f1f1;
-    border-radius: 1rem ;
-    padding: 0.5rem;
+      border: 5px solid #f1f1f1;
+      border-radius: 1rem ;
+      padding: 0.5rem;
     }
     button {
-    background-color: #4286f4;
-    color: white;
-    padding: 14px 0;
-    margin: 10px 0;
-    border: none;
-    cursor: grab;
-    width: 48%;
+      background-color: #4286f4;
+      color: white;
+      padding: 14px 0;
+      margin: 10px 0;
+      border: none;
+      cursor: grab;
+      width: 48%;
     }
     h1 {
-    text-align:center;
-    font-size:18;
+      text-align:center;
+      font-size:18;
     }
     button:hover {
-    opacity: 0.8;
+      opacity: 0.8;
     }
     .container {
-    padding: 16px 0;
-    text-align:left;
+      padding: 16px 0;
+      text-align:left;
    
     }
     span.psw {
-    float: right;
-    padding-top: 0;
-    padding-right: 15px;
+      float: right;
+      padding-top: 0;
+      padding-right: 15px;
     }
     textarea{
       border-radius: 0.8rem;
@@ -95,8 +95,8 @@
     /* Change styles for span on extra small screens */
     @media screen and (max-width: 300px) {
         span.psw {
-        display: block;
-        float: none;
+          display: block;
+          float: none;
         }
     }
 </style>

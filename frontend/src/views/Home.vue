@@ -92,10 +92,10 @@
 
 <style scope>
   input{
-    width: 90%;
+    width: 35%;
     height: 1.6rem;
     border-radius: 0.8rem;
-    margin:  5% 0 5% 0 ;
+    margin:  5% 0.5% 5% 0.5% ;
   }
   button{
     border-radius: 1rem;

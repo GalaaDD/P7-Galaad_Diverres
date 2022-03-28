@@ -1,6 +1,7 @@
 <template>
   <div id="updatePost">
       <h2>Modifier votre Post</h2>
+    <div class="posts" v-if="Posts">
       <form class=" Post" id="formpost">
         <div class="form-group">
           <label for="title">Titre</label>
@@ -8,15 +9,15 @@
         </div>
         <div class="form-group">
           <label for="content">Texte</label>
-          <textarea class="form-control textarea " rows="3" id="content" placeholder="Modifier votre text...ou modifier votre image" aria-required="true"></textarea>
+          <textarea class="form-control textarea " id="content" placeholder="Modifier votre texte..." aria-required="true"></textarea>
         </div>
         <div class="form-group">
           <label for="image" class="sr-only" title="image" role="button">images</label>
           <input type="file" accept=".png, .jpg, .jpeg, .gif, .webp" v-on:change="onSelect" aria-required="true" ref="file" id="image" />
         </div>
-        <button type="submit" @click="updatePostOnClick()">Modifier</button>
+        <button type="submit" @click="updatePost(post.id)">Modifier</button>
       </form>
-      <h2>Modifier votre commentaire</h2>
+    </div>
   </div>
 </template>
 
@@ -50,13 +51,14 @@
 
       ...mapActions( ["deletePost", "updatePost"]),
 
-      updatePostOnClick() {
+      updatePost() {
         const updateForm = {
           title: this.title,
           content: this.content,
           file:  this.file,
           user_id: VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId,
-        }
+          post_id: this.id,
+        };
         this.updatePost({ updateForm });
         this.$router.push({ name: "postsDisplay" });
       },

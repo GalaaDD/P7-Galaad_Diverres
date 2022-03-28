@@ -115,10 +115,10 @@ export default createStore({
     },
 
     updatePost({ commit }, post ){
-      let postId = post;
+      let postId = post.id;
       console.log(post);
       return new Promise((resolve, reject) => {
-        axios.put(`/post/`+ postId )
+        axios.put(`/post/`+ postId, post )
         .then((response) => {
           commit("SetUser", response.data.user);
           console.log(response.data);

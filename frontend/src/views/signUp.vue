@@ -2,19 +2,20 @@
   <div class="signup">
       <div>
           <form @submit.prevent="submit">
-            <label for="email">email:</label>
-            <div>
+           
+            <div class="input__container">
+               <label for="email">email:</label>
               <input type="text" name="email" v-model="email" required>
             </div>
-            <div>
+            <div class="input__container">
               <label for="password">Mot de Passe:</label>
               <input type="password" name="password" v-model="password" required>
             </div>
-            <div>
+            <div class="input__container">
               <label for="lastname">Nom:</label>
               <input type="text" name="lastname" v-model="lastname" required>
             </div>
-            <div>
+            <div class="input__container">
               <label for="firstname">Prénom:</label>
               <input type="text" name="firstname" v-model="firstname" required>
             </div>
