@@ -77,7 +77,7 @@ exports.deletePost = (req, res, next) => {
 //function to get all of the posts from groupomania data base
 exports.getAllPostsAdmin = (req, res, next) => {
     //WHERE canBeDisplay = 0
-    db.query('SELECT post.id, user_id, title, content, image  FROM post  INNER JOIN user ON user.id = post.user_id WHERE canBeDisplay = 0', (error, result) => {
+    db.query('SELECT post.id, user_id, title, content, image  FROM post  INNER JOIN user ON user.id = post.user_id', (error, result) => {
         if (error) {
             return res.status(400).json({ error: "L'affichage de l'ensemble des publications semble etre indisponible pour le moment" });
         }
@@ -100,7 +100,7 @@ exports.canBeDisplay = (req, res, next) => {
 exports.getAllPosts = (req, res, next) => {
     
     //WHERE canBeDisplay = 1
-    db.query('SELECT post.id, user_id, title, content, image  FROM post INNER JOIN user ON user.id = post.user_id WHERE canBeDisplay = 1', (error, result) => {
+    db.query('SELECT post.id, user_id, title, content, image  FROM post INNER JOIN user ON user.id = post.user_id', (error, result) => {
         if (error) {
             return res.status(400).json({ error: "L'affichage de l'ensemble des publications semble etre indisponible pour le moment" });
         }

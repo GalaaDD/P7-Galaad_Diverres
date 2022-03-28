@@ -15,8 +15,8 @@
                       <p>{{ User.firstname }} {{ User.lastname }}</p>
                       <p>{{ comment.content }}</p>
                     </div>
-                  <button @click="deleteOnePost()">Supprimer la publication</button>
-                  <button @click="updatePostPage()">Modifier la publication</button>
+                  <button @click="deleteOnePost(post.postId)">Supprimer la publication</button>
+                  <button @click="updatePostPage(post.postId)">Modifier la publication</button>
                   </li>
                 </ul>
               </div>
@@ -54,12 +54,13 @@
       this.$router.push({ name: "update" });
     },
 
-     deleteUser() {
+     deleteOnePost() {
       const idPost = this.postId;
-      this.$store.dispatch("deleteUser", { idPost });
+      this.$store.dispatch("deleteOnePost", { idPost });
     },
     canBeDisplay(){
-      this.canBeDisplay()
+      const idPost = this.postId;
+      this.canBeDisplay(idPost)
     },
       ...mapActions( ["GetPosts", "GetPostsAdmin", "canBeDisplay"]),
     },

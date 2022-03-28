@@ -40,7 +40,7 @@
         file: "",
         user_id:"",
         id:"",
-        canBeDisplay: 0,
+        canBeDisplay: "",
       };
     },
     computed: {
@@ -73,7 +73,7 @@
         } catch (error) {
           throw "Le service est temporairement indisponible"
         }
-    },//localStorage.clear;
+    },
   },
 };
 </script>
