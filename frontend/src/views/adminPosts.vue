@@ -1,7 +1,7 @@
 <template>
     <div class="posts" v-if="Posts  "> <!--&& Admin-->
       <div class="post__container">
-        <div :postId= post.id v-for="post in Posts" :key="post.user_id" >
+        <div :postId= post.id v-for="post in Posts.slice().reverse()" :key="post.user_id" >
           <div id="post-div">
             <h2>{{ post.title }}</h2>
             <img :src= "post.image" id="image"/>
@@ -9,7 +9,7 @@
             
             <div class="comment__Container">
             <div class="comments" v-if="Comments">
-                  <div :id= post.id v-for="comment in Comments" :key="comment.id" class="comment">
+                  <div :id= post.id v-for="comment in Comments.slice().reverse()" :key="comment.id" class="comment">
                     <div id="comment-div">
                       <p> Commentaires</p>
                       <p>{{ User.firstname }} {{ User.lastname }}</p>
