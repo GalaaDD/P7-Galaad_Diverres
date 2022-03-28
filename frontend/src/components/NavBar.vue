@@ -55,7 +55,7 @@ name: 'NavBar',
 #nav a {
   font-weight: bold;
   color: #2c3e50;
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 a:hover {
   cursor: pointer;

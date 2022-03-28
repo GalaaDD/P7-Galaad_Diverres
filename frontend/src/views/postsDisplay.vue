@@ -3,8 +3,8 @@
   <router-view/>
   <div v-if="User">
     <div class="posts" v-if="Posts">
-      <ul>
-        <li :postId= post.id v-for="post in Posts" :key="post.user_id" >
+      <div class="post__container">
+        <div :postId= post.id v-for="post in Posts" :key="post.user_id" >
           <div id="post-div">
             <h2>{{ post.title }}</h2>
             <img :src= "post.image" id="image"/>
@@ -19,6 +19,7 @@
               <div class="comments" v-if="Comments">
                   <div :id= post.id v-for="comment in Comments" :key="comment.id" class="comment">
                     <div id="comment-div">
+                      <p> Commentaire publié par</p>
                       <p>{{ User.firstname }} {{ User.lastname }}</p>
                       <p>{{ comment.content }}</p>
                     </div>
@@ -31,8 +32,8 @@
               </div>
             </div>
           </div>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
     <div v-else>Aucune publications de disponible</div>
   </div>
@@ -113,6 +114,7 @@
     flex-wrap: wrap;
     justify-content: center;
     padding: 10%;
+    margin-top: 2rem;
   }
 
   img {
@@ -124,6 +126,8 @@
     background-color: #fff;
     border-radius: 0.5rem;
     padding: 0.5rem;
+    text-align: left;
+    width: 80%
   }
 
 </style>

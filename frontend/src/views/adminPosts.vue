@@ -1,7 +1,7 @@
 <template>
     <div class="posts" v-if="Posts  "> <!--&& Admin-->
-      <ul>
-        <li :postId= post.id v-for="post in Posts" :key="post.user_id" >
+      <div class="post__container">
+        <div :postId= post.id v-for="post in Posts" :key="post.user_id" >
           <div id="post-div">
             <h2>{{ post.title }}</h2>
             <img :src= "post.image" id="image"/>
@@ -11,6 +11,7 @@
             <div class="comments" v-if="Comments">
                   <div :id= post.id v-for="comment in Comments" :key="comment.id" class="comment">
                     <div id="comment-div">
+                      <p> Commentaires</p>
                       <p>{{ User.firstname }} {{ User.lastname }}</p>
                       <p>{{ comment.content }}</p>
                     </div>
@@ -21,9 +22,9 @@
               <div v-else>Aucun commentaire sur cette publication</div>
           </div>
           </div>
-        </li>
+        </div>
         <button type="submit" @click="canBeDisplay()">Approuver les publications</button>
-      </ul>
+      </div>
     </div>
   <div v-else>Aucune publications à moderer</div>
 </template>
@@ -67,22 +68,39 @@
 
 <style>
 
-  .comments{
+  .comments, .comment{
     background-color: #fff;
     border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
   }
 
   button{
-    width: 20%;
+    width: 45%;
     margin: 1rem;
     padding: 0.3rem 0.5rem;
     font-size: 1rem;
     font-weight: bold;
   }
 
+   #comment-div{
+    border: solid grey 0.1rem;
+    border-radius: 0.5rem;
+    margin-top: 0.5rem;
+    width: 100%;
+  }
+
   @media screen and (max-width: 300px) {
     .posts {
       width: 90%;
     }
+
+    button{
+    width: none;
   }
+  
+ 
+}
 </style>
