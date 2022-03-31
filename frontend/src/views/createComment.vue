@@ -36,7 +36,6 @@
     methods: {
 
       ...mapActions(["createComment"]),
-      
 
       submit() {
         

@@ -1,43 +1,43 @@
 <template>
-  <div id="updatePost">
-      <h2>Modifier votre Post</h2>
-    <div class="posts" v-if="Posts">
-      <form class=" Post" id="formpost">
-        <div class="form-group">
-          <label for="title">Titre</label>
-          <input type="text" class="form-control" v-model="title" id="title" placeholder="votre titre" aria-required="true" required />
-        </div>
-        <div class="form-group">
-          <label for="content">Texte</label>
-          <textarea class="form-control textarea " id="content" placeholder="Modifier votre texte..." aria-required="true"></textarea>
-        </div>
-        <div class="form-group">
-          <label for="image" class="sr-only" title="image" role="button">images</label>
-          <input type="file" accept=".png, .jpg, .jpeg, .gif, .webp" v-on:change="onSelect" aria-required="true" ref="file" id="image" />
-        </div>
-        <button type="submit" @click="updatePost(post.id)">Modifier</button>
-      </form>
-    </div>
+  <div id:postId = post.id v-if="Posts">
+    <form @submit.prevent="submit">
+      <div class="postCreation__containers">
+        <label for="title">Titre:</label>
+        <input type="text" name="title" v-model="title" />
+      </div>
+      <div class="postCreation__containers">
+        <label class="sr-only" for="image" title="image" role="button">image</label>
+        <input type="file" name="image" accept=".png, .jpg, .jpeg, .gif" v-on:change="onSelect" ref="file" aria-required="true" id="image" />
+      </div>
+      <div class="postCreation__containers">
+        <label for="content">Publication</label>
+        <textarea
+          name="content"
+          v-model="content"
+          placeholder="Modifiez votre publication ici..."
+        ></textarea>
+      </div>
+      <button type="submit">Modifier</button>
+    </form>
   </div>
 </template>
-
-
 
 <script>
 
   import { mapGetters, mapActions } from "vuex";
   import VueJwtDecode from "vue-jwt-decode";
   export default {
-    name: 'HomeView',
-    components: {
-    },
+    name: 'updatePost',
+    props: ["postId"],
+    components: { },
 
     data() {
         return {
         title: "",
         content: "",
         file: "",
-        user_id:"",
+        user_id: VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId,
+        post_id: this.postId,
       };
     },
 
@@ -51,16 +51,40 @@
 
       ...mapActions( ["deletePost", "updatePost"]),
 
-      updatePost() {
-        const updateForm = {
-          title: this.title,
-          content: this.content,
-          file:  this.file,
-          user_id: VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId,
-          post_id: this.id,
-        };
-        this.updatePost({ updateForm });
-        this.$router.push({ name: "postsDisplay" });
+      onSelect() {
+        this.file = this.$refs.file.files[0];
+        console.log(this.file);
+      },
+
+      submit() {
+        /*const title = this.title;
+        const content = this.content;
+        const file = this.file;
+        const user_id = VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId;
+        const post_id = this.id;
+        console.log(this.id);
+        this.$store.dispatch("updatePost", {
+          title,
+          content,
+          file, 
+          user_id,
+          post_id,
+        })
+        //this.$router.push({ name: "postsDisplay" });*/
+         try {
+          const formData = new FormData();
+          formData.append("image", this.file);
+          formData.append("title", this.title);
+          formData.append("content", this.content);
+          formData.append("user_id", this.user_id);
+          formData.append("post_id", this.postId);
+          console.log(formData);
+          this.updatePost(formData);
+
+          this.$router.push({ name: "postsDisplay" });
+        } catch (error) {
+          throw "Le service est temporairement indisponible"
+        }
       },
     },
   }

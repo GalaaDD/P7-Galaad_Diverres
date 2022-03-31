@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="createPost__container">
     <div v-if="User">
       <p>Bienvenue {{ User.firstname }}, à la création et au partage de vos passions</p>
     </div>
@@ -14,11 +14,11 @@
           <input type="file" name="image" accept=".png, .jpg, .jpeg, .gif" v-on:change="onSelect" ref="file" aria-required="true" id="image" />
         </div>
         <div class="postCreation__containers">
-          <label for="content">Description</label>
+          <label for="content">Publication</label>
           <textarea
             name="content"
             v-model="content"
-            placeholder="Description..."
+            placeholder="écrivez votre publication ici..."
           ></textarea>
         </div>
         <button type="submit">Publier</button>
@@ -40,7 +40,6 @@
         file: "",
         user_id:"",
         id:"",
-        canBeDisplay: "",
       };
     },
     computed: {
@@ -65,7 +64,6 @@
           formData.append("content", this.content);
           formData.append("user_id", this.user_id);
           formData.append("post_id", this.id);
-          formData.append("canBeDisplay", this.canBeDisplay);
           console.log(formData);
           this.createPost(formData);
 

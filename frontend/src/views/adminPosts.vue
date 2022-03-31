@@ -16,14 +16,14 @@
                       <p>{{ comment.content }}</p>
                     </div>
                   </div>
-                  <button @click="deleteOnePost(post.postId)">Supprimer la publication</button>
-                  <button @click="updatePostPage(post.postId)">Modifier la publication</button>
+                  <button @click="deleteOnePost(post.id)">Supprimer la publication</button>
+                  <button @click="updatePostPage(post.id)">Modifier la publication</button>
+                  <button @click="canBeDisplay(post.id)">Approuver la publication</button>
               </div>
               <div v-else>Aucun commentaire sur cette publication</div>
           </div>
           </div>
         </div>
-        <button type="submit" @click="canBeDisplay()">Approuver les publications</button>
       </div>
     </div>
   <div v-else>Aucune publications à moderer</div>
@@ -54,12 +54,12 @@
     },
 
      deleteOnePost() {
-      const idPost = this.postId;
+      const idPost = this.post.id;
       this.$store.dispatch("deleteOnePost", { idPost });
     },
     canBeDisplay(){
-      const idPost = this.postId;
-      this.canBeDisplay(idPost)
+      const idPost = this.post.id;
+       this.$store.dispatch("deleteOnePost", { idPost });
     },
       ...mapActions( ["GetPosts", "GetPostsAdmin", "canBeDisplay"]),
     },
@@ -78,7 +78,7 @@
   }
 
   button{
-    width: 45%;
+    width: 49%;
     margin: 1rem;
     padding: 0.3rem 0.5rem;
     font-size: 1rem;

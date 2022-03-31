@@ -12,7 +12,7 @@
             <p>Publié par {{ User.firstname }} {{ User.lastname }} </p>
             <div v-if ="userId == post.user_id">
               <button @click="deleteOnePost(post.id)">Supprimer la publication</button>
-              <button @click="updatePost(post.id)">Modifier la publication</button>
+              <button @click="updatePostPage(post.id)">Modifier la publication</button>
               <!--sending post.id as a parameter to know which one has to be either delete or updated-->
             </div>
             <div class="comment__Container">
@@ -73,14 +73,13 @@
 
     methods: {
 
-    updatePost: function() {
-      let idPost = this.post.id;
-      this.$store.dispatch( "updatePost", { idPost });
-      this.$router.push({ name: "update" });
+    updatePostPage() {
+      let postId = this.id;
+      this.$router.push({ name: "update", postId });
     },
 
     deleteOnePost: function () {
-      let idPost = this.post.id;
+      let idPost = this.post;
       this.$store.dispatch("deleteOnePost", { idPost });
     },
 
@@ -90,10 +89,6 @@
 </script>
 
 <style>
-
-  ul{
-    list-style-type: none;
-  }
 
   #post-div{
     border: solid black 0.2rem;

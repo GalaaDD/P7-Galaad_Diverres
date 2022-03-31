@@ -23,8 +23,8 @@ exports.createPost = (req, res, next) => {
         image: image,
         canBeDisplay: 0,
     });
-    if (!title && !content && !image) {
-        return res.status(400).json({ message: "Veuillez renseigner le titre" });
+    if (!title && !content && !image && canBeDisplay == null) {
+        return res.status(400).json({ message: "Veuillez renseigner le titre, le contenu " });
     } else {
 
         db.query(`INSERT INTO post SET ?`, post, (error, result) => {
@@ -40,20 +40,39 @@ exports.createPost = (req, res, next) => {
 //function to update a post
 exports.updatePost = (req, res, next) => {
     let image = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
-    db.query(`SELECT * FROM post WHERE id=?`, req.params.postId, (error, rows, fields) => {
+    console.log(image);
+    console.log(req.file);
+    console.log(req.file.filename);
+    if (req.file) {
+        image = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
+    }
+    console.log(req.params.id);
+    db.query(`SELECT * FROM post WHERE id=?`, req.params.id, (error, rows, fields) => {
         if (error) {
             return res.status(500).json({ error: "mysql" });
+        } else {
+            if (rows[0].image) {
+                const filename = rows[0].image.split("/images/")[1];
+                fs.unlink(`images/${filename}`, () => {
+                    db.query(`UPDATE post SET content = ?, title = ?, image= ?  WHERE id = ?`, [req.body.content, req.body.title, image, req.params.id], (error, result) => {
+                        if (error) {
+                            return res.status(400).json({ error: "Le post n'a pas pu être modifié" });
+                        }
+                        return res.status(200).json(result);
+                    });
+                });
             } else {
-                db.query(`UPDATE post SET content = ?, title = ? WHERE id = ?`, [req.params.id, req.body.title, req.body.content, image ], (error, result) => {
+                db.query(`UPDATE post SET content = ?, title = ?, WHERE id = ?`, [req.body.content, req.body.title, image, req.params.id], (error, result) => {
                     if (error) {
-                        return res.status(400).json({ error: "La publication n'a pas pu être mise à jour" });
+                        return res.status(400).json({ error: "Le post n'a pas pu être modifié" });
                     }
                     return res.status(200).json(result);
                 });
 
             }
+
         }
-    );
+    });
 };
 
 //function to delete a post from groupomania data base
@@ -77,7 +96,7 @@ exports.deletePost = (req, res, next) => {
 //function to get all of the posts from groupomania data base
 exports.getAllPostsAdmin = (req, res, next) => {
     //WHERE canBeDisplay = 0
-    db.query('SELECT post.id, user_id, title, content, image  FROM post  INNER JOIN user ON user.id = post.user_id', (error, result) => {
+    db.query('SELECT post.id, user_id, title, content, image  FROM post  INNER JOIN user ON user.id = post.user_id WHERE canBeDisplay = 0', (error, result) => {
         if (error) {
             return res.status(400).json({ error: "L'affichage de l'ensemble des publications semble etre indisponible pour le moment" });
         }
@@ -100,7 +119,7 @@ exports.canBeDisplay = (req, res, next) => {
 exports.getAllPosts = (req, res, next) => {
     
     //WHERE canBeDisplay = 1
-    db.query('SELECT post.id, user_id, title, content, image  FROM post INNER JOIN user ON user.id = post.user_id', (error, result) => {
+    db.query('SELECT post.id, user_id, title, content, image  FROM post INNER JOIN user ON user.id = post.user_id WHERE canBeDisplay = 1', (error, result) => {
         if (error) {
             return res.status(400).json({ error: "L'affichage de l'ensemble des publications semble etre indisponible pour le moment" });
         }

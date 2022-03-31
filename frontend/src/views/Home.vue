@@ -15,22 +15,22 @@
   <h2>Modification du compte utilisateur:</h2>
   <div class="form-container">
     <label for="email">Modifier mon Adresse Email</label>
-    <input type="email" v-model="email" placeholder="groupomania@gr.com" required /><br>
+    <input type="email" v-model="state.email" placeholder="groupomania@gr.com" required /><br>
   </div>
 
   <div class="form-container">
     <label for="password">Modifier mon Mot de passe</label>
-    <input type="password" v-model="password" placeholder="Mot de passe" required /><br>
+    <input type="password" v-model="state.password" placeholder="Mot de passe" required /><br>
   </div>
 
   <div class="form-container">
     <label for="password">Modifier mon Nom de famille</label>
-    <input type="text" v-model="lastname" placeholder="Nom de famille" required /><br>
+    <input type="text" v-model="state.lastname" placeholder="Nom de famille" required /><br>
   </div>
 
   <div class="form-container">
     <label for="password">Modifier mon Prénom</label>
-    <input type="text" v-model="firstname" placeholder="Prénom" required /><br>
+    <input type="text" v-model="state.firstname" placeholder="Prénom" required /><br>
   </div>
  
   <button @click="updateUserOnClick()">Modifier mon compte</button>
@@ -42,20 +42,39 @@
 <script>
 
   import { mapGetters, mapActions } from "vuex";
+  import useValidate from '@vuelidate/core'
+  import { required, email, minLength } from '@vuelidate/validators'
+  import { reactive, computed } from 'vue'
   import VueJwtDecode from "vue-jwt-decode";
   export default {
     name: 'HomeView',
     components: {
     },
 
-    data() {
-      return {
+    setup() {
+      const state = reactive({
         email: "",
         password: "",
-        firstname: "",
         lastname: "",
-        userId: VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId,
-      };
+        firstname:"",
+        showError: false
+      })
+
+      const rules = computed(() => {
+        return {
+            email: { required, email },
+        password: { required, minLength:minLength(6) },
+        lastname: { required, minLength:minLength(2) },
+        firstname: { required },
+        }
+      })
+
+      const v$ = useValidate(rules, state)
+
+      return {
+        state,
+        v$,
+      }
     },
 
     computed: {
@@ -72,19 +91,24 @@
           this.$store.dispatch("deleteUser", { userId });
       },
       updateUserOnClick() {
-        
-        const email = this.email;
-        const password = this.password;
-        const userId = this.userId;
-        const firstname = this.firstname;
-        const lastname = this.lastname;
-        this.$store.dispatch("updateUser", {
-          email,
-          password,
-          userId,
-          firstname,
-          lastname,
-        })
+        this.v$.$validate()
+        if (!this.v$.$error) {
+          alert('Form successfully submitted.')
+          const email = this.email;
+          const password = this.password;
+          const userId = this.userId;
+          const firstname = this.firstname;
+          const lastname = this.lastname;
+          this.$store.dispatch("updateUser", {
+            email,
+            password,
+            userId,
+            firstname,
+            lastname,
+          })
+        } else {
+          alert('Form failed validation')
+        }
       },
     },
   }
@@ -92,7 +116,7 @@
 
 <style scope>
   input{
-    width: 35%;
+    width: 45%;
     height: 1.6rem;
     border-radius: 0.8rem;
     margin:  5% 0.5% 5% 0.5% ;

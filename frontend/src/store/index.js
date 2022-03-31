@@ -53,7 +53,7 @@ export default createStore({
             "Bearer " + response.data.token;
   
             commit("setUser", response.data);
-  
+            location.reload();
           resolve(response);
         })
         .catch((error) => {
@@ -105,8 +105,9 @@ export default createStore({
         .then((response) => {
           commit("setPosts", post);
           console.log(response);
-          dispatch('GetPosts', 'updatePost', response.data)
+          dispatch('GetPosts', 'updatePost', post)
           resolve(response.data);
+          //location.reload();
         })
         .catch((error) => {
           reject(error);
@@ -114,13 +115,14 @@ export default createStore({
       });
     },
 
-    updatePost({ commit }, post ){
-      let postId = post.id;
-      console.log(post);
+    updatePost({ commit }, payload ){
+      let postId = payload.id;
+      console.log(payload);
       return new Promise((resolve, reject) => {
-        axios.put(`/post/`+ postId, post )
+        axios.put(`/post/`+ postId, payload )
         .then((response) => {
-          commit("SetUser", response.data.user);
+          commit("SetUser", payload);
+          console.log(response.data.user);
           console.log(response.data);
           resolve();
         })
@@ -131,13 +133,13 @@ export default createStore({
     },
   
     canBeDisplay( {commit}, payload ){
-      let postId = payload.post_id;
+      let postId = payload;
       console.log(postId);
       return new Promise((resolve, reject) => {
-        axios.put(`/post/moderation/`)
+        axios.put(`/post/moderation/`+ postId,)
         .then((response) => {
           console.log(response.data);
-          location.reload();
+          //location.reload();
           commit;
           resolve();
         })
@@ -175,15 +177,15 @@ export default createStore({
       });
     },
   
-    deleteOnePost({ commit }, post){
-      console.log(post);
-      let postId = post;
+    deleteOnePost({ commit }, payload){
+      console.log(payload);
+      let postId = payload;
       return new Promise((resolve, reject) => {
         axios.delete(`/post/`+ postId)
         .then((response) => {
           commit;
           console.log(response.data);
-          location.reload();
+          //location.reload();
           resolve();
         })
         .catch((error) => {

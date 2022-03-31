@@ -1,7 +1,7 @@
 <template>
      <div class="comments" v-if="comments">
       <ul>
-        <li :id= post.id v-for="comment in comments" :key="comment.id" class="comment">
+        <li :id= post.id v-for="comment in Comments" :key="comment.id" class="comment">
           <div id="comment-div">
             <p>{{ comment.content }}</p>
             <p>{{ comment.username }}</p>

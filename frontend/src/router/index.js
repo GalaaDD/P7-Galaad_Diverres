@@ -78,7 +78,7 @@ const routes = [
     meta: { requiresAuth: true }, //requiresAuth: true
   },
   {
-    path: '/post/:id',
+    path: '/post/:postId',
     name: 'updatePost',
     component: postsDisplay,
     meta: { requiresAuth: true }, //requiresAuth: true
@@ -93,7 +93,7 @@ const routes = [
     }, //requiresAuth: true
   },
   {
-    path: '/post/moderation/',
+    path: '/post/moderation/:postId',
     name: 'canBeDisplay',
     meta: { requiresAuth: true }, //requiresAuth: true
   },
