@@ -7,7 +7,6 @@ const Post = function(post) {
     this.title = post.title;
     this.content = post.content;
     this.image = post.image;
-    this.canBeDisplay = post.canBeDisplay;
 };
 
 module.exports = Post;

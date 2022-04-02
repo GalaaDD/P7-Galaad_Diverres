@@ -68,6 +68,7 @@ const routes = [
     component: postsDisplay,
     meta: { 
       requiresAuth: true,
+      props: true,
       title: 'Publications',
     }, //requiresAuth: true
   },
@@ -81,6 +82,7 @@ const routes = [
     path: '/post/:postId',
     name: 'updatePost',
     component: postsDisplay,
+    props: true,
     meta: { requiresAuth: true }, //requiresAuth: true
   },
   {

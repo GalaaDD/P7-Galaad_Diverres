@@ -14,7 +14,7 @@ db.connect((err) => {
 });
 
 let user = `create table if not exists user(
-  userId int primary key auto_increment,
+  id int primary key auto_increment,
   email varchar(50) not null unique,
   password VARCHAR(255) not null,
   lastname VARCHAR(45) not null, 

@@ -23,21 +23,19 @@
 </template>
 
 <script>
-
   import { mapGetters, mapActions } from "vuex";
   import VueJwtDecode from "vue-jwt-decode";
   export default {
     name: 'updatePost',
     props: ["postId"],
     components: { },
-
+    
     data() {
         return {
         title: "",
         content: "",
         file: "",
         user_id: VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId,
-        post_id: this.postId,
       };
     },
 
@@ -57,36 +55,58 @@
       },
 
       submit() {
-        /*const title = this.title;
-        const content = this.content;
-        const file = this.file;
-        const user_id = VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId;
-        const post_id = this.id;
-        console.log(this.id);
-        this.$store.dispatch("updatePost", {
-          title,
-          content,
-          file, 
-          user_id,
-          post_id,
-        })
-        //this.$router.push({ name: "postsDisplay" });*/
-         try {
+       
+              /*const title = this.title;
+              const content = this.content;
+              const file = this.file;
+              const user_id = VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId;
+              const post_id = this.id;
+              console.log(this.id);
+              this.$store.dispatch("updatePost", {
+                title,
+                content,
+                file, 
+                user_id,
+                post_id,
+              })
+              //this.$router.push({ name: "postsDisplay" });*/
+
+
+              /*submit() {
+            try {
+              const formData = new FormData();
+              formData.append("image", this.file);
+              formData.append("title", this.title);
+              formData.append("content", this.content);
+              formData.append("user_id", this.user_id);
+              formData.append("post_id", this.postId);
+              console.log("file", this.file);
+              this.updatePost(this.postId, formData);
+
+              //this.$router.push({ name: "postsDisplay" });
+            } catch (error) {
+              throw "Le service est temporairement indisponible";
+            }
+          },*/
+        try {
           const formData = new FormData();
           formData.append("image", this.file);
           formData.append("title", this.title);
           formData.append("content", this.content);
           formData.append("user_id", this.user_id);
           formData.append("post_id", this.postId);
-          console.log(formData);
-          this.updatePost(formData);
+          console.log("file", this.file);
+          this.updatePost(this.postId, formData);
 
-          this.$router.push({ name: "postsDisplay" });
+          //this.$router.push({ name: "postsDisplay" });
         } catch (error) {
           throw "Le service est temporairement indisponible"
         }
       },
     },
   }
+
+
+  
 </script>
 
