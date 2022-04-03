@@ -46,9 +46,9 @@ exports.updatePost = (req, res, next) => {
     */
     let image = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
     
-    if (req.file) {
+    /*if (req.file) {
         image = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
-    }
+    }*/
     console.log(req.params.postId);
     db.query(`SELECT * FROM post WHERE id=?`, req.params.postId, (error, rows, fields) => {
         if (error) {
@@ -57,7 +57,7 @@ exports.updatePost = (req, res, next) => {
             if (rows[0].image) {
                 const filename = rows[0].image.split("/images/")[1];
                 fs.unlink(`images/${filename}`, () => {
-                    db.query(`UPDATE post SET title = ?, content = ?, image= ?  WHERE id = ?`, [req.body.content, req.body.title, image, req.params.postId], (error, result) => {
+                    db.query(`UPDATE post SET title = ?, content = ?, image= ?  WHERE id = ?`, [req.body.title, req.body.content, image, req.params.postId], (error, result) => {
                         if (error) {
                             return res.status(400).json({ error: "Le post n'a pas pu être modifié" });
                         }
@@ -65,7 +65,7 @@ exports.updatePost = (req, res, next) => {
                     });
                 });
             } else {
-                db.query(`UPDATE post SET title = ?, content = ?, WHERE id = ?`, [req.body.content, req.body.title, image, req.params.postId], (error, result) => {
+                db.query(`UPDATE post SET title = ?, content = ?, WHERE id = ?`, [req.body.title, req.body.content, image, req.params.postId], (error, result) => {
                     if (error) {
                         return res.status(400).json({ error: "Le post n'a pas pu être modifié" });
                     }
@@ -109,7 +109,7 @@ exports.getAllPostsAdmin = (req, res, next) => {
 
 
 
-exports.canBeDisplay = (req, res, next) => {
+/*exports.canBeDisplay = (req, res, next) => {
     //WHERE canBeDisplay = 1
     db.query(`UPDATE post SET canBeDisplay = 1`, (error, result) => {
         if (error) {
@@ -117,7 +117,7 @@ exports.canBeDisplay = (req, res, next) => {
         }
         return res.status(200).json(result);
     });
-};
+};*/
 
 exports.getAllPosts = (req, res, next) => {
     

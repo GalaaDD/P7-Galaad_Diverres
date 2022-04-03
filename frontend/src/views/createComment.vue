@@ -50,7 +50,7 @@
           this.content= "";
 
         } catch (error) {
-          throw "Sorry you can't make a post now!"
+          throw "Sorry you can't make a comment now!"
         }
     },
 

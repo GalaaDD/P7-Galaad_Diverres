@@ -9,10 +9,10 @@
             <h2>{{ post.title }}</h2>
             <img :src= "post.image" id="image"/>
             <p>{{ post.content }}</p>
+            <div v-if ="userId == post.user_id || User.Admin == 1">
             <p>Publié par {{ User.firstname }} {{ User.lastname }} </p>
-            <div v-if ="userId == post.user_id">
-              <button @click="deleteOnePost(post.id)">Supprimer la publication</button>
-              <button @click="updatePostPage(post.id)">Modifier la publication</button>
+              <button @click="deleteOnePost(post.id)" title="Supprimer cette publication">Supprimer la publication</button>
+              <button @click="updatePostPage(post.id)" title="Lien vers la modification de cette publication">Modifier la publication</button>
               <!--sending post.id as a parameter to know which one has to be either delete or updated-->
             </div>
             <div class="comment__Container">
@@ -58,7 +58,7 @@
       return {
         content: "",
         userId: VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId,
-        Admin: VueJwtDecode.decode(localStorage.getItem("AccessToken")).Admin,
+        //Admin: VueJwtDecode.decode(localStorage.getItem("AccessToken")).Admin,
       };
     },
     created: function() {

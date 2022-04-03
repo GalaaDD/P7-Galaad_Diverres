@@ -134,9 +134,10 @@ export default createStore({
     },*/
 
     updatePost({ commit }, postId, payload){
+      console.log(postId);
       console.log("payload", payload);
       return new Promise((resolve, reject) => {
-        axios.put(`/post/`+ postId)
+        axios.put(`/post/`+ postId, payload)
         .then((response) => {
           commit("SetUser", payload);
           console.log(response.data.user);
@@ -149,7 +150,7 @@ export default createStore({
       });
     },
   
-    canBeDisplay( {commit}, payload ){
+    /*canBeDisplay( {commit}, payload ){
       let postId = payload;
       console.log(postId);
       return new Promise((resolve, reject) => {
@@ -164,7 +165,7 @@ export default createStore({
           reject(error);
         });
       });
-    },
+    },*/
 
     GetPostsAdmin({ commit }) {
       return new Promise((resolve, reject) => {

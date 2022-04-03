@@ -7,11 +7,11 @@
       <form @submit.prevent="submit">
         <div class="postCreation__containers">
           <label for="title">Titre:</label>
-          <input type="text" name="title" v-model="title" />
+          <input type="text" name="title" v-model="title" aria-label="champ du titre de la publication" />
         </div>
         <div class="postCreation__containers">
           <label class="sr-only" for="image" title="image" role="button">image</label>
-          <input type="file" name="image" accept=".png, .jpg, .jpeg, .gif" v-on:change="onSelect" ref="file" aria-required="true" id="image" />
+          <input type="file" name="image" accept=".png, .jpg, .jpeg, .gif" v-on:change="onSelect" ref="file" aria-required="true" id="image" title="Séléctionner une image à inclure dans votre publication" aria-label="sélection d'image" />
         </div>
         <div class="postCreation__containers">
           <label for="content">Publication</label>
@@ -19,9 +19,10 @@
             name="content"
             v-model="content"
             placeholder="écrivez votre publication ici..."
+            aria-label="champ du contenu de la publication"
           ></textarea>
         </div>
-        <button type="submit">Publier</button>
+        <button type="submit" title="Valider la création d'une publication"  aria-label="Publier">Publier</button>
       </form>
     </div>
   </div>

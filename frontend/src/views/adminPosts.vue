@@ -18,7 +18,7 @@
                   </div>
                   <button @click="deleteOnePost(post.id)">Supprimer la publication</button>
                   <button @click="updatePostPage(post.id)">Modifier la publication</button>
-                  <button @click="canBeDisplay(post.id)">Approuver la publication</button>
+                  <!--<button @click="canBeDisplay(post.id)">Approuver la publication</button>-->
               </div>
               <div v-else>Aucun commentaire sur cette publication</div>
           </div>
@@ -57,11 +57,11 @@
       const idPost = this.post.id;
       this.$store.dispatch("deleteOnePost", { idPost });
     },
-    canBeDisplay(){
+    /*canBeDisplay(){
       const idPost = this.post.id;
        this.$store.dispatch("deleteOnePost", { idPost });
-    },
-      ...mapActions( ["GetPosts", "GetPostsAdmin", "canBeDisplay"]),
+    },*/
+      ...mapActions( ["GetPosts", "GetPostsAdmin"]),
     },
   };
 </script>

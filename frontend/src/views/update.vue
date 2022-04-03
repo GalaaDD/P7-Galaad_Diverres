@@ -36,6 +36,7 @@
         content: "",
         file: "",
         user_id: VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId,
+        post_id: this.postId,
       };
     },
 
@@ -55,7 +56,7 @@
       },
 
       submit() {
-       
+       console.log("postId", this.postId);
               /*const title = this.title;
               const content = this.content;
               const file = this.file;
@@ -90,12 +91,14 @@
           },*/
         try {
           const formData = new FormData();
-          formData.append("image", this.file);
+          
           formData.append("title", this.title);
           formData.append("content", this.content);
+          formData.append("image", this.file);
           formData.append("user_id", this.user_id);
           formData.append("post_id", this.postId);
           console.log("file", this.file);
+          console.log("postId", this.postId);
           this.updatePost(this.postId, formData);
 
           //this.$router.push({ name: "postsDisplay" });

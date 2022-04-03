@@ -27,7 +27,6 @@ db.execute(user, function(err, results, fields) {
     console.log(err.message);
   }
 });
-//canBeDisplay TINYINT not null,\
 //ON DELETE CASCADE\
 //CONSTRAINT `user` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)\
 
@@ -36,8 +35,7 @@ let post = `create table if not exists post(
   user_id int not null,
   title VARCHAR(50) not null,
   content TEXT not null,
-  image VARCHAR(120),
-  canBeDisplay TINYINT not null
+  image VARCHAR(120)
 )`;
 
 db.execute( post, function(err, results, fields) {

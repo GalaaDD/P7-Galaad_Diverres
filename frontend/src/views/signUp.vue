@@ -16,8 +16,8 @@
               <label for="password">Mot de Passe:</label>
               <input type="password" name="password" v-model="state.password" required>
               <p v-for="error of v$.password.$errors" :key="error.$uid">
-              <strong>{{ error.$message }}</strong>
-            </p>
+                <strong>{{ error.$message }}</strong>
+              </p>
               <span v-if="v$.password.$error">
                 {{ v$.password.$errors[0].$message }}
               </span>
@@ -42,7 +42,7 @@
                 {{ v$.firstname.$errors[0].$message }}
               </span>
             </div>
-            <button type="submit">S'inscrire</button>
+            <button type="submit" title="S'incrire à Groupomania">S'inscrire</button>
           </form>
       </div>
       <!--<p  id="error">email déjà utilisé</p>-->

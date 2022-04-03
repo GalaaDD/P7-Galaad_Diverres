@@ -1,42 +1,56 @@
 <template>
   <div class="home">
-    <img id ="nav__image" src="../assets/logo-banner-update-3.png"/>
-    <h1 id="nav__text">Avec Groupomania, partagez et restez en contact avec vos collaborateurs.</h1>
-    <div>
-    <p>Bienvenue sur Groupomania le réseau social qui vous ressemble !</p>
+    <div v-if ="User || User.Admin == 1">
+        <img id ="nav__image" src="../assets/logo-banner-update-3.png"/>
+        <h1 id="nav__text">Avec Groupomania, partagez et restez en contact avec vos collaborateurs.</h1>
+        <div>
+        <p>Bienvenue sur Groupomania le réseau social qui vous ressemble !</p>
+        </div>
+        <div v-if="User" class="user-information__container">
+          <h2>Informations personnelles </h2>
+          <p>email:{{ User.email }}</p>
+          <p>Nom de famille:{{ User.lastname }}</p>
+          <p>Prénom:{{ User.firstname }}</p>
+        </div>
+      </div>
+      <h2>Modification du compte utilisateur:</h2>
+      <div class="form-container">
+        <label for="email">Modifier mon Adresse Email</label>
+        <input type="email" v-model="state.email" placeholder="groupomania@gr.com" required /><br>
+        <p v-for="error of v$.email.$errors" :key="error.$uid">
+          <strong>{{ error.$message }}</strong>
+        </p>
+      </div>
+
+      <div class="form-container">
+        <label for="password">Modifier mon Mot de passe</label>
+        <input type="password" v-model="state.password" placeholder="Mot de passe" required /><br>
+        <p v-for="error of v$.password.$errors" :key="error.$uid">
+          <strong>{{ error.$message }}</strong>
+        </p>
+      </div>
+
+      <div class="form-container">
+        <label for="password">Modifier mon Nom de famille</label>
+        <input type="text" v-model="state.lastname" placeholder="Nom de famille" required /><br>
+        <p v-for="error of v$.lastname.$errors" :key="error.$uid">
+          <strong>{{ error.$message }}</strong>
+        </p>
+      </div>
+
+      <div class="form-container">
+        <label for="password">Modifier mon Prénom</label>
+        <input type="text" v-model="state.firstname" placeholder="Prénom" required /><br>
+        <p v-for="error of v$.firstname.$errors" :key="error.$uid">
+          <strong>{{ error.$message }}</strong>
+        </p>
+      </div>
+    
+      <button @click="updateUserOnClick()" title="valider la modification des informations de votre compte">Modifier mon compte</button>
+
+      <h2>Suppression du compte utilisateur:</h2>
+      <button @click="deleteUser()" title="confirmez la suppression de votre compte Groupomania">Supprimer mon compte</button>
     </div>
-    <div v-if="User" class="user-information__container">
-      <h2>Informations personnelles </h2>
-      <p>email:{{ User.email }}</p>
-      <p>Nom de famille:{{ User.lastname }}</p>
-      <p>Prénom:{{ User.firstname }}</p>
-    </div>
-  </div>
-  <h2>Modification du compte utilisateur:</h2>
-  <div class="form-container">
-    <label for="email">Modifier mon Adresse Email</label>
-    <input type="email" v-model="state.email" placeholder="groupomania@gr.com" required /><br>
-  </div>
-
-  <div class="form-container">
-    <label for="password">Modifier mon Mot de passe</label>
-    <input type="password" v-model="state.password" placeholder="Mot de passe" required /><br>
-  </div>
-
-  <div class="form-container">
-    <label for="password">Modifier mon Nom de famille</label>
-    <input type="text" v-model="state.lastname" placeholder="Nom de famille" required /><br>
-  </div>
-
-  <div class="form-container">
-    <label for="password">Modifier mon Prénom</label>
-    <input type="text" v-model="state.firstname" placeholder="Prénom" required /><br>
-  </div>
- 
-  <button @click="updateUserOnClick()">Modifier mon compte</button>
-
-  <h2>Suppression du compte utilisateur:</h2>
-  <button @click="deleteUser()">Supprimer mon compte</button>
 </template>
 
 <script>
@@ -62,10 +76,10 @@
 
       const rules = computed(() => {
         return {
-            email: { required, email },
-        password: { required, minLength:minLength(6) },
-        lastname: { required, minLength:minLength(2) },
-        firstname: { required },
+          email: { required, email },
+          password: { required, minLength:minLength(6) },
+          lastname: { required, minLength:minLength(2) },
+          firstname: { required, minLength:minLength(2) },
         }
       })
 
@@ -94,11 +108,11 @@
         this.v$.$validate()
         if (!this.v$.$error) {
           alert('Form successfully submitted.')
-          const email = this.email;
-          const password = this.password;
-          const userId = this.userId;
-          const firstname = this.firstname;
-          const lastname = this.lastname;
+          const email = this.state.email;
+          const password = this.state.password;
+          const userId = this.state.userId;
+          const firstname = this.state.firstname;
+          const lastname = this.state.lastname;
           this.$store.dispatch("updateUser", {
             email,
             password,

@@ -66,9 +66,9 @@ const routes = [
     path: '/post/display',
     name: 'postsDisplay',
     component: postsDisplay,
+    props: true,
     meta: { 
       requiresAuth: true,
-      props: true,
       title: 'Publications',
     }, //requiresAuth: true
   },
@@ -83,7 +83,7 @@ const routes = [
     name: 'updatePost',
     component: postsDisplay,
     props: true,
-    meta: { requiresAuth: true }, //requiresAuth: true
+    meta: { requiresAuth: true, }, //requiresAuth: true
   },
   {
     path: '/post/admin',
@@ -94,11 +94,11 @@ const routes = [
       title: 'Administrateur-Publications à modérer'
     }, //requiresAuth: true
   },
-  {
+  /*{
     path: '/post/moderation/:postId',
     name: 'canBeDisplay',
     meta: { requiresAuth: true }, //requiresAuth: true
-  },
+  },*/
   {
     path: '/comment',
     name: 'createComment',

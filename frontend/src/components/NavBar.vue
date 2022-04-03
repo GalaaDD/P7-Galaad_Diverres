@@ -1,20 +1,20 @@
 <template>
   <div id="nav">
       <router-link to="/">Accueil</router-link> |
-      <router-link to="/post/display">Fil d'actualités</router-link> |
+      <router-link to="/post/display" title="Lien vers la page des publications">Fil d'actualités</router-link> |
       <div v-if="User">
-        <span v-if="User.Admin == 1">
+        <!--<span v-if="User.Admin == 1">
           <router-link to="/post/admin">Publications à modérer</router-link> |
-        </span>
+        </span>-->
       </div>
       <span v-if="isLoggedIn">
-        <a @click="logout">Se déconnecter</a>
+        <a @click="logout" title="Lien pour se déconnecter de votre session">Se déconnecter</a>
       </span>
       
       
       <span v-else>
-        <router-link to="/signup">S'inscrire</router-link> |
-        <router-link to="/login">Se Connecter</router-link>
+        <router-link to="/signup" title="Lien vers la page d'inscription">S'inscrire</router-link> |
+        <router-link to="/login" title="Lien vers la page de connexion">Se Connecter</router-link>
       </span>
     </div>
 </template>
@@ -61,7 +61,7 @@ a:hover {
   cursor: pointer;
 }
 #nav a.router-link-exact-active {
-  color: #689ef6;
+  color: #0795e6;
 }
 
 </style>
