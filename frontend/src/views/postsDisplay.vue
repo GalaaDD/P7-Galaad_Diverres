@@ -74,9 +74,9 @@
     methods: {
 
     updatePostPage(postId) {
-      this.$store.dispatch("updatePost", { postId });
-      this.$router.push({ name: "update" });
-
+      this.$router.push({ name: "update", params: { postId }});
+      console.log("postId-post-Display", postId);
+      //this.$store.dispatch("updatePost", { postId });
     },
 
     deleteOnePost: function () {

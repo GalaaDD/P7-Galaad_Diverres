@@ -17,7 +17,7 @@
           placeholder="Modifiez votre publication ici..."
         ></textarea>
       </div>
-      <button type="submit">Modifier</button>
+      <button class="submit">Modifier</button>
     </form>
   </div>
 </template>
@@ -56,8 +56,28 @@
       },
 
       submit() {
-       console.log("postId", this.postId);
-              /*const title = this.title;
+              
+        try {
+          const formData = new FormData();
+          
+          formData.append("title", this.title);
+          formData.append("content", this.content);
+          formData.append("image", this.file);
+          formData.append("user_id", this.user_id);
+          formData.append("post_id", this.postId);
+          console.log("file", this.file);
+          console.log("postId", this.postId);
+          this.updatePost(this.postId, formData);
+
+          //this.$router.push({ name: "postsDisplay" });
+        } catch (error) {
+          throw "Le service est temporairement indisponible"
+        }
+      },
+    },
+  }
+
+          /*const title = this.title;
               const content = this.content;
               const file = this.file;
               const user_id = VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId;
@@ -89,27 +109,6 @@
               throw "Le service est temporairement indisponible";
             }
           },*/
-        try {
-          const formData = new FormData();
-          
-          formData.append("title", this.title);
-          formData.append("content", this.content);
-          formData.append("image", this.file);
-          formData.append("user_id", this.user_id);
-          formData.append("post_id", this.postId);
-          console.log("file", this.file);
-          console.log("postId", this.postId);
-          this.updatePost(this.postId, formData);
-
-          //this.$router.push({ name: "postsDisplay" });
-        } catch (error) {
-          throw "Le service est temporairement indisponible"
-        }
-      },
-    },
-  }
-
-
   
 </script>
 

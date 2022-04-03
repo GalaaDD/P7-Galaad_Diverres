@@ -62,7 +62,7 @@
       padding: 0.5rem;
     }
     button {
-      background-color: #0795e6;
+      background-color: #5900FF;
       color: white;
       padding: 14px 0;
       margin: 10px 0;

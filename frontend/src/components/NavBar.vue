@@ -61,7 +61,7 @@ a:hover {
   cursor: pointer;
 }
 #nav a.router-link-exact-active {
-  color: #0795e6;
+  color: #5900FF;
 }
 
 </style>

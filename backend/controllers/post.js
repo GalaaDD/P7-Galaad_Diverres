@@ -46,9 +46,9 @@ exports.updatePost = (req, res, next) => {
     */
     let image = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
     
-    /*if (req.file) {
+    if (req.file) {
         image = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
-    }*/
+    }
     console.log(req.params.postId);
     db.query(`SELECT * FROM post WHERE id=?`, req.params.postId, (error, rows, fields) => {
         if (error) {
@@ -97,7 +97,7 @@ exports.deletePost = (req, res, next) => {
 };
 
 //function to get all of the posts from groupomania data base
-exports.getAllPostsAdmin = (req, res, next) => {
+/*exports.getAllPostsAdmin = (req, res, next) => {
     //WHERE canBeDisplay = 0
     db.query('SELECT post.id, user_id, title, content, image  FROM post  INNER JOIN user ON user.id = post.user_id', (error, result) => {
         if (error) {
@@ -105,7 +105,7 @@ exports.getAllPostsAdmin = (req, res, next) => {
         }
         return res.status(200).json(result);
     });
-};
+};*/
 
 
 

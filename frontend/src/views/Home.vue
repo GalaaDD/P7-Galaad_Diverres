@@ -49,7 +49,7 @@
       <button @click="updateUserOnClick()" title="valider la modification des informations de votre compte">Modifier mon compte</button>
 
       <h2>Suppression du compte utilisateur:</h2>
-      <button @click="deleteUser()" title="confirmez la suppression de votre compte Groupomania">Supprimer mon compte</button>
+      <button @click="deleteUser()" title="confirmer la suppression de votre compte Groupomania">Supprimer mon compte</button>
     </div>
 </template>
 
