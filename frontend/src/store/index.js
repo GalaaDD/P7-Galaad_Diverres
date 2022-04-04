@@ -133,20 +133,21 @@ export default createStore({
       });
     },*/
 
-    updatePost({ commit }, postId, payload){
-      console.log(postId);
+    updatePost({ commit }, postId, payload) {
+      //let postId = payload.id;
       console.log("payload", payload);
       return new Promise((resolve, reject) => {
-        axios.put(`/post/`+ postId, payload)
-        .then((response) => {
-          commit("SetUser", payload);
-          console.log(response.data.user);
-          console.log(response.data);
-          resolve();
-        })
-        .catch((error) => {
-          reject(error);
-        });
+        axios
+          .put(`/post/` + postId, payload)
+          .then((response) => {
+            commit("setPosts", payload);
+            console.log(response.data.user);
+            console.log(response.data);
+            resolve();
+          })
+          .catch((error) => {
+            reject(error);
+          });
       });
     },
   

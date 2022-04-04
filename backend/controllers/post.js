@@ -38,45 +38,57 @@ exports.createPost = (req, res, next) => {
 
 //function to update a post
 exports.updatePost = (req, res, next) => {
-
-    console.log(req.params.postId);
-
-    /* let image="null";
-        let image = file....;
-    */
-    let image = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
-    
+    let image = null;
+  
     if (req.file) {
-        image = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
+      image = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
     }
-    console.log(req.params.postId);
-    db.query(`SELECT * FROM post WHERE id=?`, req.params.postId, (error, rows, fields) => {
+  
+    console.log(req.params);
+  
+    db.query(
+      `SELECT * FROM post WHERE id = ?`,
+      [req.params.postId],
+      (error, rows, fields) => {
         if (error) {
-            return res.status(500).json({ error: "mysql" });
+          console.log(error);
+          return res.status(500).json({ error: "mysql" });
         } else {
-            if (rows[0].image) {
-                const filename = rows[0].image.split("/images/")[1];
-                fs.unlink(`images/${filename}`, () => {
-                    db.query(`UPDATE post SET title = ?, content = ?, image= ?  WHERE id = ?`, [req.body.title, req.body.content, image, req.params.postId], (error, result) => {
-                        if (error) {
-                            return res.status(400).json({ error: "Le post n'a pas pu être modifié" });
-                        }
-                        return res.status(200).json(result);
-                    });
-                });
-            } else {
-                db.query(`UPDATE post SET title = ?, content = ?, WHERE id = ?`, [req.body.title, req.body.content, image, req.params.postId], (error, result) => {
-                    if (error) {
-                        return res.status(400).json({ error: "Le post n'a pas pu être modifié" });
-                    }
-                    return res.status(200).json(result);
-                });
-
-            }
-
+          console.log(rows);
+          if (rows[0].image) {
+            const filename = rows[0].image.split("/images/")[1];
+            fs.unlink(`images/${filename}`, () => {
+              db.query(
+                `UPDATE post SET content = ?, title = ?, image= ?  WHERE id = ?`,
+                [req.body.content, req.body.title, image, req.params.id],
+                (error, result) => {
+                  if (error) {
+                    return res
+                      .status(400)
+                      .json({ error: "Le post n'a pas pu être modifié" });
+                  }
+                  return res.status(200).json(result);
+                }
+              );
+            });
+          } else {
+            db.query(
+              `UPDATE post SET content = ?, title = ?, WHERE id = ?`,
+              [req.body.content, req.body.title, image, req.params.id],
+              (error, result) => {
+                if (error) {
+                  return res
+                    .status(400)
+                    .json({ error: "Le post n'a pas pu être modifié" });
+                }
+                return res.status(200).json(result);
+              }
+            );
+          }
         }
-    });
-};
+      }
+    );
+  };
 
 //function to delete a post from groupomania data base
 exports.deletePost = (req, res, next) => {

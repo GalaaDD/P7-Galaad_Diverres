@@ -1,51 +1,68 @@
 <template>
   <div class="signup">
-      <div>
-          <form @submit.prevent="submit">
-            <div class="input__container">
-               <label for="email">email:</label>
-              <input type="text" name="email" placeholder="email" v-model="state.email" required>
-              <p v-for="error of v$.email.$errors" :key="error.$uid">
-                <strong>{{ error.$message }}</strong>
-              </p>
-              <!--<span v-if="v$.email.$error">
-                {{ v$.email.$errors[0].$message }}
-              </span>-->
-            </div>
-            <div class="input__container">
-              <label for="password">Mot de Passe:</label>
-              <input type="password" name="password" v-model="state.password" required>
-              <p v-for="error of v$.password.$errors" :key="error.$uid">
-                <strong>{{ error.$message }}</strong>
-              </p>
-              <span v-if="v$.password.$error">
-                {{ v$.password.$errors[0].$message }}
-              </span>
-            </div>
-            <div class="input__container">
-              <label for="lastname">Nom:</label>
-              <input type="text" name="lastname" v-model="state.lastname" required>
-              <p v-for="error of v$.lastname.$errors" :key="error.$uid">
-                <strong>{{ error.$message }}</strong>
-              </p>
-              <span v-if="v$.lastname.$error">
-                {{ v$.lastname.$errors[0].$message }}
-              </span>
-            </div>
-            <div class="input__container">
-              <label for="firstname">Prénom:</label>
-              <input type="text" name="firstname" v-model="state.firstname" required>
-              <p v-for="error of v$.firstname.$errors" :key="error.$uid">
-                <strong>{{ error.$message }}</strong>
-              </p>
-              <span v-if="v$.firstname.$error">
-                {{ v$.firstname.$errors[0].$message }}
-              </span>
-            </div>
-            <button type="submit" title="S'incrire à Groupomania">S'inscrire</button>
-          </form>
-      </div>
-      <!--<p  id="error">email déjà utilisé</p>-->
+    <div>
+      <form @submit.prevent="submit">
+        <div class="input__container">
+          <label for="email">email:</label>
+          <input
+            type="text"
+            name="email"
+            placeholder="email"
+            v-model="state.email"
+            required
+          />
+          <span v-if="v$.email.$errors">
+            <p v-for="error of v$.email.$errors" :key="error.$uid">
+              <strong>{{ error.$message }}</strong>
+            </p>
+          </span>
+        </div>
+        <div class="input__container">
+          <label for="password">Mot de Passe:</label>
+          <input
+            type="password"
+            name="password"
+            v-model="state.password"
+            required
+          />
+          <span v-if="v$.password.$errors">
+            <p v-for="error of v$.password.$errors" :key="error.$uid">
+              <strong>{{ error.$message }}</strong>
+            </p>
+          </span>
+        </div>
+        <div class="input__container">
+          <label for="lastname">Nom:</label>
+          <input
+            type="text"
+            name="lastname"
+            v-model="state.lastname"
+            required
+          />
+          <span v-if="v$.lastname.$errors">
+            <p v-for="error of v$.lastname.$errors" :key="error.$uid">
+              <strong>{{ error.$message }}</strong>
+            </p>
+          </span>
+        </div>
+        <div class="input__container">
+          <label for="firstname">Prénom:</label>
+          <input
+            type="text"
+            name="firstname"
+            v-model="state.firstname"
+            required
+          />
+          <span v-if="v$.firstname.$error">
+            <p v-for="error of v$.firstname.$errors" :key="error.$uid">
+              <strong>{{ error.$message }}</strong>
+            </p>
+          </span>
+        </div>
+        <button type="submit">S'inscrire</button>
+      </form>
+    </div>
+    <!--<p  id="error">email déjà utilisé</p>-->
   </div>
 </template>
 

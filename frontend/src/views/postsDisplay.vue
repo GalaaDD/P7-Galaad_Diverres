@@ -1,34 +1,47 @@
 <template>
   <createPost />
-  <router-view/>
+  <router-view />
   <div v-if="User">
     <div class="posts" v-if="Posts">
       <div class="post__container">
-        <div :postId= post.id v-for="post in Posts" :key="post.user_id" ><!--slice().reverse()-->
+        <div
+          :postId="post.id"
+          v-for="post in Posts.slice().reverse()"
+          :key="post.user_id"
+        >
           <div id="post-div">
             <h2>{{ post.title }}</h2>
-            <img :src= "post.image" id="image"/>
+            <img :src="post.image" id="image" />
             <p>{{ post.content }}</p>
-            <div v-if ="userId == post.user_id || User.Admin == 1">
-            <p>Publié par {{ User.firstname }} {{ User.lastname }} </p>
-              <button @click="deleteOnePost(post.id)" title="Supprimer cette publication">Supprimer la publication</button>
-              <button @click="updatePostPage(post.id)" title="Lien vers la modification de cette publication">Modifier la publication</button>
+            <p>Publié par {{ User.firstname }} {{ User.lastname }}</p>
+            <div v-if="userId == post.user_id">
+              <button @click="deleteOnePost(post.id)">
+                Supprimer la publication
+              </button>
+              <button @click="updatePostPage(post.id)">
+                Modifier la publication
+              </button>
               <!--sending post.id as a parameter to know which one has to be either delete or updated-->
             </div>
             <div class="comment__Container">
               <div class="comments" v-if="Comments">
-                  <div :id= post.id v-for="comment in Comments" :key="comment.id" class="comment"> <!--.slice().reverse()-->
-                    <div id="comment-div">
-                      <p> Commentaire publié par</p>
-                      <p>{{ User.firstname }} {{ User.lastname }}</p>
-                      <p>{{ comment.content }}</p>
-                    </div>
+                <div
+                  :id="post.id"
+                  v-for="comment in Comments.slice().reverse()"
+                  :key="comment.id"
+                  class="comment"
+                >
+                  <div id="comment-div">
+                    <p>Commentaire publié par</p>
+                    <p>{{ User.firstname }} {{ User.lastname }}</p>
+                    <p>{{ comment.content }}</p>
                   </div>
+                </div>
               </div>
               <div v-else>Aucun commentaire sur cette publication</div>
               <div class="commentCreation__Container">
                 <createComment :postId="post.id" />
-                <router-view/>
+                <router-view />
               </div>
             </div>
           </div>
@@ -40,43 +53,39 @@
 </template>
 
 <script>
-  import { mapGetters, mapActions } from "vuex";
-  import createPost  from '@/views/createPost.vue'
-  import createComment from '@/views/createComment.vue'
-  //import CommentView   from '@/views/comment.vue'
-  import VueJwtDecode from "vue-jwt-decode";
+import { mapGetters, mapActions } from "vuex";
+import createPost from "@/views/createPost.vue";
+import createComment from "@/views/createComment.vue";
+//import CommentView   from '@/views/comment.vue'
+import VueJwtDecode from "vue-jwt-decode";
 
-  export default {
-  
-    name: 'postsDisplay',
-    props: ["post"],
-    components: {
-      createComment, createPost, 
-    },
-    
-    data() {
-      return {
-        content: "",
-        userId: VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId,
-        //Admin: VueJwtDecode.decode(localStorage.getItem("AccessToken")).Admin,
-      };
-    },
-    created: function() {
-      this.GetPosts();
-    },
-    computed: {
-      
-      ...mapGetters( {User: 'StateUser'}),
-      ...mapGetters( {Posts: 'StatePosts'}),
-      ...mapGetters( {Comments:'StateComments'}),
-    },
+export default {
+  name: "postsDisplay",
+  props: ["post"],
+  components: {
+    createComment,
+    createPost,
+  },
 
-    methods: {
+  data() {
+    return {
+      content: "",
+      userId: VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId,
+      Admin: VueJwtDecode.decode(localStorage.getItem("AccessToken")).Admin,
+    };
+  },
+  created: function () {
+    this.GetPosts();
+  },
+  computed: {
+    ...mapGetters({ User: "StateUser" }),
+    ...mapGetters({ Posts: "StatePosts" }),
+    ...mapGetters({ Comments: "StateComments" }),
+  },
 
+  methods: {
     updatePostPage(postId) {
-      this.$router.push({ name: "update", params: { postId }});
-      console.log("postId-post-Display", postId);
-      //this.$store.dispatch("updatePost", { postId });
+      this.$router.push({ name: "update", params: { postId } });
     },
 
     deleteOnePost: function () {
@@ -84,10 +93,11 @@
       this.$store.dispatch("deleteOnePost", { idPost });
     },
 
-      ...mapActions( ["GetPosts", "updatePost", "deleteOnePost"]),
-    },
-  };
+    ...mapActions(["GetPosts", "updatePost", "deleteOnePost"]),
+  },
+};
 </script>
+
 
 <style>
 
