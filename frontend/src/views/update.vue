@@ -67,14 +67,18 @@ export default {
     submit() {
       try {
         const formData = new FormData();
-        formData.append("image", this.file);
+        formData.append("post_id", this.postId);
+        formData.append("user_id", this.user_id);
         formData.append("title", this.title);
         formData.append("content", this.content);
-        formData.append("user_id", this.user_id);
-        formData.append("post_id", this.postId);
+        formData.append("image", this.file);
+        
         console.log("file", this.file);
-        this.updatePost(this.postId, formData);
-
+        console.log("title", this.title);
+        console.log("content", this.content);
+        console.log("user_id", this.user_id);
+        console.log("post_id", this.postId);
+        this.updatePost(formData, this.postId);
         //this.$router.push({ name: "postsDisplay" });
       } catch (error) {
         throw "Le service est temporairement indisponible";

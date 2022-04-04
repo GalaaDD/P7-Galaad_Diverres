@@ -10,7 +10,7 @@
           <label for="password">Mot de Passe:</label>
           <input type="password" name="password" v-model="password" />
         </div>
-        <button type="submit" title="Se connecter à votre session Groupomania">Se Connecter</button>
+        <button type="submit">Se Connecter</button>
       </form>
       <p v-if="showError" id="error">L'email ou le Mot de Passe est incorrect</p>
     </div>
@@ -62,7 +62,7 @@
       padding: 0.5rem;
     }
     button {
-      background-color: #5900FF;
+      background-color: #4286f4;
       color: white;
       padding: 14px 0;
       margin: 10px 0;

@@ -2,11 +2,11 @@
   <div id="nav">
       <router-link to="/">Accueil</router-link> |
       <router-link to="/post/display" title="Lien vers la page des publications">Fil d'actualités</router-link> |
-      <div v-if="User">
-        <!--<span v-if="User.Admin == 1">
+      <!--<div v-if="User">
+        <span v-if="User.Admin == 1">
           <router-link to="/post/admin">Publications à modérer</router-link> |
-        </span>-->
-      </div>
+        </span>
+      </div>-->
       <span v-if="isLoggedIn">
         <a @click="logout" title="Lien pour se déconnecter de votre session">Se déconnecter</a>
       </span>

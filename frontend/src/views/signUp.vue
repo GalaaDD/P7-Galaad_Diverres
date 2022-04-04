@@ -67,65 +67,69 @@
 </template>
 
 <script>
-  import { mapActions } from "vuex";
-  import useValidate from '@vuelidate/core'
-  import { required, email, minLength, /*helpers*/ } from '@vuelidate/validators'
-  import { reactive, computed } from 'vue'
-  export default {
-    name: 'signUp',
-    components: {},
-    setup() {
-      const state = reactive({
-        email: "",
-        password: "",
-        lastname: "",
-        firstname:"",
-        showError: false
-      })
+import { mapActions } from "vuex";
+import useValidate from "@vuelidate/core";
+import { required, email, minLength } from "@vuelidate/validators";
+import { reactive, computed } from "vue";
+export default {
+  name: "signUp",
+  components: {},
 
-      //const mustBeLearnVue = (value) => value.includes("learnvue");
+  setup() {
+    const state = reactive({
+      email: "",
+      password: "",
+      lastname: "",
+      firstname: "",
+      showError: false,
+    });
 
-      const rules = computed(() => {
-        
-        return {
-          email: { required, email, /*mustBeLearnVue: helpers.withMessage("Must Be learnvue" , mustBeLearnVue),*/ },
-          password: { required, minLength:minLength(8) },
-          lastname: { required, minLength:minLength(2) },
-          firstname: { required, minLength:minLength(2) },
-        }
-      })
+    // const mustBeLearnVue = (value) =>value.includes('learnvue');
 
-      const v$ = useValidate(rules, state)
-
+    const rules = computed(() => {
       return {
-        state,
-        v$,
+        email: {
+          required,
+          email,
+          //mustBeLearnVue: helpers.withMessage("Must Be learnvue "),
+        },
+        password: { required, minLength: minLength(8) },
+        lastname: { required, minLength: minLength(2) },
+        firstname: { required },
+      };
+    });
+
+    const v$ = useValidate(rules, state);
+
+    return {
+      state,
+      v$,
+    };
+  },
+  methods: {
+    ...mapActions(["signUp"]),
+    submit() {
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        alert("Form successfully submitted.");
+        try {
+          console.log(this.state);
+          this.signUp({
+            email: this.state.email,
+            password: this.state.password,
+            firstname: this.state.firstname,
+            lastname: this.state.lastname,
+          });
+          //window.location.reload();
+          //this.$router.push({ name: "HomeView" });
+          this.showError = false;
+        } catch (error) {
+          alert("Form not submitted.");
+        }
+      } else {
+        alert("Form failed validation");
       }
     },
-    methods: {
-      ...mapActions ( ['signUp']),
-      submit() {
-        this.v$.$validate()
-        if (!this.v$.$error) {
-          alert('Form successfully submitted.')
-          try {
-            this.signUp({
-              email: this.state.email,
-              password: this.state.password,
-              firstname: this.state.firstname,
-              lastname: this.state.lastname,
-            })
-            //window.location.reload();
-            this.$router.push({ name: "HomeView" });
-            this.showError = false
-          } 
-          catch (error) {
-            alert('Le formulaire n/a pas été envoyé')
-          }
-        } else {
-          alert('Le formulaire n/a pas été validé')
-        }
-      }
-    }
-  };
+  },
+};
 </script>

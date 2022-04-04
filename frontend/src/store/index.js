@@ -105,7 +105,7 @@ export default createStore({
         .then((response) => {
           commit("setPosts", post);
           console.log(response);
-          dispatch('GetPosts', 'updatePost', post)
+          dispatch('GetPosts', post)
           resolve(response.data);
           //location.reload();
         })
@@ -115,33 +115,16 @@ export default createStore({
       });
     },
 
-   /* updatePost({ commit }, postId, payload) {
-      //let postId = payload.id;
+    updatePost({ commit }, payload, postId ) {
+      //let postId = payload.post_id;
       console.log("payload", payload);
+      console.log("postId", postId);
       return new Promise((resolve, reject) => {
         axios
-          .put(`/post/` + postId, payload)
-          .then((response) => {
-            commit("SetUser", payload);
-            console.log(response.data.user);
-            console.log(response.data);
-            resolve();
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },*/
-
-    updatePost({ commit }, postId, payload) {
-      //let postId = payload.id;
-      console.log("payload", payload);
-      return new Promise((resolve, reject) => {
-        axios
-          .put(`/post/` + postId, payload)
+          .patch(`/post/` + postId, payload)
           .then((response) => {
             commit("setPosts", payload);
-            console.log(response.data.user);
+            console.log(payload);
             console.log(response.data);
             resolve();
           })
@@ -150,25 +133,8 @@ export default createStore({
           });
       });
     },
-  
-    /*canBeDisplay( {commit}, payload ){
-      let postId = payload;
-      console.log(postId);
-      return new Promise((resolve, reject) => {
-        axios.put(`/post/moderation/`+ postId,)
-        .then((response) => {
-          console.log(response.data);
-          //location.reload();
-          commit;
-          resolve();
-        })
-        .catch((error) => {
-          reject(error);
-        });
-      });
-    },*/
 
-    GetPostsAdmin({ commit }) {
+    /*GetPostsAdmin({ commit }) {
       return new Promise((resolve, reject) => {
         axios.get('post/admin')
         .then((response) => {
@@ -180,7 +146,7 @@ export default createStore({
           reject(error);
         });
       });
-    },
+    },*/
 
     GetPosts({ commit, /*dispatch*/ }) {
       return new Promise((resolve, reject) => {
