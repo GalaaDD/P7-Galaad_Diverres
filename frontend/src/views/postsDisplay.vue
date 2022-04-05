@@ -99,39 +99,70 @@ export default {
 </script>
 
 <style>
-#post-div {
-  border: solid black 0.2rem;
-  border-radius: 1rem;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  flex-wrap: wrap;
+  #post-div {
+    border: solid black 0.2rem;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
 
-  width: 100%;
-  background-color: #f2f2f2;
-  border-radius: 25px;
-}
+    width: 100%;
+    background-color: #f2f2f2;
+    border-radius: 25px;
+  }
 
-#post-div {
-  width: 80%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 10%;
-  margin-top: 2rem;
-}
+  #post-div {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10%;
+    margin-top: 2rem;
+  }
 
-img {
-  max-width: 100%;
-  border-radius: 15px;
-}
+  img {
+    max-width: 100%;
+    border-radius: 15px;
+  }
 
-p,
-h2 {
-  background-color: #fff;
-  border-radius: 0.5rem;
-  padding: 0.3rem;
-  text-align: left;
-  width: 94.5%;
-}
+  p,
+  h2 {
+    background-color: #fff;
+    border-radius: 0.5rem;
+    padding: 0.3rem;
+    text-align: left;
+    width: 94.5%;
+  }
+
+  .comments, .comment{
+      background-color: #fff;
+      border-radius: 1rem;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      width: 100%;
+    }
+    button{
+      width: 49%;
+      margin: 1rem;
+      padding: 0.3rem 0.5rem;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+    #comment-div{
+      border: solid grey 0.1rem;
+      border-radius: 0.5rem;
+      margin-top: 0.5rem;
+      width: 100%;
+    }
+
+    @media screen and (max-width: 300px) {
+      .posts {
+        width: 90%;
+      }
+      button{
+      width: none;
+      } 
+    }  
 </style>

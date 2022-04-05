@@ -7,7 +7,7 @@
       <form @submit.prevent="submit">
         <div class="postCreation__containers">
           <label for="title">Titre:</label>
-          <input type="text" name="title" v-model="title" />
+          <input type="text" name="title" v-model="title" required/>
         </div>
         <div class="postCreation__containers">
           <label class="sr-only" for="image" title="image" role="button">image</label>
@@ -19,6 +19,7 @@
             name="content"
             v-model="content"
             placeholder="écrivez votre publication ici..."
+            required
           ></textarea>
         </div>
         <button type="submit">Publier</button>

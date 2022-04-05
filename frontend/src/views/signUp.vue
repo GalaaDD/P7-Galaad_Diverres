@@ -81,7 +81,7 @@ export default {
       password: "",
       lastname: "",
       firstname: "",
-      showError: false,
+      //showError: false,
     });
 
     // const mustBeLearnVue = (value) =>value.includes('learnvue');
@@ -122,7 +122,7 @@ export default {
           });
           //window.location.reload();
           //this.$router.push({ name: "HomeView" });
-          this.showError = false;
+          //this.showError = false;
         } catch (error) {
           alert("Form not submitted.");
         }

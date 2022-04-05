@@ -4,11 +4,21 @@
       <form @submit.prevent="submit">
         <div class="input__container">
           <label for="email">email:</label>
-          <input type="text" name="email" v-model="email" />
+          <input type="text" name="email" v-model="state.email" required />
+          <span v-if="v$.email.$errors">
+            <p v-for="error of v$.email.$errors" :key="error.$uid">
+              <strong>{{ error.$message }}</strong>
+            </p>
+          </span>
         </div>
         <div>
           <label for="password">Mot de Passe:</label>
-          <input type="password" name="password" v-model="password" />
+          <input type="password" name="password" v-model="state.password" required />
+          <span v-if="v$.password.$errors">
+            <p v-for="error of v$.password.$errors" :key="error.$uid">
+              <strong>{{ error.$message }}</strong>
+            </p>
+          </span>
         </div>
         <button type="submit">Se Connecter</button>
       </form>
@@ -18,35 +28,60 @@
 </template>
 
 <script>
-  import { mapActions } from "vuex"; 
+  import { mapActions } from "vuex";
+  import useValidate from "@vuelidate/core";
+  import { required, email, minLength } from "@vuelidate/validators";
+  import { reactive, computed } from "vue"; 
   export default {
     name: "LogIn",
     components: {},
-    data() {
-      return {
+    setup() {
+      const state = reactive({
         email: "",
         password: "",
-        showError: false,
-      }
+        //showError: false,
+      });
+
+      const rules = computed(() => {
+        return {
+          email: {
+            required,
+            email,
+          },
+          password: { required, minLength: minLength(8) },
+        };
+      });
+      const v$ = useValidate(rules, state);
+
+      return {
+        state,
+        v$,
+      };
     },
     methods: {
-      ...mapActions( ['LogIn']),
-      submit() {
-        const user = {
-          email: this.email, 
-          password: this.password,
-        }
-        try {
-            this.LogIn(user);
-            this.$router.push({ name: "HomeView" });
-            this.showError = false
-        }catch (error) {
-          this.showError = true;
-          this.error = error.response.data;
+        ...mapActions( ['LogIn']),
+        submit() {
+          this.v$.$validate();
+        if (!this.v$.$error) {
+          alert("Form successfully submitted.");
+          const user = {
+            email: this.state.email, 
+            password: this.state.password,
+          }
+          try {
+              this.LogIn(user);
+              this.$router.push({ name: "HomeView" });
+              this.showError = false
+          }catch (error) {
+            //this.showError = true;
+            this.error = error.response.data;
+          }
+        }else {
+          alert("Form failed validation");
         }
       },
-    }
-  }
+    },
+  };
 </script>
 
 <style>
@@ -62,7 +97,7 @@
       padding: 0.5rem;
     }
     button {
-      background-color: #4286f4;
+      background-color: #5900FF;
       color: white;
       padding: 14px 0;
       margin: 10px 0;

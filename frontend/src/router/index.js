@@ -7,7 +7,6 @@ import Posts from "../views/createPost";
 import postsDisplay from "../views/postsDisplay";
 import createComment from "../views/createComment";
 import CommentView from "../views/comment";
-import adminPosts from "../views/adminPosts";
 import NotFound from "../views/NotFound.vue";
 import update from "../views/update.vue";
 
@@ -38,6 +37,11 @@ const routes = [
       guest: true,
       title: "Connexion",
     },
+  },
+  {
+    path: "/user/:id",
+    name: "getOneUser",
+    meta: { requiresAuth: true },
   },
   {
     path: "/update/:userId",
@@ -81,20 +85,6 @@ const routes = [
     path: "/post/:postId",
     name: "updatePost",
     component: postsDisplay,
-    meta: { requiresAuth: true }, //requiresAuth: true
-  },
-  {
-    path: "/post/admin",
-    name: "adminPosts",
-    component: adminPosts,
-    meta: {
-      requiresAuth: true,
-      title: "Administrateur-Publications à modérer",
-    }, //requiresAuth: true
-  },
-  {
-    path: "/post/moderation/:postId",
-    name: "canBeDisplay",
     meta: { requiresAuth: true }, //requiresAuth: true
   },
   {

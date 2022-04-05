@@ -66,6 +66,18 @@ exports.login = async(req, res, next) => {
     }
 };
 
+// function to select one user
+exports.getOneUser = (req, res, next) => {
+    conn.query('SELECT * FROM user WHERE id =?', req.params.id, (error, result) => {
+        if (error) {
+            return res
+                .status(400)
+                .json({ error: "Impossible d'afficher cet Utilisateur" });
+        }
+        return res.status(200).json(result);
+    });
+};
+
 // function to update users' informations
 exports.updateUser = (req, res, next) => {
     const email = req.body.email;

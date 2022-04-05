@@ -11,7 +11,7 @@ const passwordValidation = require('../middleware/password');
 router.post('/signup', passwordValidation, userCtrl.signup);
 router.post('/login', userCtrl.login);
 //router.get('/getAllUsers', userCtrl.getAllUsers);
-//router.get('/user/:id', userCtrl.getOneUser);
+router.get('/user/:id', userCtrl.getOneUser);
 router.patch('/update/:userId', auth, userCtrl.updateUser);
 router.delete('/delete/:userId', auth, userCtrl.deleteUser);
 
