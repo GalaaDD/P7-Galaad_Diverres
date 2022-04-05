@@ -6,7 +6,7 @@
       <div class="post__container">
         <div
           :postId="post.id"
-          v-for="post in Posts.slice().reverse()"
+          v-for="post in Posts"
           :key="post.user_id"
         >
           <div id="post-div">
@@ -27,7 +27,7 @@
               <div class="comments" v-if="Comments">
                 <div
                   :id="post.id"
-                  v-for="comment in Comments.slice().reverse()"
+                  v-for="comment in Comments"
                   :key="comment.id"
                   class="comment"
                 >
@@ -49,6 +49,9 @@
       </div>
     </div>
     <div v-else>Aucune publications de disponible</div>
+    <div v-if="ShowError">
+        <p>L'affichage des publications est indisponible veuillez essayer à nouveau ultérieurement</p>
+    </div>
   </div>
 </template>
 
@@ -72,6 +75,7 @@ export default {
       content: "",
       userId: VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId,
       Admin: VueJwtDecode.decode(localStorage.getItem("AccessToken")).Admin,
+      ShowError: false,
     };
   },
   created: function () {

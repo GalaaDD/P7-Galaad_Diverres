@@ -135,7 +135,7 @@ exports.deletePost = (req, res, next) => {
 exports.getAllPosts = (req, res, next) => {
     
     //WHERE canBeDisplay = 1
-    db.query('SELECT post.id, user_id, title, content, image  FROM post INNER JOIN user ON user.id = post.user_id', (error, result) => {
+    db.query('SELECT post.id, user_id, title, content, image  FROM post INNER JOIN user ON user.id = post.user_id ORDER BY post.id DESC', (error, result) => {
         if (error) {
             return res.status(400).json({ error: "L'affichage de l'ensemble des publications semble etre indisponible pour le moment" });
         }

@@ -24,6 +24,9 @@
         </div>
         <button type="submit">Publier</button>
       </form>
+      <div v-if="ShowError">
+        <p>La création de publications est indisponible veuillez essayer à nouveau ultérieurement</p>
+    </div>
     </div>
   </div>
 </template>
@@ -41,6 +44,7 @@
         file: "",
         user_id:"",
         id:"",
+        ShowError: false,
       };
     },
     computed: {
@@ -70,6 +74,7 @@
 
           this.$router.push({ name: "postsDisplay" });
         } catch (error) {
+          
           throw "Le service est temporairement indisponible"
         }
     },
