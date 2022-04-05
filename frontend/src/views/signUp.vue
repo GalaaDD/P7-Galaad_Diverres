@@ -1,16 +1,18 @@
 <template>
   <div class="signup">
     <div>
-      <form @submit.prevent="submit">
+      <h1>Inscription</h1>
+      <form @submit.prevent="submit" role="main">
         <div class="input__container">
-          <label for="email">email:</label>
-          <input
-            type="text"
-            name="email"
-            placeholder="email"
-            v-model="state.email"
-            required
-          />
+          <label>email:
+            <input
+              type="text"
+              name="email"
+              placeholder="email"
+              v-model="state.email"
+              required
+            />
+          </label>
           <span v-if="v$.email.$errors">
             <p v-for="error of v$.email.$errors" :key="error.$uid">
               <strong>{{ error.$message }}</strong>
@@ -18,13 +20,14 @@
           </span>
         </div>
         <div class="input__container">
-          <label for="password">Mot de Passe:</label>
-          <input
-            type="password"
-            name="password"
-            v-model="state.password"
-            required
-          />
+          <label>Mot de Passe:
+            <input
+              type="password"
+              name="password"
+              v-model="state.password"
+              required
+            />
+          </label>
           <span v-if="v$.password.$errors">
             <p v-for="error of v$.password.$errors" :key="error.$uid">
               <strong>{{ error.$message }}</strong>
@@ -32,13 +35,14 @@
           </span>
         </div>
         <div class="input__container">
-          <label for="lastname">Nom:</label>
-          <input
-            type="text"
-            name="lastname"
-            v-model="state.lastname"
-            required
-          />
+          <label>Nom:
+            <input
+              type="text"
+              name="lastname"
+              v-model="state.lastname"
+              required
+            />
+          </label>
           <span v-if="v$.lastname.$errors">
             <p v-for="error of v$.lastname.$errors" :key="error.$uid">
               <strong>{{ error.$message }}</strong>
@@ -46,20 +50,21 @@
           </span>
         </div>
         <div class="input__container">
-          <label for="firstname">Prénom:</label>
-          <input
-            type="text"
-            name="firstname"
-            v-model="state.firstname"
-            required
-          />
+          <label>Prénom:
+            <input
+              type="text"
+              name="firstname"
+              v-model="state.firstname"
+              required
+            />
+          </label>
           <span v-if="v$.firstname.$error">
             <p v-for="error of v$.firstname.$errors" :key="error.$uid">
               <strong>{{ error.$message }}</strong>
             </p>
           </span>
         </div>
-        <button type="submit">S'inscrire</button>
+        <button type="submit" title="Bouton pour valider l'inscription" role="button">S'inscrire</button>
       </form>
     </div>
     <!--<p  id="error">email déjà utilisé</p>-->

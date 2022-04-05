@@ -1,10 +1,12 @@
 <template>
-  <div class="login">
+  <div class="login" role="main">
+    <h1>Connexion</h1>
     <div class="form__container">
       <form @submit.prevent="submit">
         <div class="input__container">
-          <label for="email">email:</label>
-          <input type="text" name="email" v-model="state.email" required />
+          <label>email:
+            <input type="text" name="email" v-model="state.email" required />
+          </label>
           <span v-if="v$.email.$errors">
             <p v-for="error of v$.email.$errors" :key="error.$uid">
               <strong>{{ error.$message }}</strong>
@@ -12,17 +14,17 @@
           </span>
         </div>
         <div>
-          <label for="password">Mot de Passe:</label>
-          <input type="password" name="password" v-model="state.password" required />
+          <label>Mot de Passe:
+            <input type="password" name="password" v-model="state.password" required />
+          </label>
           <span v-if="v$.password.$errors">
             <p v-for="error of v$.password.$errors" :key="error.$uid">
               <strong>{{ error.$message }}</strong>
             </p>
           </span>
         </div>
-        <button type="submit">Se Connecter</button>
+        <button type="submit" title="Bouton de connexion" role="button">Se Connecter</button>
       </form>
-      <p v-if="showError" id="error">L'email ou le Mot de Passe est incorrect</p>
     </div>
   </div>
 </template>
@@ -71,7 +73,7 @@
           try {
               this.LogIn(user);
               this.$router.push({ name: "HomeView" });
-              this.showError = false
+              //this.showError = false
           }catch (error) {
             //this.showError = true;
             this.error = error.response.data;

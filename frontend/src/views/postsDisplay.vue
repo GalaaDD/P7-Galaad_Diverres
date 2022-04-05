@@ -1,7 +1,7 @@
 <template>
   <createPost />
   <router-view />
-  <div v-if="User">
+  <div v-if="User" id="main" role="main">
     <div class="posts" v-if="Posts">
       <div class="post__container">
         <div
@@ -15,10 +15,10 @@
             <p>{{ post.content }}</p>
             <p>Publié par {{ User.firstname }} {{ User.lastname }}</p>
             <div v-if="userId == post.user_id">
-              <button @click="deleteOnePost(post.id)">
+              <button @click="deleteOnePost(post.id)" title="Bouton de suppression de la publication" role="button">
                 Supprimer la publication
               </button>
-              <button @click="updatePostPage(post.id)">
+              <button @click="updatePostPage(post.id)" title="Bouton de modification de la publication" role="button">
                 Modifier la publication
               </button>
               <!--sending post.id as a parameter to know which one has to be either delete or updated-->
