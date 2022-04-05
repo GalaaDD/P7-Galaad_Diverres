@@ -1,7 +1,6 @@
 <template>
   <div class="home" id="header" >
     <div v-if ="User || User.Admin == 1">
-        <img id ="nav__image" src="../assets/logo-banner-update-3.png" alt="Logo du réseau social d'entreprise Groupomania"/>
         <h1 id="nav__text">Avec Groupomania, partagez et restez en contact avec vos collaborateurs.</h1>
         <div>
           <p>Bienvenue sur Groupomania le réseau social qui vous ressemble !</p>
@@ -92,7 +91,7 @@
         v$,
       }
     },
-
+    //use of vuex store 
     computed: {
       ...mapGetters({User: 'StateUser'}),
       ...mapGetters( {Posts: 'StatePosts'}),
@@ -101,11 +100,12 @@
     methods: {
 
       ...mapActions( ["deleteUser", "updateUser"]),
-
+    // function to decode the user Id from the local storage and send the userId to the function in the store
       deleteUser() {
         const userId = VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId;
           this.$store.dispatch("deleteUser", { userId });
       },
+      //function to validate then send informations to the function in the store 
       updateUserOnClick() {
         this.v$.$validate()
         if (!this.v$.$error) {

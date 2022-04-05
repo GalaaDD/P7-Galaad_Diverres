@@ -80,6 +80,7 @@ export default {
   name: "signUp",
   components: {},
 
+  //validation system, vuelidate
   setup() {
     const state = reactive({
       email: "",
@@ -89,14 +90,11 @@ export default {
       //showError: false,
     });
 
-    // const mustBeLearnVue = (value) =>value.includes('learnvue');
-
     const rules = computed(() => {
       return {
         email: {
           required,
           email,
-          //mustBeLearnVue: helpers.withMessage("Must Be learnvue "),
         },
         password: { required, minLength: minLength(8) },
         lastname: { required, minLength: minLength(2) },
@@ -116,9 +114,10 @@ export default {
     submit() {
       this.v$.$validate();
       if (!this.v$.$error) {
-        alert("Form successfully submitted.");
+        alert("L'inscription est un succès");
         try {
           console.log(this.state);
+          //calling and sending form to the function in the store
           this.signUp({
             email: this.state.email,
             password: this.state.password,
@@ -126,13 +125,11 @@ export default {
             lastname: this.state.lastname,
           });
           //window.location.reload();
-          //this.$router.push({ name: "HomeView" });
-          //this.showError = false;
         } catch (error) {
-          alert("Form not submitted.");
+          alert("Un problème technique vient de se produire, veuillez essayer à nouveau");
         }
       } else {
-        alert("Form failed validation");
+        alert("veuillez remplir chacun des champs, l'inscription n'a pas pu aboutir");
       }
     },
   },

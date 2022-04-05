@@ -7,9 +7,7 @@ const userCtrl = require('../controllers/post');
 const multer = require('../middleware/multer-config');
 
 router.post('/post', auth, multer, userCtrl.createPost);
-router.patch('/post/:postId', auth, multer, userCtrl.updatePost);
-//router.put('/post/moderation/:postId', auth, userCtrl.canBeDisplay);
-//router.get('/post/admin', auth, multer, userCtrl.getAllPostsAdmin);
+router.put('/post/:postId', auth, multer, userCtrl.updatePost);
 router.delete('/post/:postId', auth, userCtrl.deletePost);
 router.get('/post/display', auth, userCtrl.getAllPosts);
 //router.get('/post/:id', auth, userCtrl.getOnePost);

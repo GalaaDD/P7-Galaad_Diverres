@@ -11,11 +11,11 @@
           </label>
         </div>
         <div class="form-container">
-          <label class="image" for="image" title="Bouton de sélection de l'image" role="button">image</label>
+          <label class="image" for="image" title="Bouton de sélection de l'image" role="button" id="postImage">image</label>
           <input type="file" name="image" accept=".png, .jpg, .jpeg, .gif" v-on:change="onSelect" ref="file" aria-required="true" id="image" />
         </div>
         <div class="form-container">
-          <label>Publication
+          <label id="postContent">Publication
             <textarea
               name="content"
               v-model="content"
@@ -50,6 +50,7 @@
       };
     },
     computed: {
+      //use of vuex store 
       ...mapGetters( {User: 'StateUser'}),
       ...mapGetters( {Posts: 'StatePosts'}),
       ...mapGetters( {Comments: 'StateComments'}),
@@ -57,12 +58,12 @@
     methods: {
 
       ...mapActions( ["createPost"]),
-      
+  
       onSelect() {
         this.file = this.$refs.file.files[0];
         console.log(this.file);
       },
-
+      //function to send form to the function in the store and call the function 
       submit() {
         try {
           const formData = new FormData();
@@ -86,7 +87,7 @@
 
 <style>
 
-  .form-container{
+  .form-container, #postContent{
     display: flex;
     flex-direction: column;
     justify-content: center;

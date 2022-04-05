@@ -3,10 +3,11 @@ import App from './App.vue'
 import router from './router';
 import store from './store';
 import axios from 'axios';
-
+//Establishing the base URL
 axios.defaults.baseURL = 'http://localhost:3000/api/';
 axios.defaults.withCredentials = 'true';
 
+//Getting the token from the local storage 
 let token = localStorage.getItem("AccessToken");
 console.log(token);
 if (token) {

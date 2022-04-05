@@ -1,5 +1,8 @@
 <template>
   <div id="nav" role="navigation">
+    <div id="image__container">
+      <img id ="nav__image" src="../assets/logo-banner-update-3.png" alt="Logo du réseau social d'entreprise Groupomania"/>
+    </div>
       <router-link to="/">Accueil</router-link> |
       <router-link to="/post/display" title="Lien vers la page des publications">Fil d'actualités</router-link> |
       <!--<div v-if="User">
@@ -27,13 +30,12 @@ name: 'NavBar',
   data() {
       return {
         content: "",
-        /*Admin: VueJwtDecode.decode(localStorage.getItem("AccessToken")).Admin,*/
       };
   },
   computed : {
 
   ...mapGetters({User: 'StateUser'}),
-
+  
     isLoggedIn : function(){ 
       return this.$store.getters.isAuthenticated;
     }, // return  localStorage.getItem("AccessToken")!==null;}}
@@ -62,6 +64,10 @@ a:hover {
 }
 #nav a.router-link-exact-active {
   color: #5900FF;
+}
+.image__container{
+  display: flex;
+  justify-content: center;
 }
 
 </style>

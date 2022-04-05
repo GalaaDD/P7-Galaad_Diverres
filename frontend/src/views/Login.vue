@@ -62,6 +62,7 @@
     },
     methods: {
         ...mapActions( ['LogIn']),
+        //function to get and send information to the function in the store
         submit() {
           this.v$.$validate();
         if (!this.v$.$error) {

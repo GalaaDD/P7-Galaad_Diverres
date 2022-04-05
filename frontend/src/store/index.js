@@ -2,7 +2,7 @@ import { createStore } from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import axios from 'axios';
 
-// Create store
+// Create store and of vuex 
 
 export default createStore({
 
@@ -26,7 +26,7 @@ export default createStore({
   },
   actions: {
       /***Auth-Part ***/
-
+    // function to signup the guest and dispatch to the login function with email and password to allow the connexion
     signUp({ commit, dispatch }, user) {
       return new Promise(( resolve, reject ) => {
         axios.post('signup', user)
@@ -43,7 +43,7 @@ export default createStore({
         });
       });
     },
-  
+  //function to log in, connect to the session with email and password, comparing the password hashes
     LogIn({ commit }, user) {
       return new Promise((resolve, reject) => {
         axios.post('login', user)
@@ -62,10 +62,12 @@ export default createStore({
         });
       });
     },
+    //function to log out of the session allowing to clear local storage and vuex informations
     LogOut({ commit }) {
       let user = null;
       commit("logout", user);
     },
+    //function to delete a user account, dipatch the logout
     deleteUser({ commit }, user){
       console.log(user);
       let userId = user.userId;
@@ -83,6 +85,7 @@ export default createStore({
         });
       });
     },
+    //function to update user, dispatch logout to update and log in with new email and password
     updateUser({ commit }, payload){
       const userId = payload.userId;
       return new Promise((resolve, reject) => {
@@ -98,6 +101,8 @@ export default createStore({
       });
     },
     /***Content-post-Part ***/
+
+    //function to create a post, dispatch Getposts to get and display posts
     createPost({ commit, dispatch }, post ) {
       console.log(post);
       return new Promise((resolve, reject) => {
@@ -114,14 +119,14 @@ export default createStore({
         });
       });
     },
-
+  // function to update selected post
     updatePost({ commit }, payload, postId ) {
       //let postId = payload.post_id;
       console.log("payload", payload);
       console.log("postId", postId);
       return new Promise((resolve, reject) => {
         axios
-          .patch(`/post/` + postId, payload)
+          .put(`/post/` + postId, payload)
           .then((response) => {
             commit("setPosts", payload);
             console.log(payload);
@@ -133,21 +138,7 @@ export default createStore({
           });
       });
     },
-
-    /*GetPostsAdmin({ commit }) {
-      return new Promise((resolve, reject) => {
-        axios.get('post/admin')
-        .then((response) => {
-          commit("setPosts", response.data);
-          //dispatch('createComment', response.data);
-          resolve();
-        })
-        .catch((error) => {
-          reject(error);
-        });
-      });
-    },*/
-
+  //function  to get and display posts
     GetPosts({ commit, /*dispatch*/ }) {
       return new Promise((resolve, reject) => {
         axios.get('post/display')
@@ -161,7 +152,7 @@ export default createStore({
         });
       });
     },
-  
+  //function to delete one post using the post Id
     deleteOnePost({ commit }, payload){
       console.log(payload);
       let postId = payload;
@@ -179,6 +170,7 @@ export default createStore({
       });
     },
     /***Content-comment-Part ***/
+    //function to create a comment 
     createComment({ commit, dispatch }, payload) {
       console.log(payload);
       return new Promise((resolve, reject) => {
@@ -194,7 +186,7 @@ export default createStore({
         });
       });
     },
-  
+    //function to get and display comments
     GetComments({ commit }, comment) {
       let postId = comment.post_id;
       return new Promise((resolve, reject) => {

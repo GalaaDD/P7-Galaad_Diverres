@@ -10,6 +10,8 @@ import CommentView from "../views/comment";
 import NotFound from "../views/NotFound.vue";
 import update from "../views/update.vue";
 
+
+//routes, containing path, page titles, auth
 const routes = [
   {
     path: "/",
@@ -85,19 +87,19 @@ const routes = [
     path: "/post/:postId",
     name: "updatePost",
     component: postsDisplay,
-    meta: { requiresAuth: true }, //requiresAuth: true
+    meta: { requiresAuth: true },
   },
   {
     path: "/comment",
     name: "createComment",
     component: createComment,
-    meta: { requiresAuth: true }, //requiresAuth: true
+    meta: { requiresAuth: true },
   },
   {
     path: "/comment/post/:postId",
     name: "CommentsView",
     component: CommentView,
-    meta: { requiresAuth: true }, //requiresAuth: true
+    meta: { requiresAuth: true },
   },
   {
     name: "Not Found",
@@ -106,7 +108,7 @@ const routes = [
     meta: {
       requiresAuth: true,
       title: "404 Not Found",
-    }, //requiresAuth: true
+    },
   },
   {
     name: "update",
@@ -116,7 +118,7 @@ const routes = [
     meta: {
       requiresAuth: true,
       title: "Modifications",
-    }, //requiresAuth: true
+    },
   },
 ];
 

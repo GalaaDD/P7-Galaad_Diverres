@@ -52,6 +52,10 @@
     <div v-if="ShowError">
         <p>L'affichage des publications est indisponible veuillez essayer à nouveau ultérieurement</p>
     </div>
+    <div id="footer" role="footer">
+      <footerPage />
+      <router-view/>
+    </div>
   </div>
 </template>
 
@@ -59,6 +63,7 @@
 import { mapGetters, mapActions } from "vuex";
 import createPost from "@/views/createPost.vue";
 import createComment from "@/views/createComment.vue";
+import footerPage from '@/views/footerPage.vue'
 //import CommentView   from '@/views/comment.vue'
 import VueJwtDecode from "vue-jwt-decode";
 
@@ -68,6 +73,7 @@ export default {
   components: {
     createComment,
     createPost,
+    footerPage, 
   },
 
   data() {
@@ -88,10 +94,11 @@ export default {
   },
 
   methods: {
+    //function to get postId from the template and dispatch towards update page with the postId into the params
     updatePostPage(postId) {
       this.$router.push({ name: "update", params: { postId } });
     },
-
+    //function to send the Id to the function in the store
     deleteOnePost: function () {
       let idPost = this.post;
       this.$store.dispatch("deleteOnePost", { idPost });

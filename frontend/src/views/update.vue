@@ -1,31 +1,33 @@
 <template>
-  <div id:postId="post.id" v-if="Posts">
+  <div id:postId="post.id" v-if="Posts" role="main">
+    <h1> Modification de la publication</h1>
     <form @submit.prevent="submit">
       <div class="postCreation__containers">
-        <label for="title">Titre:</label>
-        <input type="text" name="title" v-model="title" />
+        <label>Titre:
+          <input type="text" name="title" v-model="title" />
+        </label>
       </div>
       <div class="postCreation__containers">
-        <label class="image" for="image" title="image" role="button"
-          >image</label
-        >
-        <input
-          type="file"
-          name="image"
-          accept=".png, .jpg, .jpeg, .gif"
-          v-on:change="onSelect"
-          ref="file"
-          aria-required="true"
-          id="image"
-        />
+        <label class="image" title="Bouton de séléction d'image" role="button">image
+          <input
+            type="file"
+            name="image"
+            accept=".png, .jpg, .jpeg, .gif"
+            v-on:change="onSelect"
+            ref="file"
+            aria-required="true"
+            id="image"
+          />
+        </label>
       </div>
       <div class="postCreation__containers">
-        <label for="content">Publication</label>
-        <textarea
-          name="content"
-          v-model="content"
-          placeholder="Modifiez votre publication ici..."
-        ></textarea>
+        <label>Publication
+          <textarea
+            name="content"
+            v-model="content"
+            placeholder="Modifiez votre publication ici..."
+          ></textarea>
+        </label>
       </div>
       <button type="submit">Modifier</button>
     </form>
@@ -63,7 +65,7 @@ export default {
       this.file = this.$refs.file.files[0];
       console.log(this.file);
     },
-
+    //function to send form and call the function
     submit() {
       try {
         const formData = new FormData();
@@ -87,3 +89,11 @@ export default {
   },
 };
 </script>
+
+<style>
+  .form-container, #postContent{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+</style>
