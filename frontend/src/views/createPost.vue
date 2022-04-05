@@ -1,26 +1,28 @@
 <template>
-  <div class="createPost__container">
+  <div class="createPost__container" id="header">
     <div v-if="User">
       <p>Bienvenue {{ User.firstname }}, à la création et au partage de vos passions</p>
     </div>
     <div>
       <form @submit.prevent="submit">
-        <div class="postCreation__containers">
-          <label for="title">Titre:</label>
-          <input type="text" name="title" v-model="title" required/>
+        <div class="form-container">
+          <label>Titre:
+            <input type="text" name="title" v-model="title" required/>
+          </label>
         </div>
-        <div class="postCreation__containers">
-          <label class="sr-only" for="image" title="image" role="button">image</label>
+        <div class="form-container">
+          <label class="image" for="image" title="Bouton de sélection de l'image" role="button">image</label>
           <input type="file" name="image" accept=".png, .jpg, .jpeg, .gif" v-on:change="onSelect" ref="file" aria-required="true" id="image" />
         </div>
-        <div class="postCreation__containers">
-          <label for="content">Publication</label>
-          <textarea
-            name="content"
-            v-model="content"
-            placeholder="écrivez votre publication ici..."
-            required
-          ></textarea>
+        <div class="form-container">
+          <label>Publication
+            <textarea
+              name="content"
+              v-model="content"
+              placeholder="écrivez votre publication ici..."
+              required
+            ></textarea>
+          </label>
         </div>
         <button type="submit">Publier</button>
       </form>
@@ -84,7 +86,7 @@
 
 <style>
 
-  .postCreation__containers{
+  .form-container{
     display: flex;
     flex-direction: column;
     justify-content: center;

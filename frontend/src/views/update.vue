@@ -6,7 +6,7 @@
         <input type="text" name="title" v-model="title" />
       </div>
       <div class="postCreation__containers">
-        <label class="sr-only" for="image" title="image" role="button"
+        <label class="image" for="image" title="image" role="button"
           >image</label
         >
         <input

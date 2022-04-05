@@ -10,8 +10,8 @@
           :key="post.user_id"
         >
           <div id="post-div">
-            <h2>{{ post.title }}</h2>
-            <img :src="post.image" id="image" />
+            <h1>{{ post.title }}</h1>
+            <img :src="post.image" class="image" alt="Image de la publication commentée par l'auteur"/>
             <p>{{ post.content }}</p>
             <p>Publié par {{ User.firstname }} {{ User.lastname }}</p>
             <div v-if="userId == post.user_id">

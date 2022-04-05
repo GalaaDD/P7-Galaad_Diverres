@@ -1,5 +1,5 @@
 <template>
-  <div id="nav">
+  <div id="nav" role="navigation">
       <router-link to="/">Accueil</router-link> |
       <router-link to="/post/display" title="Lien vers la page des publications">Fil d'actualités</router-link> |
       <!--<div v-if="User">

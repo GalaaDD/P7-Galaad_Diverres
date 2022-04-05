@@ -2,12 +2,13 @@
   <div v-if="User" id="createComment__container">  
       <form @submit.prevent="submit">
         <div class="comment__container">
-          <label for="comment">Commenter la publication</label>
-          <textarea
-            name="content"
-            v-model="content"
-            placeholder="commentaire..."
-          ></textarea>
+          <label>Commenter la publication
+            <textarea
+              name="content"
+              v-model="content"
+              placeholder="commentaire..."
+            ></textarea>
+          </label>
         </div>
         <button type="submit">Commenter</button>
       </form>

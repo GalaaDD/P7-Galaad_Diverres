@@ -1,10 +1,10 @@
 <template>
-  <div class="home">
+  <div class="home" id="header" >
     <div v-if ="User || User.Admin == 1">
-        <img id ="nav__image" src="../assets/logo-banner-update-3.png"/>
+        <img id ="nav__image" src="../assets/logo-banner-update-3.png" alt="Logo du réseau social d'entreprise Groupomania"/>
         <h1 id="nav__text">Avec Groupomania, partagez et restez en contact avec vos collaborateurs.</h1>
         <div>
-        <p>Bienvenue sur Groupomania le réseau social qui vous ressemble !</p>
+          <p>Bienvenue sur Groupomania le réseau social qui vous ressemble !</p>
         </div>
         <div v-if="User" class="user-information__container">
           <h2>Informations personnelles </h2>
@@ -15,35 +15,39 @@
       </div>
       <h2>Modification du compte utilisateur:</h2>
       <div class="form-container">
-        <label for="email">Modifier mon Adresse Email</label>
-        <input type="email" v-model="state.email" placeholder="groupomania@gr.com" required /><br>
-        <p v-for="error of v$.email.$errors" :key="error.$uid">
-          <strong>{{ error.$message }}</strong>
-        </p>
+        <label>Modifier mon Adresse Email
+          <input type="email" v-model="state.email" placeholder="groupomania@gr.com" required /><br>
+          <p v-for="error of v$.email.$errors" :key="error.$uid">
+            <strong>{{ error.$message }}</strong>
+          </p>
+        </label>
       </div>
 
       <div class="form-container">
-        <label for="password">Modifier mon Mot de passe</label>
-        <input type="password" v-model="state.password" placeholder="Mot de passe" required /><br>
-        <p v-for="error of v$.password.$errors" :key="error.$uid">
-          <strong>{{ error.$message }}</strong>
-        </p>
+        <label>Modifier mon Mot de passe
+          <input type="password" v-model="state.password" placeholder="Mot de passe" required /><br>
+          <p v-for="error of v$.password.$errors" :key="error.$uid">
+            <strong>{{ error.$message }}</strong>
+          </p>
+        </label>
       </div>
 
       <div class="form-container">
-        <label for="password">Modifier mon Nom de famille</label>
-        <input type="text" v-model="state.lastname" placeholder="Nom de famille" required /><br>
-        <p v-for="error of v$.lastname.$errors" :key="error.$uid">
-          <strong>{{ error.$message }}</strong>
-        </p>
+        <label>Modifier mon Nom de famille
+          <input type="text" v-model="state.lastname" placeholder="Nom de famille" required /><br>
+          <p v-for="error of v$.lastname.$errors" :key="error.$uid">
+            <strong>{{ error.$message }}</strong>
+          </p>
+        </label>
       </div>
 
       <div class="form-container">
-        <label for="password">Modifier mon Prénom</label>
-        <input type="text" v-model="state.firstname" placeholder="Prénom" required /><br>
-        <p v-for="error of v$.firstname.$errors" :key="error.$uid">
-          <strong>{{ error.$message }}</strong>
-        </p>
+        <label>Modifier mon Prénom
+          <input type="text" v-model="state.firstname" placeholder="Prénom" required /><br>
+          <p v-for="error of v$.firstname.$errors" :key="error.$uid">
+            <strong>{{ error.$message }}</strong>
+          </p>
+        </label>
       </div>
       <button @click="updateUserOnClick()" title="valider la modification des informations de votre compte">Modifier mon compte</button>
       <h2>Suppression du compte utilisateur:</h2>
