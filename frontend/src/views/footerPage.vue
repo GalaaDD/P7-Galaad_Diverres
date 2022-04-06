@@ -23,7 +23,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     #footer{
         background-color: #5900FF;
         margin-top: 5rem;
@@ -40,6 +40,9 @@ export default {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
+    }
+    h2{
+        font-size: 1rem;
     }
 
 </style>

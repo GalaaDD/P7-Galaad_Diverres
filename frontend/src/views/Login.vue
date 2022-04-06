@@ -66,7 +66,7 @@
         submit() {
           this.v$.$validate();
         if (!this.v$.$error) {
-          alert("Form successfully submitted.");
+          alert("Connexion réussie !");
           const user = {
             email: this.state.email, 
             password: this.state.password,
@@ -80,7 +80,7 @@
             this.error = error.response.data;
           }
         }else {
-          alert("Form failed validation");
+          alert("Veuillez vérifier vos identifiants et essayer à nouveau");
         }
       },
     },

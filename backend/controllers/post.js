@@ -25,7 +25,7 @@ exports.createPost = (req, res, next) => {
         username: username,
     });
     console.log(post);
-    if (!title && !content && !image) {
+    if (!title && !content) {
         return res.status(400).json({ message: "Veuillez renseigner le titre, le contenu " });
     } else {
 
@@ -48,7 +48,7 @@ exports.updatePost = (req, res, next) => {
   }
 
   console.log(req.params);
-
+  console.log(post);
   db.query(
     `SELECT * FROM post WHERE id = ?`,
     [req.params.postId],
