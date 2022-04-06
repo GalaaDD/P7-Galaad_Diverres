@@ -8,6 +8,7 @@ exports.createPost = (req, res, next) => {
     const title = req.body.title;
     const content = req.body.content;
     const userId = req.userId;
+    const username = req.body.username;
     
     console.log(userId);
     let image = "";
@@ -21,6 +22,7 @@ exports.createPost = (req, res, next) => {
         title: title,
         content: content,
         image: image,
+        username: username,
     });
     console.log(post);
     if (!title && !content && !image) {
@@ -135,7 +137,7 @@ exports.deletePost = (req, res, next) => {
 exports.getAllPosts = (req, res, next) => {
     
     //WHERE canBeDisplay = 1
-    db.query('SELECT post.id, user_id, title, content, image  FROM post INNER JOIN user ON user.id = post.user_id ORDER BY post.id DESC', (error, result) => {
+    db.query('SELECT post.id, user_id, title, content, image, username  FROM post INNER JOIN user ON user.id = post.user_id ORDER BY post.id DESC', (error, result) => {
         if (error) {
             return res.status(400).json({ error: "L'affichage de l'ensemble des publications semble etre indisponible pour le moment" });
         }

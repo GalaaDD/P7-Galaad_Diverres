@@ -26,9 +26,8 @@ export default {
 <style>
     #footer{
         background-color: #5900FF;
-        margin-top: 0.5rem;
+        margin-top: 5rem;
         border-radius: 1rem;
-       
     }
     .footer__container{
         width: 40%;
@@ -38,7 +37,7 @@ export default {
         width: 30%;
     }
     #footer-text__container{
-         display: flex;
+        display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
     }

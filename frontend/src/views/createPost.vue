@@ -24,7 +24,7 @@
             ></textarea>
           </label>
         </div>
-        <button type="submit">Publier</button>
+        <button type="submit" @click="sendusername(User.firstname, User.lastname)">Publier</button>
       </form>
       <div v-if="ShowError">
         <p>La création de publications est indisponible veuillez essayer à nouveau ultérieurement</p>
@@ -46,6 +46,7 @@
         file: "",
         user_id:"",
         id:"",
+        username: this.firstname,
         ShowError: false,
       };
     },
@@ -58,6 +59,9 @@
     methods: {
 
       ...mapActions( ["createPost"]),
+      sendusername(username){
+        this.$store.dispatch("createPost", { username });
+      },
   
       onSelect() {
         this.file = this.$refs.file.files[0];
@@ -72,6 +76,7 @@
           formData.append("content", this.content);
           formData.append("user_id", this.user_id);
           formData.append("post_id", this.id);
+          formData.append("username", this.username);
           console.log(formData);
           this.createPost(formData);
 

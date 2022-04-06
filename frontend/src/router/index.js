@@ -41,8 +41,8 @@ const routes = [
     },
   },
   {
-    path: "/user/:id",
-    name: "getOneUser",
+    path: "/users",
+    name: "GetUsers",
     meta: { requiresAuth: true },
   },
   {

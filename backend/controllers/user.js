@@ -67,8 +67,8 @@ exports.login = async(req, res, next) => {
 };
 
 // function to select one user
-exports.getOneUser = (req, res, next) => {
-    conn.query('SELECT * FROM user WHERE id =?', req.params.id, (error, result) => {
+exports.getUsers = (req, res, next) => {
+    conn.query('SELECT * FROM user', req.params.id, (error, result) => {
         if (error) {
             return res
                 .status(400)
