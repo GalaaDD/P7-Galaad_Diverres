@@ -43,3 +43,44 @@ Informations compte Admin:
 
 email: Admin@Admin.com
 Mot de passe: ADMINadmin2022
+
+
+API rest plan: 
+
+User: 
+
+    Signup:
+
+    post/signup
+
+    Login: 
+
+    post/login
+
+    Update:
+
+    patch/update/:userId
+
+    Delete: 
+
+    delete/delete/:userId
+
+Post: 
+
+    Create Posts:
+
+    post/post
+
+    Update Post: 
+
+    put/post/:postId
+
+    Delete: 
+
+    delete/post/display
+
+    Get Posts: 
+
+    get/post/display
+
+
