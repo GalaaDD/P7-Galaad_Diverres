@@ -69,11 +69,11 @@ export default {
     submit() {
       try {
         const formData = new FormData();
-        formData.append("post_id", this.postId);
-        formData.append("user_id", this.user_id);
+        formData.append("image", this.file);
         formData.append("title", this.title);
         formData.append("content", this.content);
-        formData.append("image", this.file);
+        formData.append("user_id", this.user_id);
+        formData.append("post_id", this.postId);
         
         console.log("file", this.file);
         console.log("title", this.title);
