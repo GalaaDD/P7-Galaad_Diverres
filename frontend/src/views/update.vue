@@ -2,13 +2,13 @@
   <div id:postId="post.id" v-if="Posts" role="main">
     <h1> Modification de la publication</h1>
     <form @submit.prevent="submit">
-      <div class="postCreation__containers">
+      <div class="form-container">
         <label>Titre:
           <input type="text" name="title" v-model="title" />
         </label>
       </div>
-      <div class="postCreation__containers">
-        <label class="image" title="Bouton de séléction d'image" role="button">image
+      <div class="form-container">
+        <label class="image" title="Bouton de séléction d'image" role="button">Sélectionner l'image a ajouter
           <input
             type="file"
             name="image"
@@ -20,8 +20,8 @@
           />
         </label>
       </div>
-      <div class="postCreation__containers">
-        <label>Publication
+      <div class="form-container">
+        <label id="postContent">Publication
           <textarea
             name="content"
             v-model="content"
@@ -92,8 +92,8 @@ export default {
 
 <style>
   .form-container, #postContent{
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 </style>

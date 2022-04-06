@@ -11,8 +11,9 @@
           </label>
         </div>
         <div class="form-container">
-          <label class="image" for="image" title="Bouton de sélection de l'image" role="button" id="postImage">image</label>
+          <label class="image" title="Bouton de sélection de l'image" role="button" id="postImage">Sélectionner l'image a ajouter
           <input type="file" name="image" accept=".png, .jpg, .jpeg, .gif" v-on:change="onSelect" ref="file" aria-required="true" id="image" />
+          </label>
         </div>
         <div class="form-container">
           <label id="postContent">Publication
