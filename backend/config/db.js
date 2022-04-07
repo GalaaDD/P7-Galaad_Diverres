@@ -22,15 +22,14 @@ let user = `create table if not exists user(
   Admin TINYINT(4) not null
 )`;
 
-  /*let Admin = 'INSERT INTO user SET  id = 25, email = Admin@Admin.com, password = ADMINadmin2022, lastname = Admin, firstname = Admin, Admin = 1'
+  let Admin = "INSERT INTO user (id, email, password, lastname, firstname, Admin) VALUES ('25', 'Admin@Admin.com', 'ADMINadmin2022', 'Admin', 'Admin', '1' )";
 
   db.execute( Admin, function(err, results, fields) {
     if (err) {
       console.log(err.message);
     }
-  });*/
-//ON DELETE CASCADE\
-//CONSTRAINT `user` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)\
+  });
+  
 
 let post = `create table if not exists post(
   id int primary key auto_increment not null,
@@ -45,9 +44,6 @@ db.execute( post, function(err, results, fields) {
     console.log(err.message);
   }
 });
-
-// FOREIGN KEY (`user_id`) REFERENCES `user`(`id`),\
-//FOREIGN KEY (`post_id`) REFERENCES `post`(`id`)\
 
 let commentTable = `create table if not exists comment(
   id int primary key auto_increment not null,
