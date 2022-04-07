@@ -10,7 +10,7 @@
             </div>
             <div class="footer__container">
                 <h2>Notre politique de confidentialité</h2>
-                <p>Vous pouvez consulter ici nos conditions de confidentialités, de sécurités et de stockage des données confidentiels</p>
+                <p>Vous pouvez consulter ici nos conditions de confidentialités, de sécurités et de stockage des données confidentielles</p>
             </div>
         </div>
     </div>

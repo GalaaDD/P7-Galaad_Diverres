@@ -1,6 +1,6 @@
 <template>
   <div class="home" id="header" >
-    <div v-if ="User || User.Admin == 1">
+    <div v-if ="User || Admin == 1">
         <h1 id="nav__text">Avec Groupomania, partagez et restez en contact avec vos collaborateurs.</h1>
         <div>
           <p>Bienvenue sur Groupomania le réseau social qui vous ressemble !</p>

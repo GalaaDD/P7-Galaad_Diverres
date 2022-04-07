@@ -14,7 +14,7 @@
             <img :src="post.image" class="image" alt="Image de la publication commentée par l'auteur"/>
             <p>{{ post.content }}</p>
             <p>Publié par {{ post.firstname }} {{ post.lastname }}</p>
-            <div v-if="userId == post.user_id">
+            <div v-if="userId == post.user_id || Admin == 1">
               <button @click="deleteOnePost(post.id)" title="Bouton de suppression de la publication" role="button">
                 Supprimer la publication
               </button>
@@ -31,10 +31,10 @@
                   :key="comment.id"
                   class="comment"
                 >
-                  <div id="comment-div">
+                  <div v-if="comment.post_id == post.id" id="comment-div">
+                    <p>{{ comment.content }}</p>
                     <p>Commentaire publié par</p>
                     <p>{{ post.firstname }} {{ post.lastname }}</p>
-                    <p>{{ comment.content }}</p>
                   </div>
                 </div>
               </div>
@@ -61,7 +61,6 @@ import { mapGetters, mapActions } from "vuex";
 import createPost from "@/views/createPost.vue";
 import createComment from "@/views/createComment.vue";
 import footerPage from '@/views/footerPage.vue'
-//import CommentView   from '@/views/comment.vue'
 import VueJwtDecode from "vue-jwt-decode";
 
 export default {
@@ -113,17 +112,9 @@ export default {
     justify-content: center;
     flex-direction: column;
     flex-wrap: wrap;
-
-    width: 100%;
+    width: 80%;
     background-color: #f2f2f2;
     border-radius: 25px;
-  }
-
-  #post-div {
-    width: 80%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
     padding: 10%;
     margin-top: 2rem;
   }

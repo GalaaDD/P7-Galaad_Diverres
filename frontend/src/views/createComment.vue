@@ -1,8 +1,8 @@
 <template>
   <div v-if="User" id="createComment__container">  
       <form @submit.prevent="submit">
-        <div class="comment__container">
-          <label>Commenter la publication
+        <div class="form-container">
+          <label id="commentContent">Commenter la publication
             <textarea
               name="content"
               v-model="content"
@@ -61,7 +61,7 @@
 
 <style>
 
-  .comment__container{
+  #comment__container, #commentContent{
     display: flex;
     flex-direction: column;
     justify-content: center;

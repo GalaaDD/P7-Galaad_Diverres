@@ -6,7 +6,6 @@ import Login from "../views/Login";
 import Posts from "../views/createPost";
 import postsDisplay from "../views/postsDisplay";
 import createComment from "../views/createComment";
-import CommentView from "../views/comment";
 import NotFound from "../views/NotFound.vue";
 import update from "../views/update.vue";
 
@@ -95,12 +94,12 @@ const routes = [
     component: createComment,
     meta: { requiresAuth: true },
   },
-  {
+  /*{
     path: "/comment/post/:postId",
     name: "CommentsView",
     component: CommentView,
     meta: { requiresAuth: true },
-  },
+  },*/
   {
     name: "Not Found",
     path: "/:pathMatch(.*)",
