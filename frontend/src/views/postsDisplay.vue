@@ -151,7 +151,6 @@ export default {
     #comment-div{
       border: solid grey 0.1rem;
       border-radius: 0.5rem;
-      margin-top: 0.5rem;
       width: 100%;
     }
 
