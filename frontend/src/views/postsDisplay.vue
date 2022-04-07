@@ -49,9 +49,6 @@
       </div>
     </div>
     <div v-else>Aucune publications de disponible</div>
-    <div v-if="ShowError">
-        <p>L'affichage des publications est indisponible veuillez essayer à nouveau ultérieurement</p>
-    </div>
     <div id="footer" role="footer">
       <footerPage />
       <router-view/>
@@ -81,7 +78,6 @@ export default {
       content: "",
       userId: VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId,
       Admin: VueJwtDecode.decode(localStorage.getItem("AccessToken")).Admin,
-      ShowError: false,
     };
   },
   created: function () {

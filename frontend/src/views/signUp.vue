@@ -67,7 +67,6 @@
         <button type="submit" title="Bouton pour valider l'inscription" role="button">S'inscrire</button>
       </form>
     </div>
-    <!--<p  id="error">email déjà utilisé</p>-->
   </div>
 </template>
 
@@ -87,7 +86,6 @@ export default {
       password: "",
       lastname: "",
       firstname: "",
-      //showError: false,
     });
 
     /*const mustBeEmail = (value) => value.includes('email')

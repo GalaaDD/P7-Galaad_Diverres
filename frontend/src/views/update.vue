@@ -8,7 +8,7 @@
         </label>
       </div>
       <div class="form-container">
-        <label class="image" title="Bouton de séléction d'image" role="button">Sélectionner l'image a ajouter
+        <label class="image" title="Bouton de séléction d'image" role="button"  >Sélectionner l'image a ajouter
           <input
             type="file"
             name="image"
@@ -16,7 +16,7 @@
             v-on:change="onSelect"
             ref="file"
             aria-required="true"
-            id="image"
+            class="image-input"
           />
         </label>
       </div>
@@ -81,6 +81,7 @@ export default {
         console.log("user_id", this.user_id);
         console.log("post_id", this.postId);
         this.updatePost(formData, this.postId);
+        
         //this.$router.push({ name: "postsDisplay" });
       } catch (error) {
         throw "Le service est temporairement indisponible";

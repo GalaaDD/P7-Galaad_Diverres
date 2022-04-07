@@ -48,7 +48,6 @@ exports.updatePost = (req, res, next) => {
   }
 
   console.log(req.params);
-  console.log(post);
   db.query(
     `SELECT * FROM post WHERE id = ?`,
     [req.params.postId],

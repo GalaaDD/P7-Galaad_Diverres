@@ -12,7 +12,7 @@
         </div>
         <div class="form-container">
           <label class="image" title="Bouton de sélection de l'image" role="button" id="postImage">Sélectionner l'image a ajouter
-          <input type="file" name="image" accept=".png, .jpg, .jpeg, .gif" v-on:change="onSelect" ref="file" aria-required="true" id="image" />
+            <input class="image-input" type="file" name="image" accept=".png, .jpg, .jpeg, .gif" v-on:change="onSelect" ref="file" aria-required="true" id="image" />
           </label>
         </div>
         <div class="form-container">
@@ -99,4 +99,7 @@
     justify-content: center;
   }
 
+  .image-input{
+    border-radius: 0.2rem;
+  }
 </style>
