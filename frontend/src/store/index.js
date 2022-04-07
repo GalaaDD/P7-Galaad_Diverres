@@ -66,6 +66,7 @@ export default createStore({
     LogOut({ commit }) {
       let user = null;
       commit("logout", user);
+      location.reload();
     },
     //function to delete a user account, dipatch the logout
     deleteUser({ commit }, user){
@@ -92,6 +93,7 @@ export default createStore({
         axios.patch(`/update/`+ userId, payload)
         .then((response) => {
           commit("logout", payload);
+          location.reload();
           resolve(response);
         })
         .catch((error) => {
@@ -112,7 +114,7 @@ export default createStore({
           console.log(response);
           dispatch('GetPosts', post)
           resolve(response.data);
-          //location.reload();
+          location.reload();
         })
         .catch((error) => {
           reject(error);
@@ -121,7 +123,6 @@ export default createStore({
     },
   // function to update selected post
     updatePost({ commit }, payload ) {
-      //let postId = payload.post_id;
       console.log("payload", payload.formData);
       return new Promise((resolve, reject) => {
         axios
@@ -160,7 +161,7 @@ export default createStore({
         .then((response) => {
           commit;
           console.log(response.data);
-          //location.reload();
+          location.reload();
           resolve();
         })
         .catch((error) => {
@@ -206,14 +207,6 @@ export default createStore({
     setUser(state, firstname) {
       state.user = firstname;
     },
-
-    /*reset(state) {
-      Object.keys(state).forEach(key => {
-        state[key] = null; // or = 
-      });
-    },*/
-    /*localStorage.clear("AccessToken");
-    localStorage.clear*/
     
     logout(state, user) {
       state.user = user;
