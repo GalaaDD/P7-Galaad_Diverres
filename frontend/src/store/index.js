@@ -120,13 +120,12 @@ export default createStore({
       });
     },
   // function to update selected post
-    updatePost({ commit }, payload, postId ) {
+    updatePost({ commit }, payload ) {
       //let postId = payload.post_id;
-      console.log("payload", payload);
-      console.log("postId", postId);
+      console.log("payload", payload.formData);
       return new Promise((resolve, reject) => {
         axios
-          .put(`/post/` + postId, payload)
+          .put(`/post/` + payload.postId, payload.formData)
           .then((response) => {
             commit("setPosts", payload);
             console.log(payload);

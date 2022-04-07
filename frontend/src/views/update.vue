@@ -80,7 +80,7 @@ export default {
         console.log("content", this.content);
         console.log("user_id", this.user_id);
         console.log("post_id", this.postId);
-        this.updatePost(formData, this.postId);
+        this.updatePost({ formData, postId: this.postId });
         
         //this.$router.push({ name: "postsDisplay" });
       } catch (error) {

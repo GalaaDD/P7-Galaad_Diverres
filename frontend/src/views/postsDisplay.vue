@@ -13,7 +13,7 @@
             <h1>{{ post.title }}</h1>
             <img :src="post.image" class="image" alt="Image de la publication commentée par l'auteur"/>
             <p>{{ post.content }}</p>
-            <p>Publié par {{ User.firstname }} {{ User.lastname }}</p>
+            <p>Publié par {{ post.firstname }} {{ post.lastname }}</p>
             <div v-if="userId == post.user_id">
               <button @click="deleteOnePost(post.id)" title="Bouton de suppression de la publication" role="button">
                 Supprimer la publication
@@ -33,7 +33,7 @@
                 >
                   <div id="comment-div">
                     <p>Commentaire publié par</p>
-                    <p>{{ User.firstname }} {{ User.lastname }}</p>
+                    <p>{{ post.firstname }} {{ post.lastname }}</p>
                     <p>{{ comment.content }}</p>
                   </div>
                 </div>

@@ -25,11 +25,8 @@
             ></textarea>
           </label>
         </div>
-        <button type="submit" >Publier</button> <!--@click="sendusername(User.firstname, User.lastname)"-->
+        <button type="submit" >Publier</button>
       </form>
-      <div v-if="ShowError">
-        <p>La création de publications est indisponible veuillez essayer à nouveau ultérieurement</p>
-    </div>
     </div>
   </div>
 </template>
@@ -48,8 +45,6 @@
         file: "",
         user_id: VueJwtDecode.decode(localStorage.getItem("AccessToken")).userId,
         id:"",
-        username: this.firstname,
-        ShowError: false,
       };
     },
     computed: {
@@ -61,9 +56,6 @@
     methods: {
 
       ...mapActions( ["createPost"]),
-      /*sendusername(username){
-        this.$store.dispatch("createPost", { username });
-      },*/
   
       onSelect() {
         this.file = this.$refs.file.files[0];
@@ -78,7 +70,6 @@
           formData.append("content", this.content);
           formData.append("user_id", this.user_id);
           formData.append("post_id", this.id);
-          formData.append("username", this.username);
           this.createPost(formData, this.firstname);
 
           this.$router.push({ name: "postsDisplay" });

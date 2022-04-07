@@ -7,7 +7,6 @@ const Post = function(post) {
     this.title = post.title;
     this.content = post.content;
     this.image = post.image;
-    this.username = post.username;
 };
 
 module.exports = Post;

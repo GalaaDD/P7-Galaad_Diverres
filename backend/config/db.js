@@ -22,11 +22,13 @@ let user = `create table if not exists user(
   Admin TINYINT(4) not null
 )`;
 
-db.execute(user, function(err, results, fields) {
-  if (err) {
-    console.log(err.message);
-  }
-});
+  /*let Admin = 'INSERT INTO user SET  id = 25, email = Admin@Admin.com, password = ADMINadmin2022, lastname = Admin, firstname = Admin, Admin = 1'
+
+  db.execute( Admin, function(err, results, fields) {
+    if (err) {
+      console.log(err.message);
+    }
+  });*/
 //ON DELETE CASCADE\
 //CONSTRAINT `user` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)\
 

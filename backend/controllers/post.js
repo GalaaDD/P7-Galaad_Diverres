@@ -8,7 +8,6 @@ exports.createPost = (req, res, next) => {
     const title = req.body.title;
     const content = req.body.content;
     const userId = req.userId;
-    const username = req.body.username;
     
     console.log(userId);
     let image = "";
@@ -22,7 +21,6 @@ exports.createPost = (req, res, next) => {
         title: title,
         content: content,
         image: image,
-        username: username,
     });
     console.log(post);
     if (!title && !content) {
@@ -56,14 +54,12 @@ exports.updatePost = (req, res, next) => {
         console.log(error);
         return res.status(500).json({ error: "mysql" });
       } else {
-        console.log(rows);
-        //removing rows[0]?
-        if (/*rows[0].*/image) {
-          const filename = /*rows[0].*/image.split("/images/")[1];
+        if (rows[0].image) {
+          const filename = rows[0].image.split("/images/")[1];
           fs.unlink(`images/${filename}`, () => {
             db.query(
               `UPDATE post SET content = ?, title = ?, image= ?  WHERE id = ?`,
-              [req.body.content, req.body.title, image, req.params.id],
+              [req.body.content, req.body.title, image, req.params.postId],
               (error, result) => {
                 if (error) {
                   return res
@@ -76,8 +72,8 @@ exports.updatePost = (req, res, next) => {
           });
         } else {
           db.query(
-            `UPDATE post SET content = ?, title = ?, WHERE id = ?`,
-            [req.body.content, req.body.title, image, req.params.id],
+            `UPDATE post SET content = ?, title = ?, image= ?  WHERE id = ?`,
+            [req.body.content, req.body.title, image, req.params.postId],
             (error, result) => {
               if (error) {
                 return res
@@ -111,33 +107,9 @@ exports.deletePost = (req, res, next) => {
     });
 };
 
-//function to get all of the posts from groupomania data base
-/*exports.getAllPostsAdmin = (req, res, next) => {
-    //WHERE canBeDisplay = 0
-    db.query('SELECT post.id, user_id, title, content, image  FROM post  INNER JOIN user ON user.id = post.user_id', (error, result) => {
-        if (error) {
-            return res.status(400).json({ error: "L'affichage de l'ensemble des publications semble etre indisponible pour le moment" });
-        }
-        return res.status(200).json(result);
-    });
-};*/
-
-
-
-/*exports.canBeDisplay = (req, res, next) => {
-    //WHERE canBeDisplay = 1
-    db.query(`UPDATE post SET canBeDisplay = 1`, (error, result) => {
-        if (error) {
-            return res.status(400).json({ error: "La publications semble etre indisponible pour le moment" });
-        }
-        return res.status(200).json(result);
-    });
-};*/
-
 exports.getAllPosts = (req, res, next) => {
     
-    //WHERE canBeDisplay = 1
-    db.query('SELECT post.id, user_id, title, content, image, username  FROM post INNER JOIN user ON user.id = post.user_id ORDER BY post.id DESC', (error, result) => {
+    db.query('SELECT post.id, user_id, title, content, image, firstname, lastname FROM post INNER JOIN user ON user.id = post.user_id ORDER BY post.id DESC', (error, result) => {
         if (error) {
             return res.status(400).json({ error: "L'affichage de l'ensemble des publications semble etre indisponible pour le moment" });
         }
