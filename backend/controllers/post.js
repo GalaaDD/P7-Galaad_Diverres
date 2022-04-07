@@ -57,8 +57,9 @@ exports.updatePost = (req, res, next) => {
         return res.status(500).json({ error: "mysql" });
       } else {
         console.log(rows);
-        if (rows[0].image) {
-          const filename = rows[0].image.split("/images/")[1];
+        //removing rows[0]?
+        if (/*rows[0].*/image) {
+          const filename = /*rows[0].*/image.split("/images/")[1];
           fs.unlink(`images/${filename}`, () => {
             db.query(
               `UPDATE post SET content = ?, title = ?, image= ?  WHERE id = ?`,
