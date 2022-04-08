@@ -25,7 +25,7 @@ exports.createComment = (req, res, next) => {
         });
     }
 };
-// recuperer data.comment pour sauvegarder
+// get data.comment to save
 //db.query(`SELECT comment.id, comment.content, comment.post_id, comment.user_id,  FROM comment INNER JOIN post ON post.id = comment.post_id left join user on user.id = comment.user_id WHERE post.id= ?`, req.params.postId, (error, result) => {
 
 //function to display all of the comments / ORDER BY dateCreate DESC
@@ -43,8 +43,8 @@ exports.getAllCommentsByPost = (req, res, next) => {
 
 // function to delete a comment
 exports.deleteComment = (req, res, next) => {
-    let comment_id = req.params.id;
-    db.query(`DELETE FROM comment WHERE id = ?`, comment_id, (error, result) => {
+    console.log(req.params.id);
+    db.query(`DELETE FROM comment WHERE id = ?`, req.params.id, (error, result) => {
         if (error) return res.status(400).json({ error: "Le commentaire n'a pas pu être supprimé" });
         return res.status(200).json(result);
     });

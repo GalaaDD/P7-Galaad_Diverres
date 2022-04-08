@@ -22,14 +22,11 @@ let user = `create table if not exists user(
   Admin TINYINT(4) not null
 )`;
 
-  let AdminUser = "INSERT INTO user (id, email, password, lastname, firstname, Admin) VALUES ('3004', 'Admin@Admin.com', '$2b$10$xkCKeVnvCQHcY1al8v2D8uvhR6foZrcPzW3O4dIgRa4Iskkwl6RNG', 'Admin', 'Admin', '1' )";
-
-  db.execute( AdminUser, function(err, results, fields) {
-    if (err) {
-      console.log(err.message);
-    }
-  });
-  
+db.execute( user, function(err, results, fields) {
+  if (err) {
+    console.log(err.message);
+  }
+});
 
 let post = `create table if not exists post(
   id int primary key auto_increment not null,
@@ -59,5 +56,3 @@ db.execute( commentTable, function(err, results, fields) {
 });
 
 module.exports = db;
-
-  
