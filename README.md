@@ -41,8 +41,12 @@ Configuration du projet:
 
 Informations compte Admin: 
 
+Le compte Administrateur doit être créé avec les informations suivantes:
+
 email: Admin@Admin.com
 Mot de passe: ADMINadmin2022
+Nom: Admin
+Prénom: Admin 
 
 
 API rest plan: 
