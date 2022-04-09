@@ -100,7 +100,9 @@ export default {
     },
 
     ...mapActions(["GetPosts", "updatePost", "deleteOnePost"]),
+    
   },
+
 };
 </script>
 
