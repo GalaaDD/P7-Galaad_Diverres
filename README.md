@@ -43,7 +43,7 @@ Configuration du projet:
 
     DB_USER="[Inclure ici le nom de l'utilisateur root]"
 
-    DB_PASSWORD="[Inclure ici le mot de passe de la base de donné]"
+    DB_PASSWORD="[Inclure ici le mot de passe de la base de donnée]"
 
     BASE_URL=[Inclure ici l'URL]
     
@@ -53,12 +53,13 @@ Configuration du projet:
 
 Informations compte Admin: 
 
-Le compte Administrateur doit être créé avec les informations suivantes:
+Le compte Administrateur doit être créé dans la base de donnée avec les informations suivantes:
 
-email: Admin@Admin.com
-Mot de passe: ADMINadmin2022
-Nom: Admin
-Prénom: Admin 
+ email: Admin@Admin.com
+ Mot de passe: ADMINadmin2022
+ Nom: Admin
+ Prénom: Admin 
+ Admin: 1
 
 
 API rest plan: 
