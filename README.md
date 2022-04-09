@@ -33,7 +33,7 @@ Configuration du projet:
 
 1. Cloner le projet
 2. Créer un fichier dans le backend “.env” 
-3. Inclure les variables suivantes dans le document: 
+2. Inclure les variables suivantes dans le fichier “.env” dans le dossier backend: 
  
     DB_HOST="[Inclure ici le nom du localhost]"
 
