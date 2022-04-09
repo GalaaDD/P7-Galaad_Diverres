@@ -34,6 +34,12 @@ Configuration du projet:
 1. Cloner le projet
 2. Créer un fichier dans le backend “.env” 
 3. Inclure les variables suivantes dans le document:  
+DB_HOST="[Inclure ici le nom du localhost]"
+SECRET_TOKEN_KEY="[Inclure ici la clé de sécurité]"
+SECRET_PORT="[Inclure ici le numéro du port]"
+DB_USER="[Inclure ici le nom de l'utilisateur root]"
+DB_PASSWORD="[Inclure ici le mot de passe de la base de donné]"
+BASE_URL=[Inclure ici l'URL]
     
 4. Démarrer le serveur frontend avec la commande suivante: npm run serve 
 5. Démarrer le serveur backend avec la commande suivante: nodemon serve
