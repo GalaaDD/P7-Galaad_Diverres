@@ -131,6 +131,7 @@ export default createStore({
             commit("setPosts", payload);
             console.log(payload);
             console.log(response.data);
+            location.reload();
             resolve();
           })
           .catch((error) => {
