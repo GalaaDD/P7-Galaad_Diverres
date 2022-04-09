@@ -21,7 +21,7 @@
               <button @click="updatePostPage(post.id)" title="Bouton de modification de la publication" role="button">
                 Modifier la publication
               </button>
-              <!--sending post.id as a parameter to know which one has to be either delete or updated-->
+              <!--sending post.id as a parameter to know which one has to be either delete or updated   -->
             </div>
             <div class="comment__Container">
               <div class="comments" v-if="Comments">
@@ -100,7 +100,7 @@ export default {
     },
 
     ...mapActions(["GetPosts", "updatePost", "deleteOnePost"]),
-    
+
   },
 
 };
