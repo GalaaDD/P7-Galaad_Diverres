@@ -71,7 +71,6 @@ export default {
     createPost,
     footerPage, 
   },
-
   data() {
     return {
       content: "",
@@ -100,7 +99,6 @@ export default {
     },
 
     ...mapActions(["GetPosts", "updatePost", "deleteOnePost"]),
-
   },
 
 };
