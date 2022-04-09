@@ -97,5 +97,16 @@ Post:
     Get Posts: 
 
     get/post/display
+    
+Comment: 
+
+    Create Comment:
+
+    post/comment/
+
+    Get Comments: 
+
+    get/comment/post/:postId
+    
 
 
