@@ -67,7 +67,7 @@ exports.login = async(req, res, next) => {
 };
 
 // function to select one user
-exports.getUsers = (req, res, next) => {
+/*exports.getUsers = (req, res, next) => {
     conn.query('SELECT * FROM user', req.params.id, (error, result) => {
         if (error) {
             return res
@@ -76,7 +76,7 @@ exports.getUsers = (req, res, next) => {
         }
         return res.status(200).json(result);
     });
-};
+};*/
 
 // function to update users' informations
 exports.updateUser = (req, res, next) => {
